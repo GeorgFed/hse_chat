@@ -19,6 +19,7 @@ dependencies:
   freezed_annotation: ^1.1.0
   flutter_hooks: ^0.18.3
   cupertino_icons: ^1.0.2
+  flutter_svg: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -30,3 +31,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/

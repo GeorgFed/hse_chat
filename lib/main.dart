@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'common/style/assets.dart';
 import 'features/auth/page.dart';
 
-void main() => runApp(
-      const ProviderScope(
-        child: MyApp(),
-      ),
-    );
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    const ProviderScope(
+      child: App(),
+    ),
+  );
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -22,12 +26,16 @@ class MyApp extends StatelessWidget {
             elevation: 0,
             backgroundColor: Color(0xFFEFEFEF),
           ),
-          fontFamily: 'Helvetica',
+          fontFamily: GoogleFonts.inter().fontFamily,
           textTheme: const TextTheme(
             headline1: TextStyle(fontSize: 34.0, fontWeight: FontWeight.bold),
             headline2: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
             headline3: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-            button: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
+            button: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w400,
+              color: Colors.white,
+            ),
             bodyText1: TextStyle(fontSize: 12.0, fontWeight: FontWeight.normal),
             subtitle1: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400),
           ),

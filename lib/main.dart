@@ -1,105 +1,88 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'app/state_holder.dart';
+import 'services/auth.dart';
+import 'services/database/chat.dart';
+import 'services/database.dart';
+
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+
+import 'services/database/group.dart';
+
+final providerContainer = ProviderContainer();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
   runApp(
-    const ProviderScope(
-      child: MyApp(),
+    UncontrolledProviderScope(
+      container: providerContainer,
+      child: const MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) => MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        home: MyHomePage(),
       );
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
+class MyHomePage extends ConsumerWidget {
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    List<types.Message> _messages = [];
+    final _auth = AuthService();
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+    final futureAsyncValue = ref.watch(userProvider); // same syntax
 
-  final FirebaseAuth _fAuth = FirebaseAuth.instance;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Brew Crew'),
+        backgroundColor: Colors.brown[400],
+        elevation: 0.0,
+        actions: <Widget>[
+          FlatButton.icon(
+              onPressed: () async {
+                await _auth.signInWithEmailAndPassword(
+                    'vlad1@gmail.com', 'test1234');
+              },
+              icon: Icon(Icons.person),
+              label: Text('Log out')),
+          FlatButton.icon(
+              onPressed: () async {
+                await GroupDatabaseService().printGroup();
+              },
+              icon: Icon(Icons.person),
+              label: Text('Log out')),
+        ],
+      ),
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+      // body: Center(
+
+      //   // child: futureAsyncValue.when(
+      //   //   data: (data) => Text('Value: $data'),
+      //   //   loading: () => const CircularProgressIndicator(),
+      //   //   error: (e, st) => Text('Error: $e'),
+      //   // ),
+      // ),
+    );
   }
-
-  Future<void> signUp() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: "bay.allen@example.com", password: "SuperSetPassword!");
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> signIn() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: "barry.allen@example.com",
-              password: "SuperSecretPassword!");
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: sign,
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
-        ),
-      );
 }

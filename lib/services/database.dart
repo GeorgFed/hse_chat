@@ -14,10 +14,6 @@ class DataBaseService {
 
   DataBaseService({required this.uid});
 
-  final myProvider = Provider((ref) {
-    return "1";
-  });
-
   // Колекция пользователей
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
@@ -32,15 +28,6 @@ class DataBaseService {
   // Колекция групп
   final CollectionReference groupsCollection =
       FirebaseFirestore.instance.collection('groups');
-
-  Future printGroup(String uid) async {
-    QuerySnapshot snapshot = await groupsCollection.get();
-    for (var doc in snapshot.docs) {
-      //print(doc.data());
-    }
-    final _docData = snapshot.docs.map((doc) => doc.data()).toList();
-    print(_docData);
-  }
 
   // Создание или обновление данных пользователя
   Future updateUserData(String name, String avatarUrl, String status) async =>
@@ -57,9 +44,9 @@ class DataBaseService {
   ChatUserData _userDataFromSnapshot(DocumentSnapshot snapshot) => ChatUserData(
         uid: uid,
         name: snapshot['name'],
-        avatar_url: snapshot['avatar_url'],
+        avatarUrl: snapshot['avatarUrl'],
         status: snapshot['status'],
-        group_id: snapshot['group_id'],
+        groupId: snapshot['group_id'],
       );
 
   Future<bool> isUserStudent() async {
@@ -72,13 +59,13 @@ class DataBaseService {
 
   // Создание или обновление данных задания
   Future updateAssinmentData(String title, String info, String deadline,
-          String fileUrl, String tutor_id) async =>
+          String fileUrl, String tutorId) async =>
       await assignmentCollection.doc().set({
         'title': title,
         'info': info,
         'deadline': deadline,
-        'file_url': fileUrl,
-        'tutor_id': tutor_id,
+        'fileUrl': fileUrl,
+        'tutorId': tutorId,
       });
 
   List<Assingment> _assinmentsListFromSnapshot(QuerySnapshot snapshot) =>
@@ -89,8 +76,8 @@ class DataBaseService {
                 info: doc.get('info') ?? '',
                 deadline: doc.get('deadline') ?? '',
                 date: doc.get('date') ?? '',
-                file_url: doc.get('file_url') ?? '',
-                tutor_id: doc.get('tutor_id') ?? '',
+                fileUrl: doc.get('fileUrl') ?? '',
+                tutorId: doc.get('tutorId') ?? '',
               ))
           .toList();
 
@@ -100,8 +87,8 @@ class DataBaseService {
         info: snapshot['info'],
         deadline: snapshot['deadline'],
         date: snapshot['date'],
-        file_url: snapshot['file_url'],
-        tutor_id: snapshot['tutor_id'],
+        fileUrl: snapshot['fileUrl'],
+        tutorId: snapshot['tutorId'],
       );
 
   // Создание или обновление данных оценок
@@ -115,35 +102,14 @@ class DataBaseService {
       .map((doc) => Grade(
             uid: doc.get('uid'),
             value: doc.get('value') ?? 0,
-            assignment_uid: doc.get('assignment_uid') ?? '',
+            assignmentUid: doc.get('assignmentUid') ?? '',
           ))
       .toList();
 
   Grade _gradeFromSnapshot(DocumentSnapshot snapshot) => Grade(
         uid: uid,
         value: snapshot['value'],
-        assignment_uid: snapshot['assignment_uid'],
-      );
-
-  // Создание или обновление данных групп
-  Future updateGroupsData(String name, List<String> students_uid) async =>
-      await groupsCollection.doc().set({
-        'name': name,
-        'students_uid': students_uid,
-      });
-
-  List<Group> _groupsListFromSnapshot(QuerySnapshot snapshot) => snapshot.docs
-      .map((doc) => Group(
-            uid: doc.get('uid'),
-            name: doc.get('name') ?? '',
-            students_ids: doc.get('students_ids') ?? [],
-          ))
-      .toList();
-
-  Group _groupsFromSnapshot(DocumentSnapshot snapshot) => Group(
-        uid: uid,
-        name: snapshot['name'],
-        students_ids: snapshot['students_ids'],
+        assignmentUid: snapshot['assignmentUid'],
       );
 
   Stream<QuerySnapshot> get users => usersCollection.snapshots();
@@ -156,9 +122,5 @@ class DataBaseService {
 
   Stream<QuerySnapshot> get grades => gradesCollection.snapshots();
   Stream<List<Grade>> get gradesList =>
-      gradesCollection.snapshots().map(_gradesListFromSnapshot);
-
-  Stream<QuerySnapshot> get groups => gradesCollection.snapshots();
-  Stream<List<Grade>> get groupsList =>
       gradesCollection.snapshots().map(_gradesListFromSnapshot);
 }

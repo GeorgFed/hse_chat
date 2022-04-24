@@ -22,18 +22,18 @@ class _$AssingmentTearOff {
       {required String uid,
       required String title,
       required String info,
-      required DateTime? deadline,
       required DateTime date,
-      required String? file_url,
-      required String tutor_id}) {
+      required String tutorId,
+      String? fileUrl,
+      DateTime? deadline}) {
     return _Assingment(
       uid: uid,
       title: title,
       info: info,
-      deadline: deadline,
       date: date,
-      file_url: file_url,
-      tutor_id: tutor_id,
+      tutorId: tutorId,
+      fileUrl: fileUrl,
+      deadline: deadline,
     );
   }
 }
@@ -46,10 +46,10 @@ mixin _$Assingment {
   String get uid => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get info => throw _privateConstructorUsedError;
-  DateTime? get deadline => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
-  String? get file_url => throw _privateConstructorUsedError;
-  String get tutor_id => throw _privateConstructorUsedError;
+  String get tutorId => throw _privateConstructorUsedError;
+  String? get fileUrl => throw _privateConstructorUsedError;
+  DateTime? get deadline => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AssingmentCopyWith<Assingment> get copyWith =>
@@ -65,10 +65,10 @@ abstract class $AssingmentCopyWith<$Res> {
       {String uid,
       String title,
       String info,
-      DateTime? deadline,
       DateTime date,
-      String? file_url,
-      String tutor_id});
+      String tutorId,
+      String? fileUrl,
+      DateTime? deadline});
 }
 
 /// @nodoc
@@ -84,10 +84,10 @@ class _$AssingmentCopyWithImpl<$Res> implements $AssingmentCopyWith<$Res> {
     Object? uid = freezed,
     Object? title = freezed,
     Object? info = freezed,
-    Object? deadline = freezed,
     Object? date = freezed,
-    Object? file_url = freezed,
-    Object? tutor_id = freezed,
+    Object? tutorId = freezed,
+    Object? fileUrl = freezed,
+    Object? deadline = freezed,
   }) {
     return _then(_value.copyWith(
       uid: uid == freezed
@@ -102,22 +102,22 @@ class _$AssingmentCopyWithImpl<$Res> implements $AssingmentCopyWith<$Res> {
           ? _value.info
           : info // ignore: cast_nullable_to_non_nullable
               as String,
-      deadline: deadline == freezed
-          ? _value.deadline
-          : deadline // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       date: date == freezed
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      file_url: file_url == freezed
-          ? _value.file_url
-          : file_url // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tutor_id: tutor_id == freezed
-          ? _value.tutor_id
-          : tutor_id // ignore: cast_nullable_to_non_nullable
+      tutorId: tutorId == freezed
+          ? _value.tutorId
+          : tutorId // ignore: cast_nullable_to_non_nullable
               as String,
+      fileUrl: fileUrl == freezed
+          ? _value.fileUrl
+          : fileUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deadline: deadline == freezed
+          ? _value.deadline
+          : deadline // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -132,10 +132,10 @@ abstract class _$AssingmentCopyWith<$Res> implements $AssingmentCopyWith<$Res> {
       {String uid,
       String title,
       String info,
-      DateTime? deadline,
       DateTime date,
-      String? file_url,
-      String tutor_id});
+      String tutorId,
+      String? fileUrl,
+      DateTime? deadline});
 }
 
 /// @nodoc
@@ -153,10 +153,10 @@ class __$AssingmentCopyWithImpl<$Res> extends _$AssingmentCopyWithImpl<$Res>
     Object? uid = freezed,
     Object? title = freezed,
     Object? info = freezed,
-    Object? deadline = freezed,
     Object? date = freezed,
-    Object? file_url = freezed,
-    Object? tutor_id = freezed,
+    Object? tutorId = freezed,
+    Object? fileUrl = freezed,
+    Object? deadline = freezed,
   }) {
     return _then(_Assingment(
       uid: uid == freezed
@@ -171,22 +171,22 @@ class __$AssingmentCopyWithImpl<$Res> extends _$AssingmentCopyWithImpl<$Res>
           ? _value.info
           : info // ignore: cast_nullable_to_non_nullable
               as String,
-      deadline: deadline == freezed
-          ? _value.deadline
-          : deadline // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       date: date == freezed
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      file_url: file_url == freezed
-          ? _value.file_url
-          : file_url // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tutor_id: tutor_id == freezed
-          ? _value.tutor_id
-          : tutor_id // ignore: cast_nullable_to_non_nullable
+      tutorId: tutorId == freezed
+          ? _value.tutorId
+          : tutorId // ignore: cast_nullable_to_non_nullable
               as String,
+      fileUrl: fileUrl == freezed
+          ? _value.fileUrl
+          : fileUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deadline: deadline == freezed
+          ? _value.deadline
+          : deadline // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -198,10 +198,10 @@ class _$_Assingment implements _Assingment {
       {required this.uid,
       required this.title,
       required this.info,
-      required this.deadline,
       required this.date,
-      required this.file_url,
-      required this.tutor_id});
+      required this.tutorId,
+      this.fileUrl,
+      this.deadline});
 
   @override
   final String uid;
@@ -210,17 +210,17 @@ class _$_Assingment implements _Assingment {
   @override
   final String info;
   @override
-  final DateTime? deadline;
-  @override
   final DateTime date;
   @override
-  final String? file_url;
+  final String tutorId;
   @override
-  final String tutor_id;
+  final String? fileUrl;
+  @override
+  final DateTime? deadline;
 
   @override
   String toString() {
-    return 'Assingment(uid: $uid, title: $title, info: $info, deadline: $deadline, date: $date, file_url: $file_url, tutor_id: $tutor_id)';
+    return 'Assingment(uid: $uid, title: $title, info: $info, date: $date, tutorId: $tutorId, fileUrl: $fileUrl, deadline: $deadline)';
   }
 
   @override
@@ -231,10 +231,10 @@ class _$_Assingment implements _Assingment {
             const DeepCollectionEquality().equals(other.uid, uid) &&
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.info, info) &&
-            const DeepCollectionEquality().equals(other.deadline, deadline) &&
             const DeepCollectionEquality().equals(other.date, date) &&
-            const DeepCollectionEquality().equals(other.file_url, file_url) &&
-            const DeepCollectionEquality().equals(other.tutor_id, tutor_id));
+            const DeepCollectionEquality().equals(other.tutorId, tutorId) &&
+            const DeepCollectionEquality().equals(other.fileUrl, fileUrl) &&
+            const DeepCollectionEquality().equals(other.deadline, deadline));
   }
 
   @override
@@ -243,10 +243,10 @@ class _$_Assingment implements _Assingment {
       const DeepCollectionEquality().hash(uid),
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(info),
-      const DeepCollectionEquality().hash(deadline),
       const DeepCollectionEquality().hash(date),
-      const DeepCollectionEquality().hash(file_url),
-      const DeepCollectionEquality().hash(tutor_id));
+      const DeepCollectionEquality().hash(tutorId),
+      const DeepCollectionEquality().hash(fileUrl),
+      const DeepCollectionEquality().hash(deadline));
 
   @JsonKey(ignore: true)
   @override
@@ -259,10 +259,10 @@ abstract class _Assingment implements Assingment {
       {required String uid,
       required String title,
       required String info,
-      required DateTime? deadline,
       required DateTime date,
-      required String? file_url,
-      required String tutor_id}) = _$_Assingment;
+      required String tutorId,
+      String? fileUrl,
+      DateTime? deadline}) = _$_Assingment;
 
   @override
   String get uid;
@@ -271,13 +271,13 @@ abstract class _Assingment implements Assingment {
   @override
   String get info;
   @override
-  DateTime? get deadline;
-  @override
   DateTime get date;
   @override
-  String? get file_url;
+  String get tutorId;
   @override
-  String get tutor_id;
+  String? get fileUrl;
+  @override
+  DateTime? get deadline;
   @override
   @JsonKey(ignore: true)
   _$AssingmentCopyWith<_Assingment> get copyWith =>

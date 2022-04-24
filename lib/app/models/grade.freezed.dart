@@ -21,11 +21,11 @@ class _$GradeTearOff {
   _Grade call(
       {required String uid,
       required String value,
-      required String assignment_uid}) {
+      required String assignmentUid}) {
     return _Grade(
       uid: uid,
       value: value,
-      assignment_uid: assignment_uid,
+      assignmentUid: assignmentUid,
     );
   }
 }
@@ -37,7 +37,7 @@ const $Grade = _$GradeTearOff();
 mixin _$Grade {
   String get uid => throw _privateConstructorUsedError;
   String get value => throw _privateConstructorUsedError;
-  String get assignment_uid => throw _privateConstructorUsedError;
+  String get assignmentUid => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GradeCopyWith<Grade> get copyWith => throw _privateConstructorUsedError;
@@ -47,7 +47,7 @@ mixin _$Grade {
 abstract class $GradeCopyWith<$Res> {
   factory $GradeCopyWith(Grade value, $Res Function(Grade) then) =
       _$GradeCopyWithImpl<$Res>;
-  $Res call({String uid, String value, String assignment_uid});
+  $Res call({String uid, String value, String assignmentUid});
 }
 
 /// @nodoc
@@ -62,7 +62,7 @@ class _$GradeCopyWithImpl<$Res> implements $GradeCopyWith<$Res> {
   $Res call({
     Object? uid = freezed,
     Object? value = freezed,
-    Object? assignment_uid = freezed,
+    Object? assignmentUid = freezed,
   }) {
     return _then(_value.copyWith(
       uid: uid == freezed
@@ -73,9 +73,9 @@ class _$GradeCopyWithImpl<$Res> implements $GradeCopyWith<$Res> {
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      assignment_uid: assignment_uid == freezed
-          ? _value.assignment_uid
-          : assignment_uid // ignore: cast_nullable_to_non_nullable
+      assignmentUid: assignmentUid == freezed
+          ? _value.assignmentUid
+          : assignmentUid // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -86,7 +86,7 @@ abstract class _$GradeCopyWith<$Res> implements $GradeCopyWith<$Res> {
   factory _$GradeCopyWith(_Grade value, $Res Function(_Grade) then) =
       __$GradeCopyWithImpl<$Res>;
   @override
-  $Res call({String uid, String value, String assignment_uid});
+  $Res call({String uid, String value, String assignmentUid});
 }
 
 /// @nodoc
@@ -102,7 +102,7 @@ class __$GradeCopyWithImpl<$Res> extends _$GradeCopyWithImpl<$Res>
   $Res call({
     Object? uid = freezed,
     Object? value = freezed,
-    Object? assignment_uid = freezed,
+    Object? assignmentUid = freezed,
   }) {
     return _then(_Grade(
       uid: uid == freezed
@@ -113,9 +113,9 @@ class __$GradeCopyWithImpl<$Res> extends _$GradeCopyWithImpl<$Res>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      assignment_uid: assignment_uid == freezed
-          ? _value.assignment_uid
-          : assignment_uid // ignore: cast_nullable_to_non_nullable
+      assignmentUid: assignmentUid == freezed
+          ? _value.assignmentUid
+          : assignmentUid // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -125,18 +125,18 @@ class __$GradeCopyWithImpl<$Res> extends _$GradeCopyWithImpl<$Res>
 
 class _$_Grade implements _Grade {
   _$_Grade(
-      {required this.uid, required this.value, required this.assignment_uid});
+      {required this.uid, required this.value, required this.assignmentUid});
 
   @override
   final String uid;
   @override
   final String value;
   @override
-  final String assignment_uid;
+  final String assignmentUid;
 
   @override
   String toString() {
-    return 'Grade(uid: $uid, value: $value, assignment_uid: $assignment_uid)';
+    return 'Grade(uid: $uid, value: $value, assignmentUid: $assignmentUid)';
   }
 
   @override
@@ -147,7 +147,7 @@ class _$_Grade implements _Grade {
             const DeepCollectionEquality().equals(other.uid, uid) &&
             const DeepCollectionEquality().equals(other.value, value) &&
             const DeepCollectionEquality()
-                .equals(other.assignment_uid, assignment_uid));
+                .equals(other.assignmentUid, assignmentUid));
   }
 
   @override
@@ -155,7 +155,7 @@ class _$_Grade implements _Grade {
       runtimeType,
       const DeepCollectionEquality().hash(uid),
       const DeepCollectionEquality().hash(value),
-      const DeepCollectionEquality().hash(assignment_uid));
+      const DeepCollectionEquality().hash(assignmentUid));
 
   @JsonKey(ignore: true)
   @override
@@ -167,14 +167,14 @@ abstract class _Grade implements Grade {
   factory _Grade(
       {required String uid,
       required String value,
-      required String assignment_uid}) = _$_Grade;
+      required String assignmentUid}) = _$_Grade;
 
   @override
   String get uid;
   @override
   String get value;
   @override
-  String get assignment_uid;
+  String get assignmentUid;
   @override
   @JsonKey(ignore: true)
   _$GradeCopyWith<_Grade> get copyWith => throw _privateConstructorUsedError;

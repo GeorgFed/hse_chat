@@ -21,11 +21,11 @@ class _$GroupTearOff {
   _Group call(
       {required String uid,
       required String name,
-      required List<String> students_ids}) {
+      required List<String> studentsIds}) {
     return _Group(
       uid: uid,
       name: name,
-      students_ids: students_ids,
+      studentsIds: studentsIds,
     );
   }
 }
@@ -37,7 +37,7 @@ const $Group = _$GroupTearOff();
 mixin _$Group {
   String get uid => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  List<String> get students_ids => throw _privateConstructorUsedError;
+  List<String> get studentsIds => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GroupCopyWith<Group> get copyWith => throw _privateConstructorUsedError;
@@ -47,7 +47,7 @@ mixin _$Group {
 abstract class $GroupCopyWith<$Res> {
   factory $GroupCopyWith(Group value, $Res Function(Group) then) =
       _$GroupCopyWithImpl<$Res>;
-  $Res call({String uid, String name, List<String> students_ids});
+  $Res call({String uid, String name, List<String> studentsIds});
 }
 
 /// @nodoc
@@ -62,7 +62,7 @@ class _$GroupCopyWithImpl<$Res> implements $GroupCopyWith<$Res> {
   $Res call({
     Object? uid = freezed,
     Object? name = freezed,
-    Object? students_ids = freezed,
+    Object? studentsIds = freezed,
   }) {
     return _then(_value.copyWith(
       uid: uid == freezed
@@ -73,9 +73,9 @@ class _$GroupCopyWithImpl<$Res> implements $GroupCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      students_ids: students_ids == freezed
-          ? _value.students_ids
-          : students_ids // ignore: cast_nullable_to_non_nullable
+      studentsIds: studentsIds == freezed
+          ? _value.studentsIds
+          : studentsIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
   }
@@ -86,7 +86,7 @@ abstract class _$GroupCopyWith<$Res> implements $GroupCopyWith<$Res> {
   factory _$GroupCopyWith(_Group value, $Res Function(_Group) then) =
       __$GroupCopyWithImpl<$Res>;
   @override
-  $Res call({String uid, String name, List<String> students_ids});
+  $Res call({String uid, String name, List<String> studentsIds});
 }
 
 /// @nodoc
@@ -102,7 +102,7 @@ class __$GroupCopyWithImpl<$Res> extends _$GroupCopyWithImpl<$Res>
   $Res call({
     Object? uid = freezed,
     Object? name = freezed,
-    Object? students_ids = freezed,
+    Object? studentsIds = freezed,
   }) {
     return _then(_Group(
       uid: uid == freezed
@@ -113,9 +113,9 @@ class __$GroupCopyWithImpl<$Res> extends _$GroupCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      students_ids: students_ids == freezed
-          ? _value.students_ids
-          : students_ids // ignore: cast_nullable_to_non_nullable
+      studentsIds: studentsIds == freezed
+          ? _value.studentsIds
+          : studentsIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
   }
@@ -124,18 +124,18 @@ class __$GroupCopyWithImpl<$Res> extends _$GroupCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Group implements _Group {
-  _$_Group({required this.uid, required this.name, required this.students_ids});
+  _$_Group({required this.uid, required this.name, required this.studentsIds});
 
   @override
   final String uid;
   @override
   final String name;
   @override
-  final List<String> students_ids;
+  final List<String> studentsIds;
 
   @override
   String toString() {
-    return 'Group(uid: $uid, name: $name, students_ids: $students_ids)';
+    return 'Group(uid: $uid, name: $name, studentsIds: $studentsIds)';
   }
 
   @override
@@ -146,7 +146,7 @@ class _$_Group implements _Group {
             const DeepCollectionEquality().equals(other.uid, uid) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
-                .equals(other.students_ids, students_ids));
+                .equals(other.studentsIds, studentsIds));
   }
 
   @override
@@ -154,7 +154,7 @@ class _$_Group implements _Group {
       runtimeType,
       const DeepCollectionEquality().hash(uid),
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(students_ids));
+      const DeepCollectionEquality().hash(studentsIds));
 
   @JsonKey(ignore: true)
   @override
@@ -166,14 +166,14 @@ abstract class _Group implements Group {
   factory _Group(
       {required String uid,
       required String name,
-      required List<String> students_ids}) = _$_Group;
+      required List<String> studentsIds}) = _$_Group;
 
   @override
   String get uid;
   @override
   String get name;
   @override
-  List<String> get students_ids;
+  List<String> get studentsIds;
   @override
   @JsonKey(ignore: true)
   _$GroupCopyWith<_Group> get copyWith => throw _privateConstructorUsedError;

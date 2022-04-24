@@ -7,6 +7,6 @@ class Group with _$Group {
   factory Group({
     required final String uid,
     required String name,
-    required List<String> students_ids,
+    required List<String> studentsIds,
   }) = _Group;
 }

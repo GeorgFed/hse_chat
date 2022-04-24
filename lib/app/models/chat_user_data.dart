@@ -7,8 +7,8 @@ class ChatUserData with _$ChatUserData {
   factory ChatUserData({
     required final String uid,
     required String name,
-    @Default("") String? avatar_url,
     required String status,
-    String? group_id,
+    @Default('') String avatarUrl,
+    String? groupId,
   }) = _ChatUserData;
 }

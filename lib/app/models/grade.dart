@@ -7,6 +7,6 @@ class Grade with _$Grade {
   factory Grade({
     required String uid,
     required String value,
-    required String assignment_uid,
+    required String assignmentUid,
   }) = _Grade;
 }

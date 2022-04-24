@@ -8,9 +8,9 @@ class Assingment with _$Assingment {
     required final String uid,
     required String title,
     required String info,
-    required DateTime? deadline,
     required DateTime date,
-    required String? file_url,
-    required String tutor_id,
+    required String tutorId,
+    String? fileUrl,
+    DateTime? deadline,
   }) = _Assingment;
 }

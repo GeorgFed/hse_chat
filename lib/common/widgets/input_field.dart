@@ -12,6 +12,8 @@ class HInputField extends StatelessWidget {
   final InputType type;
   final String? placeholder;
   final TextEditingController? controller;
+  final Function(String)? onChanged;
+  final bool shouldValidate;
 
   static const _cornerRadius = 10.0;
 
@@ -19,6 +21,8 @@ class HInputField extends StatelessWidget {
     this.type = InputType.text,
     this.placeholder,
     this.controller,
+    this.onChanged,
+    this.shouldValidate = false,
     Key? key,
   }) : super(key: key);
 
@@ -30,7 +34,11 @@ class HInputField extends StatelessWidget {
       controller: controller,
       autocorrect: false,
       enableSuggestions: false,
+      onChanged: onChanged,
       keyboardType: type == InputType.email ? TextInputType.emailAddress : null,
+      autovalidateMode: shouldValidate
+          ? AutovalidateMode.onUserInteraction
+          : AutovalidateMode.disabled,
       decoration: InputDecoration(
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(

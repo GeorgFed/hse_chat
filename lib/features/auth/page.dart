@@ -6,56 +6,20 @@ import '../../common/style/assets.dart';
 import '../../common/widgets/button.dart';
 import '../../common/widgets/input_field.dart';
 import '../chats/page.dart';
+import '../login/page.dart';
+import '../sign_up/page.dart';
 import '../tab_bar/page.dart';
+import 'state_holder.dart';
+import 'status.dart';
 
 class AuthPage extends ConsumerWidget {
   const AuthPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-        appBar: AppBar(
-          title: SvgPicture.asset(AppAssets.logo),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Center(
-            heightFactor: 2.0,
-            child: Wrap(
-              spacing: 16.0,
-              runSpacing: 16.0,
-              children: [
-                Text(
-                  'Вход',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3
-                      ?.copyWith(color: Colors.black),
-                  textAlign: TextAlign.start,
-                ),
-                const HInputField(placeholder: 'Почта'),
-                const HInputField(placeholder: 'Пароль'),
-                Text(
-                  'Введите адрес своей корпоративной почты, чтобы на нее пришла ссылка для входа :)',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      ?.copyWith(color: Colors.black54),
-                  textAlign: TextAlign.center,
-                ),
-                HButton(
-                  text: 'Войти',
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const TabBarPage(),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final status = ref.watch(authPageStateProvider).status;
+    return status == AuthPageStatus.login
+        ? const LoginPage()
+        : const SignUpPage();
+  }
 }

@@ -17,7 +17,7 @@ class TabBarPage extends ConsumerWidget {
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.abc_outlined),
+            icon: Icon(Icons.chat_bubble),
             label: '0',
           ),
           BottomNavigationBarItem(

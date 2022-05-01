@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -10,11 +9,28 @@ import '../auth/state_holder.dart';
 import '../auth/status.dart';
 import '../tab_bar/page.dart';
 
-class SignUpPage extends ConsumerWidget {
+class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends ConsumerState<SignUpPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  late final _emailController = TextEditingController();
+  late final _passwordController = TextEditingController();
+  late final _confirmPasswordController = TextEditingController();
+
+  bool get isFormFilled =>
+      _emailController.text.isNotEmpty &&
+      _passwordController.text.isNotEmpty &&
+      _confirmPasswordController.text.isNotEmpty;
+  bool _shouldValidate = false;
+
+  @override
+  Widget build(BuildContext context) {
     final stateHolder = ref.watch(authPageStateProvider.notifier);
     return Scaffold(
       appBar: AppBar(
@@ -36,26 +52,50 @@ class SignUpPage extends ConsumerWidget {
                     ?.copyWith(color: Colors.black),
                 textAlign: TextAlign.start,
               ),
-              const HInputField(
-                placeholder: 'Почта',
-                type: InputType.email,
-              ),
-              const HInputField(
-                placeholder: 'Пароль',
-                type: InputType.password,
-              ),
-              const HInputField(
-                placeholder: 'Подтвердите пароль',
-                type: InputType.password,
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    HInputField(
+                      controller: _emailController,
+                      placeholder: 'Почта',
+                      type: InputType.email,
+                      shouldValidate: _shouldValidate,
+                      onChanged: (_) => setState(
+                        () {},
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                    HInputField(
+                      controller: _passwordController,
+                      placeholder: 'Пароль',
+                      type: InputType.password,
+                      shouldValidate: _shouldValidate,
+                      onChanged: (_) => setState(
+                        () {},
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                    HInputField(
+                      controller: _confirmPasswordController,
+                      placeholder: 'Подтвердите пароль',
+                      type: InputType.confirmPassword,
+                      validatorText: _passwordController.text,
+                      shouldValidate: _shouldValidate,
+                      onChanged: (_) => setState(
+                        () {},
+                      ),
+                    ),
+                  ],
+                ),
               ),
               HButton(
                 text: 'Далее',
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const TabBarPage(),
-                  ),
-                ),
+                onTap: isFormFilled ? _onSubmit : null,
               ),
               HButton(
                 text: 'Есть аккаунт? Войти',
@@ -67,5 +107,22 @@ class SignUpPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  void _onSubmit() {
+    final currentFormState = _formKey.currentState;
+    final isValid =
+        currentFormState == null ? false : currentFormState.validate();
+
+    if (isValid) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const TabBarPage(),
+        ),
+      );
+    } else {
+      setState(() => _shouldValidate = true);
+    }
   }
 }

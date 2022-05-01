@@ -23,10 +23,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   late final _emailController = TextEditingController();
   late final _passwordController = TextEditingController();
 
-  bool shouldValidate = false;
-
-  String email = '';
-  String password = '';
+  bool _shouldValidate = false;
+  bool get _shouldEnableButton =>
+      _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +59,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       controller: _emailController,
                       placeholder: 'Почта',
                       type: InputType.email,
-                      onChanged: (text) => setState(() => email = text),
-                      shouldValidate: shouldValidate,
+                      shouldValidate: _shouldValidate,
                     ),
                     const SizedBox(
                       height: 16.0,
@@ -70,15 +68,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       controller: _passwordController,
                       placeholder: 'Пароль',
                       type: InputType.password,
-                      onChanged: (text) => setState(() => password = text),
-                      shouldValidate: shouldValidate,
+                      onChanged: (_) => setState(
+                        () {},
+                      ),
+                      shouldValidate: _shouldValidate,
                     ),
                   ],
                 ),
               ),
               HButton(
                 text: 'Войти',
-                onTap: _onSubmit(),
+                onTap: _shouldEnableButton ? _onSubmit : null,
               ),
               HButton(
                 text: 'Нет аккаунта? Регистрация',
@@ -92,27 +92,20 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
   }
 
-  VoidCallback? _onSubmit() {
-    setState(() => shouldValidate = true);
-
+  void _onSubmit() {
     final currentFormState = _formKey.currentState;
     final isValid =
         currentFormState == null ? false : currentFormState.validate();
 
-    // validate all the form fields
-    if (email.isNotEmpty && password.isNotEmpty) {
-      if (isValid) {
-        return () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const TabBarPage(),
-              ),
-            );
-      } else {
-        return () {};
-      }
+    if (isValid) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const TabBarPage(),
+        ),
+      );
     } else {
-      return null;
+      setState(() => _shouldValidate = true);
     }
   }
 }

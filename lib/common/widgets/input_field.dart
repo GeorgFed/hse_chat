@@ -6,6 +6,7 @@ enum InputType {
   text,
   email,
   password,
+  confirmPassword,
 }
 
 class HInputField extends StatelessWidget {
@@ -14,6 +15,7 @@ class HInputField extends StatelessWidget {
   final TextEditingController? controller;
   final Function(String)? onChanged;
   final bool shouldValidate;
+  final String? validatorText;
 
   static const _cornerRadius = 10.0;
 
@@ -23,6 +25,7 @@ class HInputField extends StatelessWidget {
     this.controller,
     this.onChanged,
     this.shouldValidate = false,
+    this.validatorText,
     Key? key,
   }) : super(key: key);
 
@@ -33,7 +36,6 @@ class HInputField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       autocorrect: false,
-      enableSuggestions: false,
       onChanged: onChanged,
       keyboardType: type == InputType.email ? TextInputType.emailAddress : null,
       autovalidateMode: shouldValidate
@@ -56,7 +58,8 @@ class HInputField extends StatelessWidget {
         ),
         alignLabelWithHint: true,
       ),
-      obscureText: type == InputType.password,
+      obscureText:
+          type == InputType.password || type == InputType.confirmPassword,
       validator: validate,
     );
   }
@@ -73,6 +76,11 @@ class HInputField extends StatelessWidget {
       case InputType.password:
         if (text == null || text.length < 8) {
           return 'Введен некорректный пароль';
+        }
+        return null;
+      case InputType.confirmPassword:
+        if (text != validatorText) {
+          return 'Неправильное подтверждение пароля';
         }
         return null;
     }

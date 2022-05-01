@@ -21,14 +21,14 @@ class _$ChatUserDataTearOff {
   _ChatUserData call(
       {required String uid,
       required String name,
-      String avatarUrl = '',
       required String status,
+      String avatarUrl = '',
       String? groupId}) {
     return _ChatUserData(
       uid: uid,
       name: name,
-      avatarUrl: avatarUrl,
       status: status,
+      avatarUrl: avatarUrl,
       groupId: groupId,
     );
   }
@@ -41,8 +41,8 @@ const $ChatUserData = _$ChatUserDataTearOff();
 mixin _$ChatUserData {
   String get uid => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get avatarUrl => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
+  String get avatarUrl => throw _privateConstructorUsedError;
   String? get groupId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -58,8 +58,8 @@ abstract class $ChatUserDataCopyWith<$Res> {
   $Res call(
       {String uid,
       String name,
-      String avatarUrl,
       String status,
+      String avatarUrl,
       String? groupId});
 }
 
@@ -75,8 +75,8 @@ class _$ChatUserDataCopyWithImpl<$Res> implements $ChatUserDataCopyWith<$Res> {
   $Res call({
     Object? uid = freezed,
     Object? name = freezed,
-    Object? avatarUrl = freezed,
     Object? status = freezed,
+    Object? avatarUrl = freezed,
     Object? groupId = freezed,
   }) {
     return _then(_value.copyWith(
@@ -88,13 +88,13 @@ class _$ChatUserDataCopyWithImpl<$Res> implements $ChatUserDataCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      avatarUrl: avatarUrl == freezed
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      avatarUrl: avatarUrl == freezed
+          ? _value.avatarUrl
+          : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String,
       groupId: groupId == freezed
           ? _value.groupId
@@ -114,8 +114,8 @@ abstract class _$ChatUserDataCopyWith<$Res>
   $Res call(
       {String uid,
       String name,
-      String avatarUrl,
       String status,
+      String avatarUrl,
       String? groupId});
 }
 
@@ -133,8 +133,8 @@ class __$ChatUserDataCopyWithImpl<$Res> extends _$ChatUserDataCopyWithImpl<$Res>
   $Res call({
     Object? uid = freezed,
     Object? name = freezed,
-    Object? avatarUrl = freezed,
     Object? status = freezed,
+    Object? avatarUrl = freezed,
     Object? groupId = freezed,
   }) {
     return _then(_ChatUserData(
@@ -146,13 +146,13 @@ class __$ChatUserDataCopyWithImpl<$Res> extends _$ChatUserDataCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      avatarUrl: avatarUrl == freezed
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      avatarUrl: avatarUrl == freezed
+          ? _value.avatarUrl
+          : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String,
       groupId: groupId == freezed
           ? _value.groupId
@@ -168,25 +168,25 @@ class _$_ChatUserData implements _ChatUserData {
   _$_ChatUserData(
       {required this.uid,
       required this.name,
-      this.avatarUrl = '',
       required this.status,
+      this.avatarUrl = '',
       this.groupId});
 
   @override
   final String uid;
   @override
   final String name;
+  @override
+  final String status;
   @JsonKey()
   @override
   final String avatarUrl;
-  @override
-  final String status;
   @override
   final String? groupId;
 
   @override
   String toString() {
-    return 'ChatUserData(uid: $uid, name: $name, avatarUrl: $avatarUrl, status: $status, groupId: $groupId)';
+    return 'ChatUserData(uid: $uid, name: $name, status: $status, avatarUrl: $avatarUrl, groupId: $groupId)';
   }
 
   @override
@@ -196,8 +196,8 @@ class _$_ChatUserData implements _ChatUserData {
             other is _ChatUserData &&
             const DeepCollectionEquality().equals(other.uid, uid) &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.avatarUrl, avatarUrl) &&
             const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality().equals(other.avatarUrl, avatarUrl) &&
             const DeepCollectionEquality().equals(other.groupId, groupId));
   }
 
@@ -206,8 +206,8 @@ class _$_ChatUserData implements _ChatUserData {
       runtimeType,
       const DeepCollectionEquality().hash(uid),
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(avatarUrl),
       const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(avatarUrl),
       const DeepCollectionEquality().hash(groupId));
 
   @JsonKey(ignore: true)
@@ -220,8 +220,8 @@ abstract class _ChatUserData implements ChatUserData {
   factory _ChatUserData(
       {required String uid,
       required String name,
-      String avatarUrl,
       required String status,
+      String avatarUrl,
       String? groupId}) = _$_ChatUserData;
 
   @override
@@ -229,9 +229,9 @@ abstract class _ChatUserData implements ChatUserData {
   @override
   String get name;
   @override
-  String get avatarUrl;
-  @override
   String get status;
+  @override
+  String get avatarUrl;
   @override
   String? get groupId;
   @override

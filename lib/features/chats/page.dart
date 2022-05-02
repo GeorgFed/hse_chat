@@ -1,11 +1,12 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../common/widgets/button.dart';
+import '../../common/widgets/input_field.dart';
 import '../../common/widgets/search_bar.dart';
-import '../../services/auth.dart';
 import 'manager.dart';
 import 'models/view_models/chat_item.dart';
 import 'state_holder.dart';
@@ -18,6 +19,8 @@ class ChatsPage extends StatefulHookConsumerWidget {
 }
 
 class _ChatsPageState extends ConsumerState<ChatsPage> {
+  late final _createChatController = TextEditingController();
+
   @override
   void initState() {
     ref.read(chatsManagerProvider).onInit();
@@ -37,6 +40,14 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
           style: theme.textTheme.headline2,
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: _showCreateChatDialog,
+            icon: const Icon(Icons.add),
+            color: theme.primaryColor,
+            splashRadius: 16.0,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -56,6 +67,33 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
         ),
       ),
     );
+  }
+
+  void _showCreateChatDialog() => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Название чата'),
+          content: HInputField(
+            type: InputType.name,
+            controller: _createChatController,
+          ),
+          actions: [
+            HButton(
+              text: 'Готово',
+              onTap: () => _onCreateChatTapped(
+                _createChatController.text,
+              ),
+            ),
+          ],
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+          ),
+        ),
+      );
+
+  void _onCreateChatTapped(String? text) {
+    // TODO: create chat
+    Navigator.of(context).pop();
   }
 }
 
@@ -113,7 +151,7 @@ class ChatsRow extends StatelessWidget {
                             height: 6,
                           ),
                           Text(
-                            chatsItem.messageText,
+                            chatsItem.messageText ?? 'Напишите первым!',
                             style: TextStyle(
                               fontSize: 13,
                               color: Colors.grey.shade600,
@@ -128,7 +166,7 @@ class ChatsRow extends StatelessWidget {
               ),
             ),
             Text(
-              chatsItem.time,
+              chatsItem.time ?? '',
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,

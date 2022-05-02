@@ -130,7 +130,7 @@ class ChatsRow extends StatelessWidget {
                     backgroundColor: avatarColor,
                     backgroundImage: imageURL == null
                         ? const NetworkImage(
-                            'https://via.placeholder.com/150',
+                            'https://www.woolha.com/media/2020/03/eevee.png',
                           )
                         : NetworkImage(imageURL),
                     maxRadius: 30,

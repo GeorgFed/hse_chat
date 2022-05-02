@@ -94,7 +94,7 @@ class _CreateProfilePageState extends ConsumerState<CreateProfilePage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const TabBarPage(),
+          builder: (context) => const HTabBar(),
         ),
       );
     } else {

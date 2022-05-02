@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../app/models/chat.dart';
 import '../auth.dart';
+
+late final chatDatabaseServiceProvider =
+    Provider((ref) => ChatDatabaseService());
 
 class ChatDatabaseService {
   final CollectionReference chatCollection =
@@ -13,7 +17,7 @@ class ChatDatabaseService {
   // Создание или обновление данных пользователя
   Future createChatData(
     String title,
-    List<String> usersId,
+    List<String?> usersId,
   ) async =>
       await chatCollection.doc().set({
         'title': title,

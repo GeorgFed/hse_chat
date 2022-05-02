@@ -6,8 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../common/style/assets.dart';
 import '../../common/widgets/button.dart';
 import '../../common/widgets/input_field.dart';
-import '../../services/auth.dart';
-import '../auth/manager.dart';
 import '../auth/state_holder.dart';
 import '../auth/status.dart';
 import '../tab_bar/page.dart';
@@ -32,7 +30,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final stateHolder = ref.watch(authPageStateProvider.notifier);
-    final authManager = ref.read(authManagerProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -81,8 +78,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               ),
               HButton(
                 text: 'Войти',
-                onTap:
-                    _shouldEnableButton ? () => _onSubmit(authManager) : null,
+                onTap: _shouldEnableButton ? _onSubmit : null,
               ),
               HButton(
                 text: 'Нет аккаунта? Регистрация',
@@ -96,14 +92,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
   }
 
-  void _onSubmit(AuthManager authManager) {
+  void _onSubmit() {
     final currentFormState = _formKey.currentState;
     final isValid =
         currentFormState == null ? false : currentFormState.validate();
 
     if (isValid) {
-      authManager.signIn(_emailController.text, _passwordController.text);
-      print(authManager.getCurrentUserUid());
       Navigator.push(
         context,
         MaterialPageRoute(

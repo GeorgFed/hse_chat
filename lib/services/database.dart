@@ -1,15 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/models/assingment.dart';
 import '../app/models/chat_user_data.dart';
 import '../app/models/grade.dart';
 
-late final dataBaseServiceProvider = Provider(
-  (ref) => DataBaseService(),
-);
-
 class DataBaseService {
+  final String uid;
+
+  DataBaseService({required this.uid});
+
   // Колекция пользователей
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
@@ -26,8 +25,7 @@ class DataBaseService {
       FirebaseFirestore.instance.collection('groups');
 
   // Создание или обновление данных пользователя
-  Future updateUserData(
-          String uid, String name, String avatarUrl, String status) async =>
+  Future updateUserData(String name, String avatarUrl, String status) async =>
       await usersCollection.doc(uid).set({
         'name': name,
         'avatar_url': avatarUrl,
@@ -38,95 +36,95 @@ class DataBaseService {
         'groups': ['groupd_list_uid'],
       });
 
-  // ChatUserData _userDataFromSnapshot(DocumentSnapshot snapshot) => ChatUserData(
-  //       uid: uid,
-  //       name: snapshot['name'],
-  //       avatarUrl: snapshot['avatarUrl'],
-  //       status: snapshot['status'],
-  //       groupId: snapshot['group_id'],
-  //     );
+  ChatUserData _userDataFromSnapshot(DocumentSnapshot snapshot) => ChatUserData(
+        uid: uid,
+        name: snapshot['name'],
+        avatarUrl: snapshot['avatarUrl'],
+        status: snapshot['status'],
+        groupId: snapshot['group_id'],
+      );
 
-  // Future<bool> isUserStudent() async {
-  //   final snapshot = await usersCollection.doc(uid).get();
-  //   if (snapshot['status'] == 'student') {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  Future<bool> isUserStudent() async {
+    final snapshot = await usersCollection.doc(uid).get();
+    if (snapshot['status'] == 'student') {
+      return true;
+    }
+    return false;
+  }
 
-  // // Создание или обновление данных задания
-  // Future updateAssinmentData(
-  //   String title,
-  //   String info,
-  //   String deadline,
-  //   String fileUrl,
-  //   String tutorId,
-  // ) async =>
-  //     await assignmentCollection.doc().set({
-  //       'title': title,
-  //       'info': info,
-  //       'deadline': deadline,
-  //       'fileUrl': fileUrl,
-  //       'tutorId': tutorId,
-  //     });
+  // Создание или обновление данных задания
+  Future updateAssinmentData(
+    String title,
+    String info,
+    String deadline,
+    String fileUrl,
+    String tutorId,
+  ) async =>
+      await assignmentCollection.doc().set({
+        'title': title,
+        'info': info,
+        'deadline': deadline,
+        'fileUrl': fileUrl,
+        'tutorId': tutorId,
+      });
 
-  // List<Assingment> _assinmentsListFromSnapshot(QuerySnapshot snapshot) =>
-  //     snapshot.docs
-  //         .map(
-  //           (doc) => Assingment(
-  //             uid: doc.get('uid'),
-  //             title: doc.get('title') ?? '',
-  //             info: doc.get('info') ?? '',
-  //             deadline: doc.get('deadline') ?? '',
-  //             date: doc.get('date') ?? '',
-  //             fileUrl: doc.get('fileUrl') ?? '',
-  //             tutorId: doc.get('tutorId') ?? '',
-  //           ),
-  //         )
-  //         .toList();
+  List<Assingment> _assinmentsListFromSnapshot(QuerySnapshot snapshot) =>
+      snapshot.docs
+          .map(
+            (doc) => Assingment(
+              uid: doc.get('uid'),
+              title: doc.get('title') ?? '',
+              info: doc.get('info') ?? '',
+              deadline: doc.get('deadline') ?? '',
+              date: doc.get('date') ?? '',
+              fileUrl: doc.get('fileUrl') ?? '',
+              tutorId: doc.get('tutorId') ?? '',
+            ),
+          )
+          .toList();
 
-  // Assingment _assignmentFromSnapshot(DocumentSnapshot snapshot) => Assingment(
-  //       uid: uid,
-  //       title: snapshot['title'],
-  //       info: snapshot['info'],
-  //       deadline: snapshot['deadline'],
-  //       date: snapshot['date'],
-  //       fileUrl: snapshot['fileUrl'],
-  //       tutorId: snapshot['tutorId'],
-  //     );
+  Assingment _assignmentFromSnapshot(DocumentSnapshot snapshot) => Assingment(
+        uid: uid,
+        title: snapshot['title'],
+        info: snapshot['info'],
+        deadline: snapshot['deadline'],
+        date: snapshot['date'],
+        fileUrl: snapshot['fileUrl'],
+        tutorId: snapshot['tutorId'],
+      );
 
-  // // Создание или обновление данных оценок
-  // Future updateGradesData(int value, String assignmentUid) async =>
-  //     await gradesCollection.doc().set({
-  //       'value': value,
-  //       'assignment_uid': assignmentUid,
-  //     });
+  // Создание или обновление данных оценок
+  Future updateGradesData(int value, String assignmentUid) async =>
+      await gradesCollection.doc().set({
+        'value': value,
+        'assignment_uid': assignmentUid,
+      });
 
-  // List<Grade> _gradesListFromSnapshot(QuerySnapshot snapshot) => snapshot.docs
-  //     .map(
-  //       (doc) => Grade(
-  //         uid: doc.get('uid'),
-  //         value: doc.get('value') ?? 0,
-  //         assignmentUid: doc.get('assignmentUid') ?? '',
-  //       ),
-  //     )
-  //     .toList();
+  List<Grade> _gradesListFromSnapshot(QuerySnapshot snapshot) => snapshot.docs
+      .map(
+        (doc) => Grade(
+          uid: doc.get('uid'),
+          value: doc.get('value') ?? 0,
+          assignmentUid: doc.get('assignmentUid') ?? '',
+        ),
+      )
+      .toList();
 
-  // Grade _gradeFromSnapshot(DocumentSnapshot snapshot) => Grade(
-  //       uid: uid,
-  //       value: snapshot['value'],
-  //       assignmentUid: snapshot['assignmentUid'],
-  //     );
+  Grade _gradeFromSnapshot(DocumentSnapshot snapshot) => Grade(
+        uid: uid,
+        value: snapshot['value'],
+        assignmentUid: snapshot['assignmentUid'],
+      );
 
-  // Stream<QuerySnapshot> get users => usersCollection.snapshots();
-  // Stream<ChatUserData> get userData =>
-  //     usersCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+  Stream<QuerySnapshot> get users => usersCollection.snapshots();
+  Stream<ChatUserData> get userData =>
+      usersCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
 
-  // Stream<QuerySnapshot> get assignments => assignmentCollection.snapshots();
-  // Stream<List<Assingment>> get assignmentsList =>
-  //     assignmentCollection.snapshots().map(_assinmentsListFromSnapshot);
+  Stream<QuerySnapshot> get assignments => assignmentCollection.snapshots();
+  Stream<List<Assingment>> get assignmentsList =>
+      assignmentCollection.snapshots().map(_assinmentsListFromSnapshot);
 
-  // Stream<QuerySnapshot> get grades => gradesCollection.snapshots();
-  // Stream<List<Grade>> get gradesList =>
-  //     gradesCollection.snapshots().map(_gradesListFromSnapshot);
+  Stream<QuerySnapshot> get grades => gradesCollection.snapshots();
+  Stream<List<Grade>> get gradesList =>
+      gradesCollection.snapshots().map(_gradesListFromSnapshot);
 }

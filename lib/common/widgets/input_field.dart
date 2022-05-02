@@ -88,7 +88,9 @@ class HInputField extends StatelessWidget {
       case InputType.name:
         return null;
       case InputType.email:
-        if (text == null || text == '' || !text.endsWith('@edu.hse.ru')) {
+        if (text == null ||
+            text == '' ||
+            (!text.endsWith('@edu.hse.ru') && !text.endsWith('@hse.ru'))) {
           return 'Введен некорректный адрес корпоративной почты';
         }
         return null;

@@ -121,7 +121,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
         _emailController.text,
         _passwordController.text,
       );
-      print(authManager.getCurrentUserUid());
       Navigator.push(
         context,
         MaterialPageRoute(

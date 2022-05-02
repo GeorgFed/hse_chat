@@ -16,25 +16,23 @@ class ChatsManager {
     this._chatsState,
   );
 
-  void onInit() {
-    _chatsState.setData(
-      [
-        ChatItemViewModel(
-          name: 'Хуй',
-          messageText: 'Хуй Хуй Хуй Хуй Хуй',
-          time: 'Сегодня',
-        ),
-        ChatItemViewModel(
-          name: 'Хуй',
-          messageText: 'Хуй Хуй Хуй Хуй Хуй',
-          time: 'Сегодня',
-        ),
-        ChatItemViewModel(
-          name: 'Хуй',
-          messageText: 'Хуй Хуй Хуй Хуй Хуй',
-          time: 'Сегодня',
-        ),
-      ],
-    );
-  }
+  void onInit() => _chatsState.setData(
+        [
+          ChatItemViewModel(
+            name: 'Хуй',
+            messageText: 'Хуй Хуй Хуй Хуй Хуй',
+            time: 'Сегодня',
+          ),
+          ChatItemViewModel(
+            name: 'Хуй',
+            messageText: 'Хуй Хуй Хуй Хуй Хуй',
+            time: 'Сегодня',
+          ),
+          ChatItemViewModel(
+            name: 'Хуй',
+            messageText: 'Хуй Хуй Хуй Хуй Хуй',
+            time: 'Сегодня',
+          ),
+        ],
+      );
 }

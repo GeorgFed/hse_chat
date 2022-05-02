@@ -30,67 +30,28 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
     final items = ref.watch(chatsStateProvider.notifier).chatItems;
 
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(
+          'Чаты',
+          style: theme.textTheme.headline2,
+        ),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                  top: 10,
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          'Чаты',
-                          style: theme.textTheme.headline1?.copyWith(
-                            color: Colors.black,
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(
-                            left: 8,
-                            right: 8,
-                            top: 2,
-                            bottom: 2,
-                          ),
-                          height: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: theme.primaryColor.withAlpha(50),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.add,
-                                color: theme.primaryColor,
-                                size: 20,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    const HSearchBar(),
-                    ListView.builder(
-                      itemCount: items.length,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.only(top: 16),
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) => ChatsRow(
-                        chatsItem: items[index],
-                      ),
-                    )
-                  ],
-                ),
+            const HSearchBar(),
+            ListView.builder(
+              itemCount: items.length,
+              shrinkWrap: true,
+              padding: const EdgeInsets.only(top: 16),
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) => ChatsRow(
+                chatsItem: items[index],
               ),
-            ),
+            )
           ],
         ),
       ),

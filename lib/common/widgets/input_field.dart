@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../style/colors.dart';
 
 enum InputType {
-  text,
+  name,
+  number,
   email,
   password,
   confirmPassword,
@@ -19,8 +20,22 @@ class HInputField extends StatelessWidget {
 
   static const _cornerRadius = 10.0;
 
+  TextInputType? get _keyboardType {
+    switch (type) {
+      case InputType.name:
+        return TextInputType.text;
+      case InputType.number:
+        return TextInputType.number;
+      case InputType.email:
+        return TextInputType.emailAddress;
+      case InputType.password:
+      case InputType.confirmPassword:
+        return TextInputType.visiblePassword;
+    }
+  }
+
   const HInputField({
-    this.type = InputType.text,
+    required this.type,
     this.placeholder,
     this.controller,
     this.onChanged,
@@ -34,10 +49,13 @@ class HInputField extends StatelessWidget {
     final theme = Theme.of(context);
 
     return TextFormField(
+      textCapitalization: type == InputType.name
+          ? TextCapitalization.words
+          : TextCapitalization.none,
       controller: controller,
       autocorrect: false,
       onChanged: onChanged,
-      keyboardType: type == InputType.email ? TextInputType.emailAddress : null,
+      keyboardType: _keyboardType,
       autovalidateMode: shouldValidate
           ? AutovalidateMode.onUserInteraction
           : AutovalidateMode.disabled,
@@ -66,8 +84,9 @@ class HInputField extends StatelessWidget {
 
   String? validate(String? text) {
     switch (type) {
-      case InputType.text:
-        return text;
+      case InputType.number:
+      case InputType.name:
+        return null;
       case InputType.email:
         if (text == null || text == '' || !text.endsWith('@edu.hse.ru')) {
           return 'Введен некорректный адрес корпоративной почты';

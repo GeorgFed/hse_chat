@@ -7,7 +7,7 @@ import '../../common/widgets/button.dart';
 import '../../common/widgets/input_field.dart';
 import '../auth/state_holder.dart';
 import '../auth/status.dart';
-import '../tab_bar/page.dart';
+import '../create_profile/page.dart';
 
 class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -118,7 +118,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const TabBarPage(),
+          builder: (context) => const CreateProfilePage(),
         ),
       );
     } else {

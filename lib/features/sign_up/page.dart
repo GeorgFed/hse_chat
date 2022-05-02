@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../common/style/assets.dart';
 import '../../common/widgets/button.dart';
 import '../../common/widgets/input_field.dart';
+import '../auth/manager.dart';
 import '../auth/state_holder.dart';
 import '../auth/status.dart';
 import '../create_profile/page.dart';
@@ -32,6 +33,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     final stateHolder = ref.watch(authPageStateProvider.notifier);
+    final authManager = ref.read(authManagerProvider);
     return Scaffold(
       appBar: AppBar(
         title: SvgPicture.asset(AppAssets.logo),
@@ -95,7 +97,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
               ),
               HButton(
                 text: 'Далее',
-                onTap: isFormFilled ? _onSubmit : null,
+                onTap: isFormFilled ? () => _onSubmit(authManager) : null,
               ),
               HButton(
                 text: 'Есть аккаунт? Войти',
@@ -109,12 +111,17 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     );
   }
 
-  void _onSubmit() {
+  void _onSubmit(AuthManager authManager) {
     final currentFormState = _formKey.currentState;
     final isValid =
         currentFormState == null ? false : currentFormState.validate();
 
     if (isValid) {
+      authManager.registerWithEmailAndPassword(
+        _emailController.text,
+        _passwordController.text,
+      );
+      print(authManager.getCurrentUserUid());
       Navigator.push(
         context,
         MaterialPageRoute(

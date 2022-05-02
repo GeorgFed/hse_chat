@@ -92,7 +92,7 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
       );
 
   void _onCreateChatTapped(String? text) {
-    // TODO: create chat
+    ref.read(chatsManagerProvider).createChat(text ?? 'Чат');
     Navigator.of(context).pop();
   }
 }

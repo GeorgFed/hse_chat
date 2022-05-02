@@ -100,7 +100,6 @@ class _CreateProfilePageState extends ConsumerState<CreateProfilePage> {
         currentFormState == null ? false : currentFormState.validate();
 
     if (isValid) {
-      print("e");
       dataUserManager.addUserInfo(
           authManager.getCurrentUserUid(), _nameController.text);
       Navigator.push(

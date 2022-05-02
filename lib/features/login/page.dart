@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hse_chat/services/database.dart';
 
 import '../../common/style/assets.dart';
 import '../../common/widgets/button.dart';
 import '../../common/widgets/input_field.dart';
 import '../../services/auth.dart';
+import '../../services/database/chat.dart';
 import '../auth/manager.dart';
 import '../auth/state_holder.dart';
 import '../auth/status.dart';
@@ -103,7 +105,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
     if (isValid) {
       authManager.signIn(_emailController.text, _passwordController.text);
-      print(authManager.getCurrentUserUid());
       Navigator.push(
         context,
         MaterialPageRoute(

@@ -23,6 +23,12 @@ class ChatDatabaseService {
         'messagesId': messagesId,
       });
 
+  Future<List<Chat>> getAllChats() async {
+    QuerySnapshot querySnapshot = await chatCollection.get();
+    print(querySnapshot);
+    return _chatsListFromSnapshot(querySnapshot);
+  }
+
   List<Chat> _chatsListFromSnapshot(QuerySnapshot snapshot) => snapshot.docs
       .map(
         (doc) => Chat(

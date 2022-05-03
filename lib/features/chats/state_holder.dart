@@ -1,7 +1,7 @@
 import 'package:riverpod/riverpod.dart';
 
-import 'models/states/chats_state.dart';
-import 'models/view_models/chat_item.dart';
+import 'models/state/chats_state.dart';
+import 'models/view_model/chat_item.dart';
 
 late final chatsStateProvider = StateNotifierProvider(
   (ref) => ChatsStateHolder(),

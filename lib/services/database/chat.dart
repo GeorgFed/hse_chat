@@ -86,7 +86,7 @@ class ChatDatabaseService {
     String? userUid,
     DateTime time,
   ) async =>
-      await messagesCollection.doc().set(
+      await messagesCollection.doc(chatUid).set(
         {
           'chatUid': chatUid,
           'text': text,

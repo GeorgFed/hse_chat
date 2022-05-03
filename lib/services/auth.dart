@@ -20,6 +20,7 @@ class AuthService {
       user != null ? ChatUser(uid: user.uid) : null;
 
   String? getCurrentUserUid() {
+    print(auth.currentUser?.uid);
     return auth.currentUser?.uid;
   }
 

@@ -6,8 +6,8 @@ part 'chat_item.freezed.dart';
 class ChatItemViewModel with _$ChatItemViewModel {
   factory ChatItemViewModel({
     required String name,
-    required String messageText,
-    required String time,
+    String? messageText,
+    String? time,
     String? imageURL,
   }) = _ChatItemViewModel;
 }

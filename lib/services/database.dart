@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/models/assingment.dart';
 import '../app/models/chat_user_data.dart';
 import '../app/models/grade.dart';
+import 'auth.dart';
 
 late final dataBaseServiceProvider = Provider(
   (ref) => DataBaseService(),
@@ -30,7 +31,7 @@ class DataBaseService {
           String uid, String name, String avatarUrl, String status) async =>
       await usersCollection.doc(uid).set({
         'name': name,
-        'avatar_url': avatarUrl,
+        'avatarUrl': avatarUrl,
         'status': status,
         'group': 'group_uid',
         'grades': ['grades_list_uid'],
@@ -38,13 +39,37 @@ class DataBaseService {
         'groups': ['groupd_list_uid'],
       });
 
-  // ChatUserData _userDataFromSnapshot(DocumentSnapshot snapshot) => ChatUserData(
-  //       uid: uid,
-  //       name: snapshot['name'],
-  //       avatarUrl: snapshot['avatarUrl'],
-  //       status: snapshot['status'],
-  //       groupId: snapshot['group_id'],
-  //     );
+  String? userEmailFromUid(String uid) {
+    AuthService authService = AuthService();
+    String? email = authService.getCurrentUserEmail();
+    return email;
+  }
+
+  Future PrintUsers() async {
+    QuerySnapshot querySnapshot = await usersCollection.get();
+    print(querySnapshot);
+    print(_chatUsersDataFromSnapshot(querySnapshot));
+  }
+
+  List<ChatUserData> _chatUsersDataFromSnapshot(QuerySnapshot snapshot) =>
+      snapshot.docs
+          .map(
+            (doc) => ChatUserData(
+              uid: doc.id,
+              name: doc.get('name') ?? '',
+              status: doc.get('status') ?? [],
+              avatarUrl: doc.get('avatarUrl') ?? [],
+            ),
+          )
+          .toList();
+
+  ChatUserData _userDataFromSnapshot(DocumentSnapshot snapshot) => ChatUserData(
+        uid: snapshot.id,
+        name: snapshot['name'],
+        avatarUrl: snapshot['avatarUrl'],
+        status: snapshot['status'],
+        groupId: snapshot['group_id'],
+      );
 
   // Future<bool> isUserStudent() async {
   //   final snapshot = await usersCollection.doc(uid).get();

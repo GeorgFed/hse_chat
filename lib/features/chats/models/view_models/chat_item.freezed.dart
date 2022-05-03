@@ -20,8 +20,8 @@ class _$ChatItemViewModelTearOff {
 
   _ChatItemViewModel call(
       {required String name,
-      required String messageText,
-      required String time,
+      String? messageText,
+      String? time,
       String? imageURL}) {
     return _ChatItemViewModel(
       name: name,
@@ -38,8 +38,8 @@ const $ChatItemViewModel = _$ChatItemViewModelTearOff();
 /// @nodoc
 mixin _$ChatItemViewModel {
   String get name => throw _privateConstructorUsedError;
-  String get messageText => throw _privateConstructorUsedError;
-  String get time => throw _privateConstructorUsedError;
+  String? get messageText => throw _privateConstructorUsedError;
+  String? get time => throw _privateConstructorUsedError;
   String? get imageURL => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -52,7 +52,7 @@ abstract class $ChatItemViewModelCopyWith<$Res> {
   factory $ChatItemViewModelCopyWith(
           ChatItemViewModel value, $Res Function(ChatItemViewModel) then) =
       _$ChatItemViewModelCopyWithImpl<$Res>;
-  $Res call({String name, String messageText, String time, String? imageURL});
+  $Res call({String name, String? messageText, String? time, String? imageURL});
 }
 
 /// @nodoc
@@ -79,11 +79,11 @@ class _$ChatItemViewModelCopyWithImpl<$Res>
       messageText: messageText == freezed
           ? _value.messageText
           : messageText // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imageURL: imageURL == freezed
           ? _value.imageURL
           : imageURL // ignore: cast_nullable_to_non_nullable
@@ -99,7 +99,7 @@ abstract class _$ChatItemViewModelCopyWith<$Res>
           _ChatItemViewModel value, $Res Function(_ChatItemViewModel) then) =
       __$ChatItemViewModelCopyWithImpl<$Res>;
   @override
-  $Res call({String name, String messageText, String time, String? imageURL});
+  $Res call({String name, String? messageText, String? time, String? imageURL});
 }
 
 /// @nodoc
@@ -128,11 +128,11 @@ class __$ChatItemViewModelCopyWithImpl<$Res>
       messageText: messageText == freezed
           ? _value.messageText
           : messageText // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imageURL: imageURL == freezed
           ? _value.imageURL
           : imageURL // ignore: cast_nullable_to_non_nullable
@@ -145,17 +145,14 @@ class __$ChatItemViewModelCopyWithImpl<$Res>
 
 class _$_ChatItemViewModel implements _ChatItemViewModel {
   _$_ChatItemViewModel(
-      {required this.name,
-      required this.messageText,
-      required this.time,
-      this.imageURL});
+      {required this.name, this.messageText, this.time, this.imageURL});
 
   @override
   final String name;
   @override
-  final String messageText;
+  final String? messageText;
   @override
-  final String time;
+  final String? time;
   @override
   final String? imageURL;
 
@@ -193,16 +190,16 @@ class _$_ChatItemViewModel implements _ChatItemViewModel {
 abstract class _ChatItemViewModel implements ChatItemViewModel {
   factory _ChatItemViewModel(
       {required String name,
-      required String messageText,
-      required String time,
+      String? messageText,
+      String? time,
       String? imageURL}) = _$_ChatItemViewModel;
 
   @override
   String get name;
   @override
-  String get messageText;
+  String? get messageText;
   @override
-  String get time;
+  String? get time;
   @override
   String? get imageURL;
   @override

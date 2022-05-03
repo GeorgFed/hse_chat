@@ -32,21 +32,24 @@ class ChatDatabaseService {
         'messagesId': chat.messagesId,
       });
 
-  Future addMessageToChat(String uid) async {
-    DocumentReference documentReference = chatCollection.doc(uid);
-    Chat chat = _chatFromSnapshot(await documentReference.get());
+  Future addMessageToChat(String uid, String message) async {
+    var documentReference = chatCollection.doc(uid);
+    var chat = _chatFromSnapshot(await documentReference.get());
     var uuid = Uuid();
-    String new_id = uuid.v1();
-    AuthService authService = AuthService();
+    var newId = uuid.v1();
+    var authService = AuthService();
     createMessageData(
-        new_id, "Hello", authService.getCurrentUserUid(), DateTime.now());
-    chat.messagesId.add(new_id);
+      newId,
+      message,
+      authService.getCurrentUserUid(),
+      DateTime.now(),
+    );
+    chat.messagesId.add(newId);
     updateChatData(uid, chat);
   }
 
   Future<List<Chat>> getAllChats() async {
-    QuerySnapshot querySnapshot = await chatCollection.get();
-    print(querySnapshot);
+    var querySnapshot = await chatCollection.get();
     return _chatsListFromSnapshot(querySnapshot);
   }
 
@@ -74,7 +77,7 @@ class ChatDatabaseService {
     String? userUid,
     DateTime time,
   ) async =>
-      await messagesCollection.doc().set(
+      await messagesCollection.doc(chatUid).set(
         {
           'chatUid': chatUid,
           'text': text,

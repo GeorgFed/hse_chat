@@ -7,13 +7,10 @@ import '../app/models/chat_user.dart';
 import 'database.dart';
 
 final userController = StreamController<ChatUser?>.broadcast(sync: true);
-
-late final userProvider = StreamProvider<ChatUser?>(
-  (ref) => userController.stream,
-);
+final FirebaseAuth auth = FirebaseAuth.instance;
 
 late final authServiceProvider = Provider(
-  (ref) => AuthService().signInAnon(),
+  (ref) => AuthService(),
 );
 
 class AuthService {
@@ -21,6 +18,15 @@ class AuthService {
 
   ChatUser? _userFromFirebaseUser(User? user) =>
       user != null ? ChatUser(uid: user.uid) : null;
+
+  String? getCurrentUserUid() {
+    print(auth.currentUser?.uid);
+    return auth.currentUser?.uid;
+  }
+
+  String? getCurrentUserEmail() {
+    return auth.currentUser?.email;
+  }
 
   // Stream<ChatUser?> get user =>
   //     _auth.authStateChanges().map(_userFromFirebaseUser);
@@ -54,9 +60,7 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
-      await DataBaseService(uid: user!.uid)
-          .updateUserData('My name', 'http:/', 'student');
-      print(user.uid);
+      // await DataBaseService().updateUserData('My name', 'http:/', 'student');
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());

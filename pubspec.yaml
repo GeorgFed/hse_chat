@@ -27,6 +27,8 @@ dependencies:
   firebase_core: ^1.14.0
   firebase_storage_web: ^3.2.11
   flutter_chat_ui: ^1.5.8
+  uuid: ^3.0.6
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

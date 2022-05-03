@@ -6,14 +6,21 @@ import '../../app/models/chat.dart';
 import '../../app/models/message.dart';
 import '../auth.dart';
 
-late final chatDatabaseServiceProvider =
-    Provider((ref) => ChatDatabaseService());
+late final chatDatabaseServiceProvider = Provider(
+  (ref) => ChatDatabaseService(
+    ref.watch(authServiceProvider),
+  ),
+);
 
 class ChatDatabaseService {
+  final AuthService _authService;
+
   final CollectionReference chatCollection =
       FirebaseFirestore.instance.collection('chats');
   final CollectionReference messagesCollection =
       FirebaseFirestore.instance.collection('messages');
+
+  ChatDatabaseService(this._authService);
 
   // Создание или обновление данных пользователя
   Future createChatData(
@@ -33,24 +40,26 @@ class ChatDatabaseService {
         'messagesId': chat.messagesId,
       });
 
-  Future addMessageToChat(String uid, String message) async {
-    var documentReference = chatCollection.doc(uid);
-    var chat = _chatFromSnapshot(await documentReference.get());
-    var uuid = Uuid();
-    var newId = uuid.v1();
-    var authService = AuthService();
+  Future addMessageToChat(
+    String uid,
+    String message,
+  ) async {
+    final documentReference = chatCollection.doc(uid);
+    final chat = _chatFromSnapshot(await documentReference.get());
+    const uuid = Uuid();
+    final newUid = uuid.v1();
     createMessageData(
-      newId,
+      newUid,
       message,
-      authService.getCurrentUserUid(),
+      _authService.getCurrentUserUid(),
       DateTime.now(),
     );
-    chat.messagesId.add(newId);
+    chat.messagesId.add(newUid);
     updateChatData(uid, chat);
   }
 
   Future<List<Chat>> getAllChats() async {
-    var querySnapshot = await chatCollection.get();
+    final querySnapshot = await chatCollection.get();
     return _chatsListFromSnapshot(querySnapshot);
   }
 
@@ -59,8 +68,8 @@ class ChatDatabaseService {
         (doc) => Chat(
           uid: doc.id,
           title: doc.get('title') ?? '',
-          usersId: convertFromDynamic(doc.get('usersId')) ?? [],
-          messagesId: convertFromDynamic(doc.get('messagesId')) ?? [],
+          usersId: convertFromDynamic(doc.get('usersId')),
+          messagesId: convertFromDynamic(doc.get('messagesId')),
         ),
       )
       .toList();

@@ -3,6 +3,7 @@ import 'package:riverpod/riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../app/models/chat.dart';
+import '../../app/models/message.dart';
 import '../auth.dart';
 
 late final chatDatabaseServiceProvider =
@@ -58,8 +59,8 @@ class ChatDatabaseService {
         (doc) => Chat(
           uid: doc.id,
           title: doc.get('title') ?? '',
-          usersId: doc.get('usersId') ?? [],
-          messagesId: doc.get('messagesId') ?? [],
+          usersId: convertFromDynamic(doc.get('usersId')) ?? [],
+          messagesId: convertFromDynamic(doc.get('messagesId')) ?? [],
         ),
       )
       .toList();

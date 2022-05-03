@@ -18,12 +18,27 @@ class GroupDatabaseService {
     // print(_docData);
   }
 
+  Future createGroupData(String name, List<String> studentsUid) async {
+    await groupsCollection.doc().set({
+      'name': name,
+      'studentsUid': studentsUid,
+    });
+  }
+
   // Создание или обновление данных групп
-  Future updateGroupsData(String name, List<String> studentsUid) async =>
-      await groupsCollection.doc().set({
-        'name': name,
-        'studentsUid': studentsUid,
-      });
+  Future updateGroupsData(String uid, Group curGroup) async {
+    await groupsCollection.doc(uid).set({
+      'name': curGroup.name,
+      'studentsUid': curGroup.studentsIds,
+    });
+  }
+
+  Future addStudentToGroup(String groupUId, String userUid) async {
+    var documentReference = groupsCollection.doc(groupUId);
+    var curGroup = _groupFromSnapshot(await documentReference.get());
+    curGroup.studentsIds.add(userUid);
+    updateGroupsData(groupUId, curGroup);
+  }
 
   List<String> convertFromDynamic(List<dynamic> list) {
     final stringsList = <String>[];
@@ -53,14 +68,9 @@ class GroupDatabaseService {
         .toList();
   }
 
-  Group _groupsFromSnapshot(DocumentSnapshot snapshot) => Group(
+  Group _groupFromSnapshot(DocumentSnapshot snapshot) => Group(
         uid: snapshot.id,
         name: snapshot['name'],
         studentsIds: snapshot['studentsIds'],
       );
-
-  Stream<QuerySnapshot> get groups => groupsCollection.snapshots();
-
-  Stream<List<Group>> get groupsList =>
-      groupsCollection.snapshots().map(_groupsListFromSnapshot);
 }

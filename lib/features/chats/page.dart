@@ -23,7 +23,10 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
 
   @override
   void initState() {
-    ref.read(chatsManagerProvider).onInit();
+    ref
+        .read(chatsManagerProvider)
+        .getChats()
+        .whenComplete(() => setState(() {}));
     super.initState();
   }
 
@@ -92,7 +95,10 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
       );
 
   void _onCreateChatTapped(String? text) {
-    ref.read(chatsManagerProvider).createChat(text ?? 'Чат');
+    ref.read(chatsManagerProvider)
+      ..createChat(text ?? 'Чат')
+      ..getChats().whenComplete(() => setState(() {}));
+
     Navigator.of(context).pop();
   }
 }

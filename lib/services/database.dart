@@ -34,9 +34,9 @@ class DataBaseService {
         'avatarUrl': avatarUrl,
         'status': status,
         'group': 'group_uid',
-        'grades': ['grades_list_uid'],
-        'tasks': ['tasks_list_uid'],
-        'groups': ['groupd_list_uid'],
+        'grades': [],
+        'tasks': [],
+        'groups': [],
       });
 
   String? userEmailFromUid(String uid) {

@@ -12,6 +12,7 @@ late final authManagerProvider = Provider(
 late final databaseUserManagerProvider = Provider(
   (ref) => DataUserManager(
     ref.watch(dataBaseServiceProvider),
+    ref.watch(authServiceProvider),
   ),
 );
 
@@ -25,21 +26,30 @@ class AuthManager {
 
   Future registerWithEmailAndPassword(String email, String password) async {
     _authService.registerWithEmailAndPassword(email, password);
+    print(getCurrentUserUid());
   }
 
-  String? getCurrentUserUid() {
-    return _authService.getCurrentUserUid();
-  }
+  String? getCurrentUserUid() => _authService.getCurrentUserUid();
 }
 
 class DataUserManager {
   final DataBaseService _dataBaseService;
+  final AuthService _authService;
 
-  DataUserManager(this._dataBaseService);
+  DataUserManager(this._dataBaseService, this._authService);
 
   Future addUserInfo(String? uid, String name) async {
-    print("Update user data");
-    print(uid);
-    _dataBaseService.updateUserData(uid!, name, "avarUrl", "status");
+    String status;
+    if (_authService.getCurrentUserEmail()!.endsWith('@edu.hse.ru')) {
+      status = 'student';
+    } else {
+      status = 'teacher';
+    }
+    _dataBaseService.updateUserData(
+      uid!,
+      name,
+      'avatarUrl',
+      status,
+    );
   }
 }

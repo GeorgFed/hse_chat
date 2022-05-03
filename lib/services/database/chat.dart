@@ -1,63 +1,92 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:riverpod/riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../app/models/chat.dart';
+import '../auth.dart';
+
+late final chatDatabaseServiceProvider = Provider(
+  (ref) => ChatDatabaseService(
+    ref.watch(authServiceProvider),
+  ),
+);
 
 class ChatDatabaseService {
-  String uid;
-  ChatDatabaseService({required this.uid});
+  final AuthService _authService;
 
   final CollectionReference chatCollection =
       FirebaseFirestore.instance.collection('chats');
   final CollectionReference messagesCollection =
       FirebaseFirestore.instance.collection('messages');
 
+  ChatDatabaseService(this._authService);
+
   // Создание или обновление данных пользователя
   Future createChatData(
     String title,
-    List<String> usersId,
-    List<String> messagesId,
+    List<String?> usersId,
   ) async =>
       await chatCollection.doc().set({
         'title': title,
         'usersId': usersId,
-        'messagesId': messagesId,
+        'messagesId': [],
       });
 
+  Future updateChatData(String uid, Chat chat) async =>
+      await chatCollection.doc(uid).set({
+        'title': chat.title,
+        'usersId': chat.usersId,
+        'messagesId': chat.messagesId,
+      });
+
+  Future addMessageToChat(
+    String uid,
+    String message,
+  ) async {
+    final documentReference = chatCollection.doc(uid);
+    final chat = _chatFromSnapshot(await documentReference.get());
+    const uuid = Uuid();
+    final newUid = uuid.v1();
+    createMessageData(
+      newUid,
+      message,
+      _authService.getCurrentUserUid(),
+      DateTime.now(),
+    );
+    chat.messagesId.add(newUid);
+    updateChatData(uid, chat);
+  }
+
   Future<List<Chat>> getAllChats() async {
-    QuerySnapshot querySnapshot = await chatCollection.get();
-    print(querySnapshot);
+    final querySnapshot = await chatCollection.get();
     return _chatsListFromSnapshot(querySnapshot);
   }
 
   List<Chat> _chatsListFromSnapshot(QuerySnapshot snapshot) => snapshot.docs
       .map(
         (doc) => Chat(
-          uid: doc.get('uid'),
+          uid: doc.id,
           title: doc.get('title') ?? '',
-          usersId: doc.get('usersId') ?? [],
-          messagesId: doc.get('messagesId') ?? [],
+          usersId: convertFromDynamic(doc.get('usersId')),
+          messagesId: convertFromDynamic(doc.get('messagesId')),
         ),
       )
       .toList();
 
   Chat _chatFromSnapshot(DocumentSnapshot snapshot) => Chat(
-        uid: uid,
+        uid: snapshot.id,
         title: snapshot['title'],
-        usersId: snapshot['usersId'],
-        messagesId: snapshot['messagesId'],
+        usersId: convertFromDynamic(snapshot['usersId']),
+        messagesId: convertFromDynamic(snapshot['messagesId']),
       );
-
-  Stream<QuerySnapshot> get chats => chatCollection.snapshots();
-  Stream<List<Chat>> get chatList =>
-      chatCollection.snapshots().map(_chatsListFromSnapshot);
 
   Future createMessageData(
     String chatUid,
     String text,
-    String userUid,
+    String? userUid,
     DateTime time,
   ) async =>
-      await messagesCollection.doc().set(
+      await messagesCollection.doc(chatUid).set(
         {
           'chatUid': chatUid,
           'text': text,
@@ -65,4 +94,12 @@ class ChatDatabaseService {
           'time': time,
         },
       );
+
+  List<String> convertFromDynamic(List<dynamic> list) {
+    final stringsList = <String>[];
+    for (final cur in list) {
+      stringsList.add(cur.toString());
+    }
+    return stringsList;
+  }
 }

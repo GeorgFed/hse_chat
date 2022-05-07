@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../chats/page.dart';
+import '../profile/page.dart';
 import 'state_holder.dart';
 
 class HTabBar extends ConsumerWidget {
@@ -17,11 +18,11 @@ class HTabBar extends ConsumerWidget {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble),
-            label: '0',
+            label: 'Чаты',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_box),
-            label: '1',
+            icon: Icon(Icons.account_circle),
+            label: 'Профиль',
           ),
         ],
         currentIndex: selectedTab,
@@ -45,9 +46,7 @@ class _TabBarPage extends StatelessWidget {
       case 0:
         return const ChatsPage();
       default:
-        return Center(
-          child: Text('$tab'),
-        );
+        return const ProfilePage();
     }
   }
 }

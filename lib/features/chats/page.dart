@@ -1,14 +1,14 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../common/widgets/button.dart';
 import '../../common/widgets/input_field.dart';
 import '../../common/widgets/search_bar.dart';
+import 'active_chat/page.dart';
 import 'manager.dart';
-import 'models/view_models/chat_item.dart';
+import 'models/view_model/chat_item.dart';
 import 'state_holder.dart';
 
 class ChatsPage extends StatefulHookConsumerWidget {
@@ -64,6 +64,13 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) => ChatsRow(
                 chatsItem: items[index],
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ActiveChat(),
+                    ),
+                  );
+                },
               ),
             )
           ],
@@ -105,6 +112,7 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
 
 class ChatsRow extends StatelessWidget {
   final ChatItemViewModel chatsItem;
+  final VoidCallback onTap;
 
   late final avatarColor =
       Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
@@ -112,13 +120,14 @@ class ChatsRow extends StatelessWidget {
   ChatsRow({
     Key? key,
     required this.chatsItem,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final imageURL = chatsItem.imageURL;
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.only(
           left: 16,

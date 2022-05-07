@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../services/auth.dart';
 import '../../services/database/chat.dart';
-import 'models/view_models/chat_item.dart';
+import 'models/view_model/chat_item.dart';
 import 'state_holder.dart';
 
 late final chatsManagerProvider = Provider(
@@ -25,7 +25,7 @@ class ChatsManager {
   );
 
   Future<void> getChats() async => _chatsState.setData(
-        (await _chatDatabaseService.getAllChats())
+        (await _chatDatabaseService.getUsersChats())
             .map(
               (chat) => ChatItemViewModel(name: chat.title),
             )

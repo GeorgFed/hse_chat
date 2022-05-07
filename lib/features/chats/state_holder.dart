@@ -16,5 +16,10 @@ class ChatsStateHolder extends StateNotifier<ChatsState> {
   void setData(List<ChatItemViewModel> chatItems) =>
       state = state.copyWith(chatItems: chatItems);
 
+  void setLoading({required bool value}) =>
+      state = state.copyWith(isLoading: value);
+
   List<ChatItemViewModel> get chatItems => state.chatItems;
+
+  bool get isLoading => state.isLoading;
 }

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:bubble/bubble.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -12,6 +13,7 @@ import '../../common/widgets/input_field.dart';
 import '../../common/widgets/search_bar.dart';
 import '../../services/auth.dart';
 import '../../services/database/chat.dart';
+
 import 'active_chat/page.dart';
 import 'manager.dart';
 import 'models/view_model/chat_item.dart';
@@ -76,16 +78,24 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
               shrinkWrap: true,
               padding: const EdgeInsets.only(top: 16),
               physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) => ChatsRow(
-                chatsItem: items[index],
-                onTap: () {
-                  Navigator.of(context).push(
+              itemBuilder: (context, index) {
+                final color =
+                    Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                        .withOpacity(1.0);
+                return ChatsRow(
+                  chatsItem: items[index],
+                  onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => _ChatPage(items[index].uid),
+                      builder: (context) => _ChatPage(
+                        items[index],
+                        color,
+                        ref.read(authServiceProvider).getCurrentUserUid() ?? '',
+                      ),
                     ),
-                  );
-                },
-              ),
+                  ),
+                  avatarColor: color,
+                );
+              },
             )
           ],
         ),
@@ -127,14 +137,13 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
 class ChatsRow extends StatelessWidget {
   final ChatItemViewModel chatsItem;
   final VoidCallback onTap;
+  final Color avatarColor;
 
-  late final avatarColor =
-      Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
-
-  ChatsRow({
+  const ChatsRow({
     Key? key,
     required this.chatsItem,
     required this.onTap,
+    this.avatarColor = Colors.white,
   }) : super(key: key);
 
   @override
@@ -153,7 +162,7 @@ class ChatsRow extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: Row(
-                children: <Widget>[
+                children: [
                   CircleAvatar(
                     backgroundColor: avatarColor,
                     backgroundImage: imageURL == null
@@ -209,70 +218,120 @@ class ChatsRow extends StatelessWidget {
 }
 
 class _ChatPage extends ConsumerWidget {
-  final String uid;
-  const _ChatPage(this.uid, {Key? key}) : super(key: key);
+  final ChatItemViewModel chatItem;
+  final Color avatarColor;
+  final String currentUserId;
+
+  const _ChatPage(
+    this.chatItem,
+    this.avatarColor,
+    this.currentUserId, {
+    Key? key,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-        body: Column(
-          children: [
-            Flexible(
-              child: StreamBuilder<QuerySnapshot>(
-                stream: ref.read(chatDatabaseServiceProvider).getMessages(uid),
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot,
-                ) {
-                  if (snapshot.hasData) {
-                    final listMessages = snapshot.data!.docs;
-                    if (listMessages.isNotEmpty) {
-                      return Chat(
-                        messages: listMessages.map(
-                          (e) {
-                            final data = e.data() as Map<String, dynamic>;
-                            return types.TextMessage(
-                              author: types.User(
-                                id: e.id,
-                                firstName: 'Egor',
-                                lastName: 'Fed',
-                              ),
-                              createdAt: DateTime.now().millisecondsSinceEpoch,
-                              id: 'dsafdaf',
-                              text: data['message'] ?? '',
-                            );
-                          },
-                        ).toList(),
-                        onAttachmentPressed: () {},
-                        onMessageTap: (context, message) {},
-                        onPreviewDataFetched: (message, preview) {},
-                        onSendPressed: (text) {},
-                        user: types.User(
-                          id: ref
-                                  .read(authServiceProvider)
-                                  .getCurrentUserUid() ??
-                              '',
-                          firstName: ref
-                              .read(authServiceProvider)
-                              .getCurrentUserEmail(),
-                          lastName: '',
-                        ),
-                      );
-                    } else {
-                      return const Center(
-                        child: Text('No messages...'),
-                      );
-                    }
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.amber,
-                      ),
-                    );
-                  }
-                },
-              ),
-            ),
-          ],
+  Widget build(BuildContext context, WidgetRef ref) {
+    final imageURL = chatItem.imageURL;
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          chatItem.name,
+          style: Theme.of(context).textTheme.headline2,
         ),
+        actions: [
+          CircleAvatar(
+            backgroundColor: avatarColor,
+            backgroundImage: imageURL == null
+                ? const NetworkImage(
+                    'https://www.woolha.com/media/2020/03/eevee.png',
+                  )
+                : NetworkImage(imageURL),
+            radius: 20,
+          ),
+        ],
+        iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.black),
+        backgroundColor: Colors.white,
+      ),
+      body: Column(
+        children: [
+          Flexible(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: ref
+                  .read(chatDatabaseServiceProvider)
+                  .getMessages(chatItem.uid),
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<QuerySnapshot> snapshot,
+              ) {
+                if (snapshot.hasData) {
+                  final listMessages = snapshot.data!.docs;
+                  return Chat(
+                    messages: listMessages.map(
+                      (e) {
+                        final data = e.data() as Map<String, dynamic>;
+                        return types.TextMessage(
+                          author: types.User(
+                            id: data['userUid'],
+                            firstName: 'Egor',
+                            lastName: 'Fed',
+                          ),
+                          createdAt: DateTime.now().millisecondsSinceEpoch,
+                          id: 'dsafdaf',
+                          text: data['text'] ?? ' ',
+                        );
+                      },
+                    ).toList(),
+                    bubbleBuilder: _bubbleBuilder,
+                    onAttachmentPressed: () {},
+                    onMessageTap: (context, message) {},
+                    onPreviewDataFetched: (message, preview) {},
+                    onSendPressed: (text) {
+                      ref
+                          .read(chatDatabaseServiceProvider)
+                          .addMessageToChat(chatItem.uid, text.text);
+                    },
+                    user: types.User(
+                      id: ref.read(authServiceProvider).getCurrentUserUid() ??
+                          ' ',
+                      firstName:
+                          ref.read(authServiceProvider).getCurrentUserEmail(),
+                      lastName: ' ',
+                    ),
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.amber,
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _bubbleBuilder(
+    Widget child, {
+    required message,
+    required nextMessageInGroup,
+  }) =>
+      Bubble(
+        child: child,
+        color: currentUserId != message.author.id ||
+                message.type == types.MessageType.image
+            ? const Color(0xfff5f5f7)
+            : const Color(0xff6f61e8),
+        margin: nextMessageInGroup
+            ? const BubbleEdges.symmetric(horizontal: 6)
+            : null,
+        nip: nextMessageInGroup
+            ? BubbleNip.no
+            : currentUserId != message.author.id
+                ? BubbleNip.leftBottom
+                : BubbleNip.rightBottom,
       );
 }

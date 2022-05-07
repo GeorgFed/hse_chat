@@ -29,6 +29,7 @@ dependencies:
   flutter_chat_ui: ^1.5.8
   uuid: ^3.0.6
   intl: ^0.17.0
+  bubble: ^1.2.1
 
 dev_dependencies:
   flutter_test:

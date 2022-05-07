@@ -36,7 +36,7 @@ class ChatDatabaseService {
 
   Future addMessageToChat(String uid, String message) async {
     final documentReference = chatCollection.doc(uid);
-    final chat = _chatFromSnapshot(await documentReference.get());
+    final chat = chatFromSnapshot(await documentReference.get());
     const uuid = Uuid();
     final newId = uuid.v1();
     final authService = AuthService();
@@ -53,7 +53,7 @@ class ChatDatabaseService {
 
   Future addUserToChat(String chatUid, String userUid) async {
     var documentReference = chatCollection.doc(chatUid);
-    var chat = _chatFromSnapshot(await documentReference.get());
+    var chat = chatFromSnapshot(await documentReference.get());
     chat.usersId.add(userUid);
     updateChatData(chatUid, chat);
   }
@@ -83,7 +83,23 @@ class ChatDatabaseService {
       )
       .toList();
 
-  Chat _chatFromSnapshot(DocumentSnapshot snapshot) => Chat(
+  Chat chatFromSnapshotData(Map<String, dynamic> snapshot, String? id) => Chat(
+        uid: id ?? '',
+        title: snapshot['title'],
+        usersId: convertFromDynamic(snapshot['usersId']),
+        messagesId: convertFromDynamic(snapshot['messagesId']),
+      );
+
+  Message messageFromSnapshotData(Map<String, dynamic> snapshot, String? id) =>
+      Message(
+        uid: id ?? '',
+        chatUid: snapshot['chatUid'],
+        userUid: snapshot['userUid'],
+        message: snapshot['text'],
+        time: convertDateTimeFromString(snapshot['time']),
+      );
+
+  Chat chatFromSnapshot(DocumentSnapshot snapshot) => Chat(
         uid: snapshot.id,
         title: snapshot['title'],
         usersId: convertFromDynamic(snapshot['usersId']),
@@ -137,4 +153,15 @@ class ChatDatabaseService {
     var date = DateFormat('yyyy-MM-dd – kk:mm').parse(dateInString);
     return date;
   }
+
+  Stream<QuerySnapshot> getChats(String userUid) => chatCollection
+      .where('usersId', arrayContains: AuthService().getCurrentUserUid())
+      .snapshots();
+
+  Stream<QuerySnapshot> getMessages(String chatUid) => messagesCollection
+      .where(
+        'chatUid',
+        isEqualTo: chatUid,
+      )
+      .snapshots();
 }

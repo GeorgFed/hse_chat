@@ -24,13 +24,19 @@ class ChatsManager {
     this._authService,
   );
 
-  Future<void> getChats() async => _chatsState.setData(
-        (await _chatDatabaseService.getUsersChats())
-            .map(
-              (chat) => ChatItemViewModel(name: chat.title),
-            )
-            .toList(),
-      );
+  Future<void> getChats() async => _chatsState
+    ..setLoading(value: true)
+    ..setData(
+      (await _chatDatabaseService.getUsersChats())
+          .map(
+            (chat) => ChatItemViewModel(
+              uid: chat.uid,
+              name: chat.title,
+            ),
+          )
+          .toList(),
+    )
+    ..setLoading(value: false);
 
   Future createChat(String title) => _chatDatabaseService
       .createChatData(title, [_authService.getCurrentUserUid()]);

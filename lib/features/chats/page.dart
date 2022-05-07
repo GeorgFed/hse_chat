@@ -1,11 +1,17 @@
 import 'dart:math' as math;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../common/widgets/button.dart';
 import '../../common/widgets/input_field.dart';
 import '../../common/widgets/search_bar.dart';
+import '../../services/auth.dart';
+import '../../services/database/chat.dart';
 import 'active_chat/page.dart';
 import 'manager.dart';
 import 'models/view_model/chat_item.dart';
@@ -34,7 +40,15 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final items = ref.watch(chatsStateProvider.notifier).chatItems;
+    final isLoading = ref.watch(chatsStateProvider.notifier).isLoading;
 
+    if (isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(
+          color: Colors.amber,
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -67,7 +81,7 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const ActiveChat(),
+                      builder: (context) => _ChatPage(items[index].uid),
                     ),
                   );
                 },
@@ -192,4 +206,73 @@ class ChatsRow extends StatelessWidget {
       ),
     );
   }
+}
+
+class _ChatPage extends ConsumerWidget {
+  final String uid;
+  const _ChatPage(this.uid, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
+        body: Column(
+          children: [
+            Flexible(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: ref.read(chatDatabaseServiceProvider).getMessages(uid),
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot,
+                ) {
+                  if (snapshot.hasData) {
+                    final listMessages = snapshot.data!.docs;
+                    if (listMessages.isNotEmpty) {
+                      return Chat(
+                        messages: listMessages.map(
+                          (e) {
+                            final data = e.data() as Map<String, dynamic>;
+                            return types.TextMessage(
+                              author: types.User(
+                                id: e.id,
+                                firstName: 'Egor',
+                                lastName: 'Fed',
+                              ),
+                              createdAt: DateTime.now().millisecondsSinceEpoch,
+                              id: 'dsafdaf',
+                              text: data['message'] ?? '',
+                            );
+                          },
+                        ).toList(),
+                        onAttachmentPressed: () {},
+                        onMessageTap: (context, message) {},
+                        onPreviewDataFetched: (message, preview) {},
+                        onSendPressed: (text) {},
+                        user: types.User(
+                          id: ref
+                                  .read(authServiceProvider)
+                                  .getCurrentUserUid() ??
+                              '',
+                          firstName: ref
+                              .read(authServiceProvider)
+                              .getCurrentUserEmail(),
+                          lastName: '',
+                        ),
+                      );
+                    } else {
+                      return const Center(
+                        child: Text('No messages...'),
+                      );
+                    }
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.amber,
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      );
 }

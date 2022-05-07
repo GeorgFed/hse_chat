@@ -27,7 +27,7 @@ class ChatsManager {
   Future<void> getChats() async => _chatsState
     ..setLoading(value: true)
     ..setData(
-      (await _chatDatabaseService.getUsersChats())
+      (await _chatDatabaseService.getAllChats())
           .map(
             (chat) => ChatItemViewModel(
               uid: chat.uid,

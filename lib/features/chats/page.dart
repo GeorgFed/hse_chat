@@ -1,12 +1,16 @@
 import 'dart:math' as math;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../common/widgets/button.dart';
 import '../../common/widgets/input_field.dart';
 import '../../common/widgets/search_bar.dart';
+import '../../services/database/chat.dart';
+import '../auth/manager.dart';
 import 'manager.dart';
 import 'models/view_models/chat_item.dart';
 import 'state_holder.dart';
@@ -118,7 +122,10 @@ class ChatsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final imageURL = chatsItem.imageURL;
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => _ChatPage('bVugMk0acnd0BZbenzeUaL5Deqz2')));
+      },
       child: Container(
         padding: const EdgeInsets.only(
           left: 16,
@@ -183,4 +190,59 @@ class ChatsRow extends StatelessWidget {
       ),
     );
   }
+}
+
+class _ChatPage extends ConsumerWidget {
+  final String uid;
+  const _ChatPage(this.uid, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
+        body: Column(
+          children: [
+            Flexible(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: ref.read(chatDatabaseServiceProvider).getChats(uid),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    final listMessages = snapshot.data!.docs;
+                    if (listMessages.isNotEmpty) {
+                      return ListView.builder(
+                          padding: const EdgeInsets.all(10),
+                          itemCount: snapshot.data?.docs.length,
+                          reverse: true,
+                          itemBuilder: (context, index) {
+                            print(
+                              ref
+                                  .read(chatDatabaseServiceProvider)
+                                  .chatFromSnapshotData(
+                                    snapshot.data?.docs[index].data()
+                                        as Map<String, dynamic>,
+                                    snapshot.data?.docs[index].id,
+                                  ),
+                            );
+                            return SizedBox(
+                              height: 64,
+                              child: Text('${snapshot.data?.docs[index].id}'),
+                            );
+                          });
+                    } else {
+                      return const Center(
+                        child: Text('No messages...'),
+                      );
+                    }
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.amber,
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      );
 }

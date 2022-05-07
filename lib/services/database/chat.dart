@@ -159,6 +159,10 @@ class ChatDatabaseService {
       .where('usersId', arrayContains: AuthService().getCurrentUserUid())
       .snapshots();
 
-  Stream<QuerySnapshot> getMessages(String chatUid) =>
-      messagesCollection.where('chatUid', isEqualTo: chatUid).snapshots();
+  Stream<QuerySnapshot> getMessages(String chatUid) => messagesCollection
+      .where(
+        'chatUid',
+        isEqualTo: chatUid,
+      )
+      .snapshots();
 }

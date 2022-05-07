@@ -209,23 +209,24 @@ class _ChatPage extends ConsumerWidget {
                     final listMessages = snapshot.data!.docs;
                     if (listMessages.isNotEmpty) {
                       return ListView.builder(
-                          padding: const EdgeInsets.all(10),
-                          itemCount: snapshot.data?.docs.length,
-                          reverse: true,
-                          itemBuilder: (context, index) {
-                            final message = ref
-                                .read(chatDatabaseServiceProvider)
-                                .messageFromSnapshotData(
-                                  snapshot.data?.docs[index].data()
-                                      as Map<String, dynamic>,
-                                  snapshot.data?.docs[index].id,
-                                );
-                            print(message);
-                            return SizedBox(
-                              height: 64,
-                              child: Text(message.message),
-                            );
-                          });
+                        padding: const EdgeInsets.all(10),
+                        itemCount: snapshot.data?.docs.length,
+                        reverse: true,
+                        itemBuilder: (context, index) {
+                          final message = ref
+                              .read(chatDatabaseServiceProvider)
+                              .messageFromSnapshotData(
+                                snapshot.data?.docs[index].data()
+                                    as Map<String, dynamic>,
+                                snapshot.data?.docs[index].id,
+                              );
+                          print(message);
+                          return SizedBox(
+                            height: 64,
+                            child: Text(message.time.toString()),
+                          );
+                        },
+                      );
                     } else {
                       return const Center(
                         child: Text('No messages...'),

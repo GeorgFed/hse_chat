@@ -19,11 +19,13 @@ class _$ChatItemViewModelTearOff {
   const _$ChatItemViewModelTearOff();
 
   _ChatItemViewModel call(
-      {required String name,
+      {required String uid,
+      required String name,
       String? messageText,
       String? time,
       String? imageURL}) {
     return _ChatItemViewModel(
+      uid: uid,
       name: name,
       messageText: messageText,
       time: time,
@@ -37,6 +39,7 @@ const $ChatItemViewModel = _$ChatItemViewModelTearOff();
 
 /// @nodoc
 mixin _$ChatItemViewModel {
+  String get uid => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get messageText => throw _privateConstructorUsedError;
   String? get time => throw _privateConstructorUsedError;
@@ -52,7 +55,12 @@ abstract class $ChatItemViewModelCopyWith<$Res> {
   factory $ChatItemViewModelCopyWith(
           ChatItemViewModel value, $Res Function(ChatItemViewModel) then) =
       _$ChatItemViewModelCopyWithImpl<$Res>;
-  $Res call({String name, String? messageText, String? time, String? imageURL});
+  $Res call(
+      {String uid,
+      String name,
+      String? messageText,
+      String? time,
+      String? imageURL});
 }
 
 /// @nodoc
@@ -66,12 +74,17 @@ class _$ChatItemViewModelCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? uid = freezed,
     Object? name = freezed,
     Object? messageText = freezed,
     Object? time = freezed,
     Object? imageURL = freezed,
   }) {
     return _then(_value.copyWith(
+      uid: uid == freezed
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -99,7 +112,12 @@ abstract class _$ChatItemViewModelCopyWith<$Res>
           _ChatItemViewModel value, $Res Function(_ChatItemViewModel) then) =
       __$ChatItemViewModelCopyWithImpl<$Res>;
   @override
-  $Res call({String name, String? messageText, String? time, String? imageURL});
+  $Res call(
+      {String uid,
+      String name,
+      String? messageText,
+      String? time,
+      String? imageURL});
 }
 
 /// @nodoc
@@ -115,12 +133,17 @@ class __$ChatItemViewModelCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? uid = freezed,
     Object? name = freezed,
     Object? messageText = freezed,
     Object? time = freezed,
     Object? imageURL = freezed,
   }) {
     return _then(_ChatItemViewModel(
+      uid: uid == freezed
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -145,8 +168,14 @@ class __$ChatItemViewModelCopyWithImpl<$Res>
 
 class _$_ChatItemViewModel implements _ChatItemViewModel {
   _$_ChatItemViewModel(
-      {required this.name, this.messageText, this.time, this.imageURL});
+      {required this.uid,
+      required this.name,
+      this.messageText,
+      this.time,
+      this.imageURL});
 
+  @override
+  final String uid;
   @override
   final String name;
   @override
@@ -158,7 +187,7 @@ class _$_ChatItemViewModel implements _ChatItemViewModel {
 
   @override
   String toString() {
-    return 'ChatItemViewModel(name: $name, messageText: $messageText, time: $time, imageURL: $imageURL)';
+    return 'ChatItemViewModel(uid: $uid, name: $name, messageText: $messageText, time: $time, imageURL: $imageURL)';
   }
 
   @override
@@ -166,6 +195,7 @@ class _$_ChatItemViewModel implements _ChatItemViewModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ChatItemViewModel &&
+            const DeepCollectionEquality().equals(other.uid, uid) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.messageText, messageText) &&
@@ -176,6 +206,7 @@ class _$_ChatItemViewModel implements _ChatItemViewModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(uid),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(messageText),
       const DeepCollectionEquality().hash(time),
@@ -189,11 +220,14 @@ class _$_ChatItemViewModel implements _ChatItemViewModel {
 
 abstract class _ChatItemViewModel implements ChatItemViewModel {
   factory _ChatItemViewModel(
-      {required String name,
+      {required String uid,
+      required String name,
       String? messageText,
       String? time,
       String? imageURL}) = _$_ChatItemViewModel;
 
+  @override
+  String get uid;
   @override
   String get name;
   @override

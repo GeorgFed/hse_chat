@@ -18,8 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ChatsStateTearOff {
   const _$ChatsStateTearOff();
 
-  _ChatsState call({List<ChatItemViewModel> chatItems = const []}) {
+  _ChatsState call(
+      {bool isLoading = false, List<ChatItemViewModel> chatItems = const []}) {
     return _ChatsState(
+      isLoading: isLoading,
       chatItems: chatItems,
     );
   }
@@ -30,6 +32,7 @@ const $ChatsState = _$ChatsStateTearOff();
 
 /// @nodoc
 mixin _$ChatsState {
+  bool get isLoading => throw _privateConstructorUsedError;
   List<ChatItemViewModel> get chatItems => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -42,7 +45,7 @@ abstract class $ChatsStateCopyWith<$Res> {
   factory $ChatsStateCopyWith(
           ChatsState value, $Res Function(ChatsState) then) =
       _$ChatsStateCopyWithImpl<$Res>;
-  $Res call({List<ChatItemViewModel> chatItems});
+  $Res call({bool isLoading, List<ChatItemViewModel> chatItems});
 }
 
 /// @nodoc
@@ -55,9 +58,14 @@ class _$ChatsStateCopyWithImpl<$Res> implements $ChatsStateCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? isLoading = freezed,
     Object? chatItems = freezed,
   }) {
     return _then(_value.copyWith(
+      isLoading: isLoading == freezed
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       chatItems: chatItems == freezed
           ? _value.chatItems
           : chatItems // ignore: cast_nullable_to_non_nullable
@@ -72,7 +80,7 @@ abstract class _$ChatsStateCopyWith<$Res> implements $ChatsStateCopyWith<$Res> {
           _ChatsState value, $Res Function(_ChatsState) then) =
       __$ChatsStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<ChatItemViewModel> chatItems});
+  $Res call({bool isLoading, List<ChatItemViewModel> chatItems});
 }
 
 /// @nodoc
@@ -87,9 +95,14 @@ class __$ChatsStateCopyWithImpl<$Res> extends _$ChatsStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? isLoading = freezed,
     Object? chatItems = freezed,
   }) {
     return _then(_ChatsState(
+      isLoading: isLoading == freezed
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       chatItems: chatItems == freezed
           ? _value.chatItems
           : chatItems // ignore: cast_nullable_to_non_nullable
@@ -101,15 +114,18 @@ class __$ChatsStateCopyWithImpl<$Res> extends _$ChatsStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ChatsState implements _ChatsState {
-  _$_ChatsState({this.chatItems = const []});
+  _$_ChatsState({this.isLoading = false, this.chatItems = const []});
 
+  @JsonKey()
+  @override
+  final bool isLoading;
   @JsonKey()
   @override
   final List<ChatItemViewModel> chatItems;
 
   @override
   String toString() {
-    return 'ChatsState(chatItems: $chatItems)';
+    return 'ChatsState(isLoading: $isLoading, chatItems: $chatItems)';
   }
 
   @override
@@ -117,12 +133,15 @@ class _$_ChatsState implements _ChatsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ChatsState &&
+            const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.chatItems, chatItems));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(chatItems));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(isLoading),
+      const DeepCollectionEquality().hash(chatItems));
 
   @JsonKey(ignore: true)
   @override
@@ -131,8 +150,11 @@ class _$_ChatsState implements _ChatsState {
 }
 
 abstract class _ChatsState implements ChatsState {
-  factory _ChatsState({List<ChatItemViewModel> chatItems}) = _$_ChatsState;
+  factory _ChatsState({bool isLoading, List<ChatItemViewModel> chatItems}) =
+      _$_ChatsState;
 
+  @override
+  bool get isLoading;
   @override
   List<ChatItemViewModel> get chatItems;
   @override

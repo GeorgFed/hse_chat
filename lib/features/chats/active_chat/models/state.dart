@@ -1,9 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../../app/models/message.dart';
 
-part 'chats_state.freezed.dart';
+part 'state.freezed.dart';
 
 @freezed
 class ActiveChatState with _$ActiveChatState {
   factory ActiveChatState({
-  },) = _ActiveChatState;
+    @Default(false) bool isLoading,
+    @Default([]) List<Message> messages,
+  }) = _ActiveChatState;
 }

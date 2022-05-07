@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:uuid/uuid.dart';
-import 'package:intl/intl.dart';
 
 import '../../app/models/chat.dart';
 import '../../app/models/message.dart';
-import '../../features/auth/manager.dart';
 import '../auth.dart';
 
 late final chatDatabaseServiceProvider =
@@ -36,11 +35,11 @@ class ChatDatabaseService {
       });
 
   Future addMessageToChat(String uid, String message) async {
-    var documentReference = chatCollection.doc(uid);
-    var chat = _chatFromSnapshot(await documentReference.get());
-    var uuid = Uuid();
-    var newId = uuid.v1();
-    var authService = AuthService();
+    final documentReference = chatCollection.doc(uid);
+    final chat = _chatFromSnapshot(await documentReference.get());
+    const uuid = Uuid();
+    final newId = uuid.v1();
+    final authService = AuthService();
     createMessageData(
       uid,
       message,
@@ -64,7 +63,7 @@ class ChatDatabaseService {
     return _chatsListFromSnapshot(querySnapshot);
   }
 
-  Future<List<Chat>> getusersChats() async {
+  Future<List<Chat>> getUsersChats() async {
     var querySnapshot = await chatCollection
         .where('usersId', arrayContains: AuthService().getCurrentUserUid())
         .get();

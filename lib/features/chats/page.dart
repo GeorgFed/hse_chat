@@ -124,7 +124,7 @@ class ChatsRow extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => _ChatPage('bVugMk0acnd0BZbenzeUaL5Deqz2')));
+            builder: (context) => _ChatPage('0vjtVTnrwnTC9oFJE4sd')));
       },
       child: Container(
         padding: const EdgeInsets.only(
@@ -202,7 +202,7 @@ class _ChatPage extends ConsumerWidget {
           children: [
             Flexible(
               child: StreamBuilder<QuerySnapshot>(
-                stream: ref.read(chatDatabaseServiceProvider).getChats(uid),
+                stream: ref.read(chatDatabaseServiceProvider).getMessages(uid),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasData) {
@@ -213,18 +213,17 @@ class _ChatPage extends ConsumerWidget {
                           itemCount: snapshot.data?.docs.length,
                           reverse: true,
                           itemBuilder: (context, index) {
-                            print(
-                              ref
-                                  .read(chatDatabaseServiceProvider)
-                                  .chatFromSnapshotData(
-                                    snapshot.data?.docs[index].data()
-                                        as Map<String, dynamic>,
-                                    snapshot.data?.docs[index].id,
-                                  ),
-                            );
+                            final message = ref
+                                .read(chatDatabaseServiceProvider)
+                                .messageFromSnapshotData(
+                                  snapshot.data?.docs[index].data()
+                                      as Map<String, dynamic>,
+                                  snapshot.data?.docs[index].id,
+                                );
+                            print(message);
                             return SizedBox(
                               height: 64,
-                              child: Text('${snapshot.data?.docs[index].id}'),
+                              child: Text(message.message),
                             );
                           });
                     } else {

@@ -91,6 +91,15 @@ class ChatDatabaseService {
         messagesId: convertFromDynamic(snapshot['messagesId']),
       );
 
+  Message messageFromSnapshotData(Map<String, dynamic> snapshot, String? id) =>
+      Message(
+        uid: id ?? '',
+        chatUid: snapshot['chatUid'],
+        userUid: snapshot['userUid'],
+        message: snapshot['text'],
+        time: convertDateTimeFromString(snapshot['time']),
+      );
+
   Chat chatFromSnapshot(DocumentSnapshot snapshot) => Chat(
         uid: snapshot.id,
         title: snapshot['title'],

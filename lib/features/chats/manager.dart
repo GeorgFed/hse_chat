@@ -24,19 +24,25 @@ class ChatsManager {
     this._authService,
   );
 
-  Future<void> getChats() async => _chatsState
-    ..setLoading(value: true)
-    ..setData(
-      (await _chatDatabaseService.getAllChats())
-          .map(
-            (chat) => ChatItemViewModel(
-              uid: chat.uid,
-              name: chat.title,
-            ),
-          )
-          .toList(),
-    )
-    ..setLoading(value: false);
+  Future<void> getChats() async {
+    _chatsState.setLoading(value: true);
+    final chats = await _chatDatabaseService.getAllChats();
+    final result = <ChatItemViewModel>[];
+    for (final chat in chats) {
+      final messages = await _chatDatabaseService.getMessagesOfChat(chat.uid);
+      final lastMessage =
+          messages.isNotEmpty ? messages.last.message : 'Напишите первым!';
+      final viewModel = ChatItemViewModel(
+        uid: chat.uid,
+        name: chat.title,
+        messageText: lastMessage,
+      );
+      result.add(viewModel);
+    }
+    _chatsState
+      ..setData(result)
+      ..setLoading(value: false);
+  }
 
   Future createChat(String title) => _chatDatabaseService
       .createChatData(title, [_authService.getCurrentUserUid()]);

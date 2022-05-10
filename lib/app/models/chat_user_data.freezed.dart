@@ -23,12 +23,16 @@ class _$ChatUserDataTearOff {
       required String name,
       required String status,
       String avatarUrl = '',
+      required List<String> gradesList,
+      required List<String> assignmentsList,
       String? groupId}) {
     return _ChatUserData(
       uid: uid,
       name: name,
       status: status,
       avatarUrl: avatarUrl,
+      gradesList: gradesList,
+      assignmentsList: assignmentsList,
       groupId: groupId,
     );
   }
@@ -43,6 +47,8 @@ mixin _$ChatUserData {
   String get name => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   String get avatarUrl => throw _privateConstructorUsedError;
+  List<String> get gradesList => throw _privateConstructorUsedError;
+  List<String> get assignmentsList => throw _privateConstructorUsedError;
   String? get groupId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -60,6 +66,8 @@ abstract class $ChatUserDataCopyWith<$Res> {
       String name,
       String status,
       String avatarUrl,
+      List<String> gradesList,
+      List<String> assignmentsList,
       String? groupId});
 }
 
@@ -77,6 +85,8 @@ class _$ChatUserDataCopyWithImpl<$Res> implements $ChatUserDataCopyWith<$Res> {
     Object? name = freezed,
     Object? status = freezed,
     Object? avatarUrl = freezed,
+    Object? gradesList = freezed,
+    Object? assignmentsList = freezed,
     Object? groupId = freezed,
   }) {
     return _then(_value.copyWith(
@@ -96,6 +106,14 @@ class _$ChatUserDataCopyWithImpl<$Res> implements $ChatUserDataCopyWith<$Res> {
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      gradesList: gradesList == freezed
+          ? _value.gradesList
+          : gradesList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      assignmentsList: assignmentsList == freezed
+          ? _value.assignmentsList
+          : assignmentsList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       groupId: groupId == freezed
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -116,6 +134,8 @@ abstract class _$ChatUserDataCopyWith<$Res>
       String name,
       String status,
       String avatarUrl,
+      List<String> gradesList,
+      List<String> assignmentsList,
       String? groupId});
 }
 
@@ -135,6 +155,8 @@ class __$ChatUserDataCopyWithImpl<$Res> extends _$ChatUserDataCopyWithImpl<$Res>
     Object? name = freezed,
     Object? status = freezed,
     Object? avatarUrl = freezed,
+    Object? gradesList = freezed,
+    Object? assignmentsList = freezed,
     Object? groupId = freezed,
   }) {
     return _then(_ChatUserData(
@@ -154,6 +176,14 @@ class __$ChatUserDataCopyWithImpl<$Res> extends _$ChatUserDataCopyWithImpl<$Res>
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      gradesList: gradesList == freezed
+          ? _value.gradesList
+          : gradesList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      assignmentsList: assignmentsList == freezed
+          ? _value.assignmentsList
+          : assignmentsList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       groupId: groupId == freezed
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -170,6 +200,8 @@ class _$_ChatUserData implements _ChatUserData {
       required this.name,
       required this.status,
       this.avatarUrl = '',
+      required this.gradesList,
+      required this.assignmentsList,
       this.groupId});
 
   @override
@@ -182,11 +214,15 @@ class _$_ChatUserData implements _ChatUserData {
   @override
   final String avatarUrl;
   @override
+  final List<String> gradesList;
+  @override
+  final List<String> assignmentsList;
+  @override
   final String? groupId;
 
   @override
   String toString() {
-    return 'ChatUserData(uid: $uid, name: $name, status: $status, avatarUrl: $avatarUrl, groupId: $groupId)';
+    return 'ChatUserData(uid: $uid, name: $name, status: $status, avatarUrl: $avatarUrl, gradesList: $gradesList, assignmentsList: $assignmentsList, groupId: $groupId)';
   }
 
   @override
@@ -198,6 +234,10 @@ class _$_ChatUserData implements _ChatUserData {
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.avatarUrl, avatarUrl) &&
+            const DeepCollectionEquality()
+                .equals(other.gradesList, gradesList) &&
+            const DeepCollectionEquality()
+                .equals(other.assignmentsList, assignmentsList) &&
             const DeepCollectionEquality().equals(other.groupId, groupId));
   }
 
@@ -208,6 +248,8 @@ class _$_ChatUserData implements _ChatUserData {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(avatarUrl),
+      const DeepCollectionEquality().hash(gradesList),
+      const DeepCollectionEquality().hash(assignmentsList),
       const DeepCollectionEquality().hash(groupId));
 
   @JsonKey(ignore: true)
@@ -222,6 +264,8 @@ abstract class _ChatUserData implements ChatUserData {
       required String name,
       required String status,
       String avatarUrl,
+      required List<String> gradesList,
+      required List<String> assignmentsList,
       String? groupId}) = _$_ChatUserData;
 
   @override
@@ -232,6 +276,10 @@ abstract class _ChatUserData implements ChatUserData {
   String get status;
   @override
   String get avatarUrl;
+  @override
+  List<String> get gradesList;
+  @override
+  List<String> get assignmentsList;
   @override
   String? get groupId;
   @override

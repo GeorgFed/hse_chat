@@ -68,7 +68,6 @@ class ChatDatabaseService {
         .where('usersId', arrayContains: AuthService().getCurrentUserUid())
         .get();
     var chats = _chatsListFromSnapshot(querySnapshot);
-    print(chats);
     return chats;
   }
 

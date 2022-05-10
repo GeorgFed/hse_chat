@@ -9,6 +9,8 @@ class ChatUserData with _$ChatUserData {
     required String name,
     required String status,
     @Default('') String avatarUrl,
+    required List<String> gradesList,
+    required List<String> assignmentsList,
     String? groupId,
   }) = _ChatUserData;
 }

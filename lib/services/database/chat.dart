@@ -165,5 +165,6 @@ class ChatDatabaseService {
         'chatUid',
         isEqualTo: chatUid,
       )
+      .orderBy('time', descending: true)
       .snapshots();
 }

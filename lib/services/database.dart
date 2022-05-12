@@ -41,6 +41,11 @@ class DataBaseService {
         'groups': [],
       });
 
+  Future<List<ChatUserData>> getAllUsers() async {
+    var querySnapshot = await usersCollection.get();
+    return _chatUsersDataFromSnapshot(querySnapshot);
+  }
+
   Future updateUserData(ChatUserData chatUserData) async =>
       await usersCollection.doc(chatUserData.uid).set({
         'name': chatUserData.name,

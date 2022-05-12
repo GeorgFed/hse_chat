@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ProfilePage extends StatefulWidget {
+import '../../services/auth.dart';
+
+class ProfilePage extends StatefulHookConsumerWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends ConsumerState<ProfilePage> {
+  final _defaultName = 'Егор Фед';
   @override
   Widget build(BuildContext context) {
+    final userName = ref.watch(authServiceProvider).currentUserName ?? _defaultName;
+    final userEmail = ref.watch(authServiceProvider).currentUserEmail ?? '???';
+
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -28,16 +33,16 @@ class _ProfilePageState extends State<ProfilePage> {
             height: 16.0,
             child: Container(color: const Color.fromARGB(255, 229, 229, 229)),
           ),
-          const SizedBox(
+          SizedBox(
             height: 80,
             child: Center(
               child: ListTile(
-                leading: CircleAvatar(
+                leading: const CircleAvatar(
                   radius: 24,
                   backgroundColor: Colors.amber,
                 ),
-                title: Text('Имя'),
-                subtitle: Text('Группа'),
+                title: Text(userName),
+                subtitle: Text(userEmail),
               ),
             ),
           ),

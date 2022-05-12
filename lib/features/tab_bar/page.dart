@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../chats/page.dart';
 import '../profile/page.dart';
+import '../study_plan/page.dart';
 import 'state_holder.dart';
 
 class HTabBar extends ConsumerWidget {
@@ -19,6 +20,10 @@ class HTabBar extends ConsumerWidget {
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble),
             label: 'Чаты',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'Учебный план',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
@@ -45,6 +50,8 @@ class _TabBarPage extends StatelessWidget {
     switch (tab) {
       case 0:
         return const ChatsPage();
+      case 1:
+        return const StudyPlanPage();
       default:
         return const ProfilePage();
     }

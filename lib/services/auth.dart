@@ -16,8 +16,11 @@ late final authServiceProvider = Provider(
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  ChatUser? _userFromFirebaseUser(User? user) =>
-      user != null ? ChatUser(uid: user.uid) : null;
+  String? get currentUserName => auth.currentUser?.displayName;
+
+  String? get currentUserEmail => auth.currentUser?.email;
+
+  ChatUser? _userFromFirebaseUser(User? user) => user != null ? ChatUser(uid: user.uid) : null;
 
   String? getCurrentUserUid() {
     print(auth.currentUser?.uid);
@@ -44,8 +47,7 @@ class AuthService {
 
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
       userController.add(_userFromFirebaseUser(user));
       return _userFromFirebaseUser(user);
@@ -57,8 +59,7 @@ class AuthService {
 
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
       // await DataBaseService().updateUserData('My name', 'http:/', 'student');
       return _userFromFirebaseUser(user);
@@ -95,8 +96,7 @@ class AuthService {
       var emailAuth = 'vladislav.sizov.2002@gmail.com';
       FirebaseAuth.instance
           .sendSignInLinkToEmail(email: emailAuth, actionCodeSettings: acs)
-          .catchError(
-              (onError) => print('Error sending email verification $onError'))
+          .catchError((onError) => print('Error sending email verification $onError'))
           .then((value) => print('Successfully sent email verification'));
     } catch (e) {}
   }

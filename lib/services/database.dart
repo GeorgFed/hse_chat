@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/models/assingment.dart';
+import '../app/models/chat.dart';
 import '../app/models/chat_user_data.dart';
 import '../app/models/grade.dart';
 import 'auth.dart';
@@ -58,16 +59,23 @@ class DataBaseService {
     updateUserData(user);
   }
 
-  Future<List<Grade>> getGradesOfUser(String userUid) async {
+  Future addChatToUser(String userUid, String chatUid) async {
     var documentReference = usersCollection.doc(userUid);
     var user = _userDataFromSnapshot(await documentReference.get());
-    var gradesString = user.gradesList;
-    List<Grade> grades;
-    for (final curGrade in gradesString) {
-      GradeDatabaseService gradeDatabaseService = GradeDatabaseService();
-    }
-    return user.gradesList;
+    user.gradesList.add(chatUid);
+    updateUserData(user);
   }
+
+  // Future<List<>> getGradesOfUser(String userUid) async {
+  //   var documentReference = usersCollection.doc(userUid);
+  //   var user = _userDataFromSnapshot(await documentReference.get());
+  //   var gradesString = user.gradesList;
+  //   List<Grade> grades;
+  //   for (final curGrade in gradesString) {
+  //     GradeDatabaseService gradeDatabaseService = GradeDatabaseService();
+  //   }
+  //   return user.gradesList;
+  // }
 
   String? userEmailFromUid(String uid) {
     AuthService authService = AuthService();

@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import '../../app/models/chat.dart';
 import '../../app/models/message.dart';
 import '../auth.dart';
+import '../database.dart';
 
 late final chatDatabaseServiceProvider =
     Provider((ref) => ChatDatabaseService());
@@ -56,6 +57,8 @@ class ChatDatabaseService {
     var chat = chatFromSnapshot(await documentReference.get());
     chat.usersId.add(userUid);
     updateChatData(chatUid, chat);
+    var dataBaseService = DataBaseService();
+    dataBaseService.addChatToUser(chatUid, userUid);
   }
 
   Future<List<Chat>> getAllChats() async {

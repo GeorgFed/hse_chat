@@ -66,7 +66,7 @@ class DataBaseService {
     for (final curGrade in gradesString) {
       GradeDatabaseService gradeDatabaseService = GradeDatabaseService();
     }
-    return user.gradesList;
+    return [];
   }
 
   String? userEmailFromUid(String uid) {

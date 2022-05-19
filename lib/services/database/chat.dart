@@ -21,12 +21,15 @@ class ChatDatabaseService {
   Future createChatData(
     String title,
     List<String?> usersId,
-  ) async =>
-      await chatCollection.doc().set({
-        'title': title,
-        'usersId': usersId,
-        'messagesId': [],
-      });
+  ) async {
+    print("Время начала: " + DateTime.now().toString());
+    await chatCollection.doc().set({
+      'title': title,
+      'usersId': usersId,
+      'messagesId': [],
+    });
+    print("Время окончания: " + DateTime.now().toString());
+  }
 
   Future updateChatData(String uid, Chat chat) async =>
       await chatCollection.doc(uid).set({

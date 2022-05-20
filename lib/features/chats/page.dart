@@ -125,11 +125,7 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
     ref.read(chatsManagerProvider)
       ..createChat(text ?? 'Чат')
       ..getChats().whenComplete(() => setState(() {}));
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const FriendsPage(),
-      ),
-    );
+    Navigator.of(context).pop();
   }
 }
 
@@ -239,14 +235,23 @@ class _ChatPage extends ConsumerWidget {
           style: Theme.of(context).textTheme.headline2,
         ),
         actions: [
-          CircleAvatar(
-            backgroundColor: avatarColor,
-            backgroundImage: imageURL == null
-                ? const NetworkImage(
-                    'https://www.woolha.com/media/2020/03/eevee.png',
-                  )
-                : NetworkImage(imageURL),
-            radius: 20,
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => FriendsPage(chatItem.uid),
+                ),
+              );
+            },
+            child: CircleAvatar(
+              backgroundColor: avatarColor,
+              backgroundImage: imageURL == null
+                  ? const NetworkImage(
+                      'https://www.woolha.com/media/2020/03/eevee.png',
+                    )
+                  : NetworkImage(imageURL),
+              radius: 20,
+            ),
           ),
         ],
         iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.black),

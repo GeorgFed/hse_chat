@@ -24,7 +24,7 @@ class _StudyPlanPageState extends ConsumerState<StudyPlanPage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.separated(
-          itemCount: 5,
+          itemCount: 1,
           itemBuilder: (BuildContext context, int index) => Container(
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -53,7 +53,7 @@ class _StudyPlanPageState extends ConsumerState<StudyPlanPage> {
                   ),
                   const SizedBox(height: 4.0),
                   Text(
-                    'Описание задания',
+                    'Разработать приложение для чатов в рамках НИС ПО iOS',
                     style: theme.textTheme.subtitle1?.copyWith(
                       color: const Color.fromARGB(221, 73, 73, 73),
                     ),

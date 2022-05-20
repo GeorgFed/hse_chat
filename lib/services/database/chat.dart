@@ -22,13 +22,11 @@ class ChatDatabaseService {
     String title,
     List<String?> usersId,
   ) async {
-    print("Время начала: " + DateTime.now().toString());
     await chatCollection.doc().set({
       'title': title,
       'usersId': usersId,
       'messagesId': [],
     });
-    print("Время окончания: " + DateTime.now().toString());
   }
 
   Future updateChatData(String uid, Chat chat) async =>

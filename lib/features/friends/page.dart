@@ -3,9 +3,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../app/models/chat_user_data.dart';
 import '../../services/database.dart';
+import '../../services/database/chat.dart';
 
 class FriendsPage extends ConsumerStatefulWidget {
-  const FriendsPage({
+  final String chatId;
+  const FriendsPage(
+    this.chatId, {
     Key? key,
   }) : super(key: key);
 
@@ -81,6 +84,7 @@ class _FriendsPageState extends ConsumerState<FriendsPage> {
                           name: foundUsers[index].name,
                           avatarURL: foundUsers[index].avatarUrl,
                           onPressed: () {},
+                          chatId: widget.chatId,
                         ),
                       )
                     : ListView.builder(
@@ -90,6 +94,7 @@ class _FriendsPageState extends ConsumerState<FriendsPage> {
                           name: friends[index].name,
                           avatarURL: friends[index].avatarUrl,
                           onPressed: () {},
+                          chatId: widget.chatId,
                         ),
                       ),
               ),
@@ -157,12 +162,14 @@ class UserTile extends ConsumerStatefulWidget {
   final String name;
   final String avatarURL;
   final VoidCallback onPressed;
+  final String chatId;
 
   const UserTile({
     required this.uid,
     required this.name,
     required this.avatarURL,
     required this.onPressed,
+    required this.chatId,
     Key? key,
   }) : super(key: key);
 
@@ -185,7 +192,10 @@ class _UserTileState extends ConsumerState<UserTile> {
                     : () {
                         setState(() {
                           isAdded = true;
-                          ref.read(dataBaseServiceProvider);
+                          ref.read(chatDatabaseServiceProvider).addUserToChat(
+                                widget.chatId,
+                                widget.uid,
+                              );
                         });
                       },
               ),

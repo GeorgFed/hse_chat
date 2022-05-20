@@ -285,9 +285,9 @@ class _ChatPage extends ConsumerWidget {
                     ).toList(),
                     bubbleBuilder: _bubbleBuilder,
                     onAttachmentPressed: () {
-                      // ChatDatabaseService chatDatabaseService =
-                      //     ChatDatabaseService();
-                      // chatDatabaseService.selectFile();
+                      ChatDatabaseService chatDatabaseService =
+                          ChatDatabaseService();
+                      chatDatabaseService.selectFile();
                     },
                     onMessageTap: (context, message) {},
                     onPreviewDataFetched: (message, preview) {},
@@ -413,7 +413,12 @@ class __ActiveChatState extends ConsumerState<_ActiveChat> {
                       },
                     ).toList(),
                     bubbleBuilder: _bubbleBuilder,
-                    onAttachmentPressed: () {},
+                    onAttachmentPressed: () {
+                      print("Here!");
+                      ChatDatabaseService chatDatabaseService =
+                          ChatDatabaseService();
+                      chatDatabaseService.selectFile();
+                    },
                     onMessageTap: (context, message) {},
                     onPreviewDataFetched: (message, preview) {},
                     onSendPressed: (text) {

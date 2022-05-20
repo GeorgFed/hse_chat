@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:file_picker/file_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -110,14 +110,15 @@ class ChatDatabaseService {
         messagesId: convertFromDynamic(snapshot['messagesId']),
       );
 
-  // Future selectFile() async {
-  //   final result = await FilePicker.platform.pickFiles(allowMultiple: false);
-  //   if (result == null) {
-  //     return;
-  //   }
-  //   final fileName = result.paths;
-  //   final destination = 'files/$fileName';
-  // }
+  Future selectFile() async {
+    print("Here");
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    if (result == null) {
+      return;
+    }
+    final fileName = result.paths;
+    final destination = 'files/$fileName';
+  }
 
   Future createMessageData(
     String chatUid,

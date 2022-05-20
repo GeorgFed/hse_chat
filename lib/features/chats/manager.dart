@@ -26,7 +26,7 @@ class ChatsManager {
 
   Future<void> getChats() async {
     _chatsState.setLoading(value: true);
-    final chats = await _chatDatabaseService.getAllChats();
+    final chats = await _chatDatabaseService.getUsersChats();
     final result = <ChatItemViewModel>[];
     for (final chat in chats) {
       final messages = await _chatDatabaseService.getMessagesOfChat(chat.uid);

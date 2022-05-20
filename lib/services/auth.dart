@@ -20,7 +20,8 @@ class AuthService {
 
   String? get currentUserEmail => auth.currentUser?.email;
 
-  ChatUser? _userFromFirebaseUser(User? user) => user != null ? ChatUser(uid: user.uid) : null;
+  ChatUser? _userFromFirebaseUser(User? user) =>
+      user != null ? ChatUser(uid: user.uid) : null;
 
   String? getCurrentUserUid() {
     print(auth.currentUser?.uid);
@@ -47,9 +48,14 @@ class AuthService {
 
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
       User? user = result.user;
       userController.add(_userFromFirebaseUser(user));
+      print("Auth: " + user!.emailVerified.toString());
+      if (!user.emailVerified) {
+        return null;
+      }
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -59,9 +65,12 @@ class AuthService {
 
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      User? user = result.user;
-      // await DataBaseService().updateUserData('My name', 'http:/', 'student');
+      var result = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      var user = result.user;
+      user!.sendEmailVerification();
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -96,7 +105,8 @@ class AuthService {
       var emailAuth = 'vladislav.sizov.2002@gmail.com';
       FirebaseAuth.instance
           .sendSignInLinkToEmail(email: emailAuth, actionCodeSettings: acs)
-          .catchError((onError) => print('Error sending email verification $onError'))
+          .catchError(
+              (onError) => print('Error sending email verification $onError'))
           .then((value) => print('Successfully sent email verification'));
     } catch (e) {}
   }

@@ -52,8 +52,8 @@ class AuthService {
           email: email, password: password);
       User? user = result.user;
       userController.add(_userFromFirebaseUser(user));
-      print(user!.emailVerified);
-      if (!user!.emailVerified) {
+      print("Auth: " + user!.emailVerified.toString());
+      if (!user.emailVerified) {
         return null;
       }
       return _userFromFirebaseUser(user);

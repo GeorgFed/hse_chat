@@ -11,7 +11,7 @@ class ProfilePage extends StatefulHookConsumerWidget {
 }
 
 class _ProfilePageState extends ConsumerState<ProfilePage> {
-  final _defaultName = 'Егор Фед';
+  final _defaultName = 'Влад Сизов';
   @override
   Widget build(BuildContext context) {
     final userName = ref.watch(authServiceProvider).currentUserName ?? _defaultName;
@@ -44,6 +44,64 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 title: Text(userName),
                 subtitle: Text(userEmail),
               ),
+            ),
+          ),
+          SizedBox(
+            height: 16.0,
+            child: Container(color: const Color.fromARGB(255, 229, 229, 229)),
+          ),
+          ListTile(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 4,
+                ),
+                const Text(
+                  'Оценки',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      '6',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    Text(
+                      '8',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 16.0,
+                    ),
+                    Text(
+                      '7',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           SizedBox(

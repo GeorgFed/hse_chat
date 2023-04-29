@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'message.dart';
 
@@ -12,30 +12,7 @@ part of 'message.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$MessageTearOff {
-  const _$MessageTearOff();
-
-  _Message call(
-      {required String uid,
-      required String chatUid,
-      required String userUid,
-      required String message,
-      required DateTime time}) {
-    return _Message(
-      uid: uid,
-      chatUid: chatUid,
-      userUid: userUid,
-      message: message,
-      time: time,
-    );
-  }
-}
-
-/// @nodoc
-const $Message = _$MessageTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$Message {
@@ -52,7 +29,8 @@ mixin _$Message {
 /// @nodoc
 abstract class $MessageCopyWith<$Res> {
   factory $MessageCopyWith(Message value, $Res Function(Message) then) =
-      _$MessageCopyWithImpl<$Res>;
+      _$MessageCopyWithImpl<$Res, Message>;
+  @useResult
   $Res call(
       {String uid,
       String chatUid,
@@ -62,51 +40,56 @@ abstract class $MessageCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MessageCopyWithImpl<$Res> implements $MessageCopyWith<$Res> {
+class _$MessageCopyWithImpl<$Res, $Val extends Message>
+    implements $MessageCopyWith<$Res> {
   _$MessageCopyWithImpl(this._value, this._then);
 
-  final Message _value;
   // ignore: unused_field
-  final $Res Function(Message) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
-    Object? chatUid = freezed,
-    Object? userUid = freezed,
-    Object? message = freezed,
-    Object? time = freezed,
+    Object? uid = null,
+    Object? chatUid = null,
+    Object? userUid = null,
+    Object? message = null,
+    Object? time = null,
   }) {
     return _then(_value.copyWith(
-      uid: uid == freezed
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      chatUid: chatUid == freezed
+      chatUid: null == chatUid
           ? _value.chatUid
           : chatUid // ignore: cast_nullable_to_non_nullable
               as String,
-      userUid: userUid == freezed
+      userUid: null == userUid
           ? _value.userUid
           : userUid // ignore: cast_nullable_to_non_nullable
               as String,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      time: time == freezed
+      time: null == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as DateTime,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
-  factory _$MessageCopyWith(_Message value, $Res Function(_Message) then) =
-      __$MessageCopyWithImpl<$Res>;
+abstract class _$$_MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
+  factory _$$_MessageCopyWith(
+          _$_Message value, $Res Function(_$_Message) then) =
+      __$$_MessageCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String uid,
       String chatUid,
@@ -116,40 +99,39 @@ abstract class _$MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$MessageCopyWithImpl<$Res> extends _$MessageCopyWithImpl<$Res>
-    implements _$MessageCopyWith<$Res> {
-  __$MessageCopyWithImpl(_Message _value, $Res Function(_Message) _then)
-      : super(_value, (v) => _then(v as _Message));
+class __$$_MessageCopyWithImpl<$Res>
+    extends _$MessageCopyWithImpl<$Res, _$_Message>
+    implements _$$_MessageCopyWith<$Res> {
+  __$$_MessageCopyWithImpl(_$_Message _value, $Res Function(_$_Message) _then)
+      : super(_value, _then);
 
-  @override
-  _Message get _value => super._value as _Message;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
-    Object? chatUid = freezed,
-    Object? userUid = freezed,
-    Object? message = freezed,
-    Object? time = freezed,
+    Object? uid = null,
+    Object? chatUid = null,
+    Object? userUid = null,
+    Object? message = null,
+    Object? time = null,
   }) {
-    return _then(_Message(
-      uid: uid == freezed
+    return _then(_$_Message(
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      chatUid: chatUid == freezed
+      chatUid: null == chatUid
           ? _value.chatUid
           : chatUid // ignore: cast_nullable_to_non_nullable
               as String,
-      userUid: userUid == freezed
+      userUid: null == userUid
           ? _value.userUid
           : userUid // ignore: cast_nullable_to_non_nullable
               as String,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      time: time == freezed
+      time: null == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -187,36 +169,32 @@ class _$_Message implements _Message {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Message &&
-            const DeepCollectionEquality().equals(other.uid, uid) &&
-            const DeepCollectionEquality().equals(other.chatUid, chatUid) &&
-            const DeepCollectionEquality().equals(other.userUid, userUid) &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality().equals(other.time, time));
+            other is _$_Message &&
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.chatUid, chatUid) || other.chatUid == chatUid) &&
+            (identical(other.userUid, userUid) || other.userUid == userUid) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.time, time) || other.time == time));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(uid),
-      const DeepCollectionEquality().hash(chatUid),
-      const DeepCollectionEquality().hash(userUid),
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(time));
+  int get hashCode =>
+      Object.hash(runtimeType, uid, chatUid, userUid, message, time);
 
   @JsonKey(ignore: true)
   @override
-  _$MessageCopyWith<_Message> get copyWith =>
-      __$MessageCopyWithImpl<_Message>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_MessageCopyWith<_$_Message> get copyWith =>
+      __$$_MessageCopyWithImpl<_$_Message>(this, _$identity);
 }
 
 abstract class _Message implements Message {
   factory _Message(
-      {required String uid,
-      required String chatUid,
-      required String userUid,
-      required String message,
-      required DateTime time}) = _$_Message;
+      {required final String uid,
+      required final String chatUid,
+      required final String userUid,
+      required final String message,
+      required final DateTime time}) = _$_Message;
 
   @override
   String get uid;
@@ -230,6 +208,6 @@ abstract class _Message implements Message {
   DateTime get time;
   @override
   @JsonKey(ignore: true)
-  _$MessageCopyWith<_Message> get copyWith =>
+  _$$_MessageCopyWith<_$_Message> get copyWith =>
       throw _privateConstructorUsedError;
 }

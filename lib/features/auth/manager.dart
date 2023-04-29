@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:riverpod/riverpod.dart';
 
 import '../../services/auth.dart';
@@ -16,6 +17,7 @@ late final databaseUserManagerProvider = Provider(
   ),
 );
 
+@lazySingleton
 class AuthManager {
   final AuthService _authService;
 
@@ -32,6 +34,7 @@ class AuthManager {
   String? getCurrentUserUid() => _authService.getCurrentUserUid();
 }
 
+@lazySingleton
 class DataUserManager {
   final DataBaseService _dataBaseService;
   final AuthService _authService;

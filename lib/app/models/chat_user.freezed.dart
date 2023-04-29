@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'chat_user.dart';
 
@@ -12,21 +12,7 @@ part of 'chat_user.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ChatUserTearOff {
-  const _$ChatUserTearOff();
-
-  _ChatUser call({required String uid}) {
-    return _ChatUser(
-      uid: uid,
-    );
-  }
-}
-
-/// @nodoc
-const $ChatUser = _$ChatUserTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ChatUser {
@@ -40,54 +26,60 @@ mixin _$ChatUser {
 /// @nodoc
 abstract class $ChatUserCopyWith<$Res> {
   factory $ChatUserCopyWith(ChatUser value, $Res Function(ChatUser) then) =
-      _$ChatUserCopyWithImpl<$Res>;
+      _$ChatUserCopyWithImpl<$Res, ChatUser>;
+  @useResult
   $Res call({String uid});
 }
 
 /// @nodoc
-class _$ChatUserCopyWithImpl<$Res> implements $ChatUserCopyWith<$Res> {
+class _$ChatUserCopyWithImpl<$Res, $Val extends ChatUser>
+    implements $ChatUserCopyWith<$Res> {
   _$ChatUserCopyWithImpl(this._value, this._then);
 
-  final ChatUser _value;
   // ignore: unused_field
-  final $Res Function(ChatUser) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
+    Object? uid = null,
   }) {
     return _then(_value.copyWith(
-      uid: uid == freezed
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ChatUserCopyWith<$Res> implements $ChatUserCopyWith<$Res> {
-  factory _$ChatUserCopyWith(_ChatUser value, $Res Function(_ChatUser) then) =
-      __$ChatUserCopyWithImpl<$Res>;
+abstract class _$$_ChatUserCopyWith<$Res> implements $ChatUserCopyWith<$Res> {
+  factory _$$_ChatUserCopyWith(
+          _$_ChatUser value, $Res Function(_$_ChatUser) then) =
+      __$$_ChatUserCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String uid});
 }
 
 /// @nodoc
-class __$ChatUserCopyWithImpl<$Res> extends _$ChatUserCopyWithImpl<$Res>
-    implements _$ChatUserCopyWith<$Res> {
-  __$ChatUserCopyWithImpl(_ChatUser _value, $Res Function(_ChatUser) _then)
-      : super(_value, (v) => _then(v as _ChatUser));
+class __$$_ChatUserCopyWithImpl<$Res>
+    extends _$ChatUserCopyWithImpl<$Res, _$_ChatUser>
+    implements _$$_ChatUserCopyWith<$Res> {
+  __$$_ChatUserCopyWithImpl(
+      _$_ChatUser _value, $Res Function(_$_ChatUser) _then)
+      : super(_value, _then);
 
-  @override
-  _ChatUser get _value => super._value as _ChatUser;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
+    Object? uid = null,
   }) {
-    return _then(_ChatUser(
-      uid: uid == freezed
+    return _then(_$_ChatUser(
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
@@ -112,27 +104,27 @@ class _$_ChatUser implements _ChatUser {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ChatUser &&
-            const DeepCollectionEquality().equals(other.uid, uid));
+            other is _$_ChatUser &&
+            (identical(other.uid, uid) || other.uid == uid));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(uid));
+  int get hashCode => Object.hash(runtimeType, uid);
 
   @JsonKey(ignore: true)
   @override
-  _$ChatUserCopyWith<_ChatUser> get copyWith =>
-      __$ChatUserCopyWithImpl<_ChatUser>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_ChatUserCopyWith<_$_ChatUser> get copyWith =>
+      __$$_ChatUserCopyWithImpl<_$_ChatUser>(this, _$identity);
 }
 
 abstract class _ChatUser implements ChatUser {
-  factory _ChatUser({required String uid}) = _$_ChatUser;
+  factory _ChatUser({required final String uid}) = _$_ChatUser;
 
   @override
   String get uid;
   @override
   @JsonKey(ignore: true)
-  _$ChatUserCopyWith<_ChatUser> get copyWith =>
+  _$$_ChatUserCopyWith<_$_ChatUser> get copyWith =>
       throw _privateConstructorUsedError;
 }

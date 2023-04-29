@@ -1,41 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'manager.dart';
-import 'state_holder.dart';
+import 'view_model.dart';
 
-class ActiveChat extends StatefulHookConsumerWidget {
-  const ActiveChat({Key? key}) : super(key: key);
+class ActiveChat extends StatefulWidget {
+  final ActiveChatViewModel viewModel;
+
+  const ActiveChat(this.viewModel, {Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ActiveChatState();
+  State<ActiveChat> createState() => _ActiveChatState();
 }
 
-class _ActiveChatState extends ConsumerState<ActiveChat> {
+class _ActiveChatState extends State<ActiveChat> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    ref.read(activeChatManagerProvider).getMessages();
+    widget.viewModel.getMessages();
   }
 
   @override
   Widget build(BuildContext context) {
-    final messages = ref
-        .watch(activeChatStateProvider.notifier)
-        .messages
+    final messages = widget.viewModel.messages
         .map(
-          (e) => types.TextMessage(
+          (message) => types.TextMessage(
             author: types.User(
-              id: e.userUid,
-              firstName: 'Egor',
-              lastName: 'Fed',
+              id: message.userUid,
+              firstName: message.userUid,
+              lastName: message.uid,
             ),
-            createdAt: DateTime.now().millisecondsSinceEpoch,
-            id: 'dsafdaf',
-            text: e.message,
+            createdAt: message.time.millisecondsSinceEpoch,
+            id: message.uid,
+            text: message.message,
           ),
         )
         .toList();
@@ -46,10 +43,10 @@ class _ActiveChatState extends ConsumerState<ActiveChat> {
         onMessageTap: (context, message) {},
         onPreviewDataFetched: (message, preview) {},
         onSendPressed: (text) {},
-        user: const types.User(
-          id: 'sfdfasf',
-          firstName: 'Egor',
-          lastName: 'Fed',
+        user: types.User(
+          id: messages.first.id,
+          firstName: messages.first.author.firstName,
+          lastName: messages.first.author.lastName,
         ),
       ),
     );

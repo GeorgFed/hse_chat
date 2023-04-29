@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'state.dart';
 
@@ -12,23 +12,7 @@ part of 'state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ActiveChatStateTearOff {
-  const _$ActiveChatStateTearOff();
-
-  _ActiveChatState call(
-      {bool isLoading = false, List<Message> messages = const []}) {
-    return _ActiveChatState(
-      isLoading: isLoading,
-      messages: messages,
-    );
-  }
-}
-
-/// @nodoc
-const $ActiveChatState = _$ActiveChatStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ActiveChatState {
@@ -44,70 +28,72 @@ mixin _$ActiveChatState {
 abstract class $ActiveChatStateCopyWith<$Res> {
   factory $ActiveChatStateCopyWith(
           ActiveChatState value, $Res Function(ActiveChatState) then) =
-      _$ActiveChatStateCopyWithImpl<$Res>;
+      _$ActiveChatStateCopyWithImpl<$Res, ActiveChatState>;
+  @useResult
   $Res call({bool isLoading, List<Message> messages});
 }
 
 /// @nodoc
-class _$ActiveChatStateCopyWithImpl<$Res>
+class _$ActiveChatStateCopyWithImpl<$Res, $Val extends ActiveChatState>
     implements $ActiveChatStateCopyWith<$Res> {
   _$ActiveChatStateCopyWithImpl(this._value, this._then);
 
-  final ActiveChatState _value;
   // ignore: unused_field
-  final $Res Function(ActiveChatState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoading = freezed,
-    Object? messages = freezed,
+    Object? isLoading = null,
+    Object? messages = null,
   }) {
     return _then(_value.copyWith(
-      isLoading: isLoading == freezed
+      isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      messages: messages == freezed
+      messages: null == messages
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<Message>,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ActiveChatStateCopyWith<$Res>
+abstract class _$$_ActiveChatStateCopyWith<$Res>
     implements $ActiveChatStateCopyWith<$Res> {
-  factory _$ActiveChatStateCopyWith(
-          _ActiveChatState value, $Res Function(_ActiveChatState) then) =
-      __$ActiveChatStateCopyWithImpl<$Res>;
+  factory _$$_ActiveChatStateCopyWith(
+          _$_ActiveChatState value, $Res Function(_$_ActiveChatState) then) =
+      __$$_ActiveChatStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool isLoading, List<Message> messages});
 }
 
 /// @nodoc
-class __$ActiveChatStateCopyWithImpl<$Res>
-    extends _$ActiveChatStateCopyWithImpl<$Res>
-    implements _$ActiveChatStateCopyWith<$Res> {
-  __$ActiveChatStateCopyWithImpl(
-      _ActiveChatState _value, $Res Function(_ActiveChatState) _then)
-      : super(_value, (v) => _then(v as _ActiveChatState));
+class __$$_ActiveChatStateCopyWithImpl<$Res>
+    extends _$ActiveChatStateCopyWithImpl<$Res, _$_ActiveChatState>
+    implements _$$_ActiveChatStateCopyWith<$Res> {
+  __$$_ActiveChatStateCopyWithImpl(
+      _$_ActiveChatState _value, $Res Function(_$_ActiveChatState) _then)
+      : super(_value, _then);
 
-  @override
-  _ActiveChatState get _value => super._value as _ActiveChatState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoading = freezed,
-    Object? messages = freezed,
+    Object? isLoading = null,
+    Object? messages = null,
   }) {
-    return _then(_ActiveChatState(
-      isLoading: isLoading == freezed
+    return _then(_$_ActiveChatState(
+      isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      messages: messages == freezed
-          ? _value.messages
+      messages: null == messages
+          ? _value._messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<Message>,
     ));
@@ -117,14 +103,21 @@ class __$ActiveChatStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ActiveChatState implements _ActiveChatState {
-  _$_ActiveChatState({this.isLoading = false, this.messages = const []});
+  _$_ActiveChatState(
+      {this.isLoading = false, final List<Message> messages = const []})
+      : _messages = messages;
 
-  @JsonKey()
   @override
+  @JsonKey()
   final bool isLoading;
-  @JsonKey()
+  final List<Message> _messages;
   @override
-  final List<Message> messages;
+  @JsonKey()
+  List<Message> get messages {
+    if (_messages is EqualUnmodifiableListView) return _messages;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_messages);
+  }
 
   @override
   String toString() {
@@ -135,26 +128,27 @@ class _$_ActiveChatState implements _ActiveChatState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ActiveChatState &&
-            const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
-            const DeepCollectionEquality().equals(other.messages, messages));
+            other is _$_ActiveChatState &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            const DeepCollectionEquality().equals(other._messages, _messages));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(isLoading),
-      const DeepCollectionEquality().hash(messages));
+      runtimeType, isLoading, const DeepCollectionEquality().hash(_messages));
 
   @JsonKey(ignore: true)
   @override
-  _$ActiveChatStateCopyWith<_ActiveChatState> get copyWith =>
-      __$ActiveChatStateCopyWithImpl<_ActiveChatState>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_ActiveChatStateCopyWith<_$_ActiveChatState> get copyWith =>
+      __$$_ActiveChatStateCopyWithImpl<_$_ActiveChatState>(this, _$identity);
 }
 
 abstract class _ActiveChatState implements ActiveChatState {
-  factory _ActiveChatState({bool isLoading, List<Message> messages}) =
-      _$_ActiveChatState;
+  factory _ActiveChatState(
+      {final bool isLoading,
+      final List<Message> messages}) = _$_ActiveChatState;
 
   @override
   bool get isLoading;
@@ -162,6 +156,6 @@ abstract class _ActiveChatState implements ActiveChatState {
   List<Message> get messages;
   @override
   @JsonKey(ignore: true)
-  _$ActiveChatStateCopyWith<_ActiveChatState> get copyWith =>
+  _$$_ActiveChatStateCopyWith<_$_ActiveChatState> get copyWith =>
       throw _privateConstructorUsedError;
 }

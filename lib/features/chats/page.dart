@@ -7,6 +7,7 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:bubble/bubble.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../common/widgets/button.dart';
 import '../../common/widgets/input_field.dart';
@@ -14,6 +15,7 @@ import '../../common/widgets/search_bar.dart';
 import '../../services/auth.dart';
 import '../../services/database/chat.dart';
 
+import '../friends/page.dart';
 import 'active_chat/page.dart';
 import 'manager.dart';
 import 'models/view_model/chat_item.dart';
@@ -31,10 +33,7 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
 
   @override
   void initState() {
-    ref
-        .read(chatsManagerProvider)
-        .getChats()
-        .whenComplete(() => setState(() {}));
+    ref.read(chatsManagerProvider).getChats().whenComplete(() => setState(() {}));
     super.initState();
   }
 
@@ -79,9 +78,7 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
               padding: const EdgeInsets.only(top: 16),
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                final color =
-                    Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                        .withOpacity(1.0);
+                final color = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
                 return ChatsRow(
                   chatsItem: items[index],
                   onTap: () => Navigator.of(context).push(
@@ -129,7 +126,6 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
     ref.read(chatsManagerProvider)
       ..createChat(text ?? 'Чат')
       ..getChats().whenComplete(() => setState(() {}));
-
     Navigator.of(context).pop();
   }
 }
@@ -170,7 +166,7 @@ class ChatsRow extends StatelessWidget {
                             'https://www.woolha.com/media/2020/03/eevee.png',
                           )
                         : NetworkImage(imageURL),
-                    maxRadius: 30,
+                    maxRadius: 20,
                   ),
                   const SizedBox(
                     width: 16,
@@ -240,14 +236,23 @@ class _ChatPage extends ConsumerWidget {
           style: Theme.of(context).textTheme.headline2,
         ),
         actions: [
-          CircleAvatar(
-            backgroundColor: avatarColor,
-            backgroundImage: imageURL == null
-                ? const NetworkImage(
-                    'https://www.woolha.com/media/2020/03/eevee.png',
-                  )
-                : NetworkImage(imageURL),
-            radius: 20,
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => FriendsPage(chatItem.uid),
+                ),
+              );
+            },
+            child: CircleAvatar(
+              backgroundColor: avatarColor,
+              backgroundImage: imageURL == null
+                  ? const NetworkImage(
+                      'https://www.woolha.com/media/2020/03/eevee.png',
+                    )
+                  : NetworkImage(imageURL),
+              radius: 20,
+            ),
           ),
         ],
         iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.black),
@@ -257,9 +262,7 @@ class _ChatPage extends ConsumerWidget {
         children: [
           Flexible(
             child: StreamBuilder<QuerySnapshot>(
-              stream: ref
-                  .read(chatDatabaseServiceProvider)
-                  .getMessages(chatItem.uid),
+              stream: ref.read(chatDatabaseServiceProvider).getMessages(chatItem.uid),
               builder: (
                 BuildContext context,
                 AsyncSnapshot<QuerySnapshot> snapshot,
@@ -283,7 +286,11 @@ class _ChatPage extends ConsumerWidget {
                       },
                     ).toList(),
                     bubbleBuilder: _bubbleBuilder,
-                    onAttachmentPressed: () {},
+                    onAttachmentPressed: () {
+                      ChatDatabaseService chatDatabaseService =
+                          ChatDatabaseService();
+                      chatDatabaseService.selectFile();
+                    },
                     onMessageTap: (context, message) {},
                     onPreviewDataFetched: (message, preview) {},
                     onSendPressed: (text) {
@@ -328,6 +335,129 @@ class _ChatPage extends ConsumerWidget {
         margin: nextMessageInGroup
             ? const BubbleEdges.symmetric(horizontal: 6)
             : null,
+        nip: nextMessageInGroup
+            ? BubbleNip.no
+            : currentUserId != message.author.id
+                ? BubbleNip.leftBottom
+                : BubbleNip.rightBottom,
+      );
+}
+
+class _ActiveChat extends ConsumerStatefulWidget {
+  final ChatItemViewModel chatItem;
+  final Color avatarColor;
+  final String currentUserId;
+
+  const _ActiveChat(this.chatItem, this.avatarColor, this.currentUserId,
+      {Key? key})
+      : super(key: key);
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => __ActiveChatState();
+}
+
+class __ActiveChatState extends ConsumerState<_ActiveChat> {
+  ChatItemViewModel get chatItem => widget.chatItem;
+  Color get avatarColor => widget.avatarColor;
+  String get currentUserId => widget.currentUserId;
+
+  @override
+  Widget build(BuildContext context) {
+    final imageURL = chatItem.imageURL;
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          chatItem.name,
+          style: Theme.of(context).textTheme.headline2,
+        ),
+        actions: [
+          CircleAvatar(
+            backgroundColor: avatarColor,
+            backgroundImage: imageURL == null
+                ? const NetworkImage(
+                    'https://www.woolha.com/media/2020/03/eevee.png',
+                  )
+                : NetworkImage(imageURL),
+            radius: 20,
+          ),
+        ],
+        iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.black),
+        backgroundColor: Colors.white,
+      ),
+      body: Column(
+        children: [
+          Flexible(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: ref
+                  .read(chatDatabaseServiceProvider)
+                  .getMessages(chatItem.uid),
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<QuerySnapshot> snapshot,
+              ) {
+                if (snapshot.hasData) {
+                  final listMessages = snapshot.data!.docs;
+                  return Chat(
+                    messages: listMessages.map(
+                      (e) {
+                        final data = e.data() as Map<String, dynamic>;
+                        return types.TextMessage(
+                          author: types.User(
+                            id: data['userUid'],
+                            firstName: 'Egor',
+                            lastName: 'Fed',
+                          ),
+                          createdAt: DateTime.now().millisecondsSinceEpoch,
+                          id: 'dsafdaf',
+                          text: data['text'] ?? ' ',
+                        );
+                      },
+                    ).toList(),
+                    bubbleBuilder: _bubbleBuilder,
+                    onAttachmentPressed: () {
+                      print("Here!");
+                      ChatDatabaseService chatDatabaseService =
+                          ChatDatabaseService();
+                      chatDatabaseService.selectFile();
+                    },
+                    onMessageTap: (context, message) {},
+                    onPreviewDataFetched: (message, preview) {},
+                    onSendPressed: (text) {
+                      ref.read(chatDatabaseServiceProvider).addMessageToChat(chatItem.uid, text.text);
+                    },
+                    user: types.User(
+                      id: ref.read(authServiceProvider).getCurrentUserUid() ?? ' ',
+                      firstName: ref.read(authServiceProvider).getCurrentUserEmail(),
+                      lastName: ' ',
+                    ),
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.amber,
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _bubbleBuilder(
+    Widget child, {
+    required message,
+    required nextMessageInGroup,
+  }) =>
+      Bubble(
+        child: child,
+        color: currentUserId != message.author.id || message.type == types.MessageType.image
+            ? const Color(0xfff5f5f7)
+            : const Color(0xff6f61e8),
+        margin: nextMessageInGroup ? const BubbleEdges.symmetric(horizontal: 6) : null,
         nip: nextMessageInGroup
             ? BubbleNip.no
             : currentUserId != message.author.id

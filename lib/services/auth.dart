@@ -16,6 +16,10 @@ late final authServiceProvider = Provider(
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  String? get currentUserName => auth.currentUser?.displayName;
+
+  String? get currentUserEmail => auth.currentUser?.email;
+
   ChatUser? _userFromFirebaseUser(User? user) =>
       user != null ? ChatUser(uid: user.uid) : null;
 
@@ -48,6 +52,10 @@ class AuthService {
           email: email, password: password);
       User? user = result.user;
       userController.add(_userFromFirebaseUser(user));
+      print("Auth: " + user!.emailVerified.toString());
+      if (!user.emailVerified) {
+        return null;
+      }
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -57,10 +65,12 @@ class AuthService {
 
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      User? user = result.user;
-      // await DataBaseService().updateUserData('My name', 'http:/', 'student');
+      var result = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      var user = result.user;
+      user!.sendEmailVerification();
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());

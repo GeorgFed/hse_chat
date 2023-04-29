@@ -45,7 +45,7 @@ class DataUserManager {
     } else {
       status = 'teacher';
     }
-    _dataBaseService.updateUserData(
+    _dataBaseService.createUserData(
       uid!,
       name,
       'avatarUrl',

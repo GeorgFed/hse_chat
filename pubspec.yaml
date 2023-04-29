@@ -22,11 +22,13 @@ dependencies:
   google_fonts: ^2.3.1
 
   firebase_storage: ^10.2.11
+
   firebase_auth: ^3.3.13
   cloud_firestore: ^3.1.12
   firebase_core: ^1.14.0
   firebase_storage_web: ^3.2.11
   flutter_chat_ui: ^1.5.8
+  file_picker: ^4.5.1
   uuid: ^3.0.6
   intl: ^0.17.0
   bubble: ^1.2.1

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
 
 import '../chats/page.dart';
+import '../chats/view_model.dart';
 import '../profile/page.dart';
 import '../study_plan/page.dart';
 import 'state_holder.dart';
@@ -49,7 +51,7 @@ class _TabBarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (tab) {
       case 0:
-        return const ChatsPage();
+        return ChatsPage(GetIt.I.get<ChatsViewModel>());
       case 1:
         return const StudyPlanPage();
       default:

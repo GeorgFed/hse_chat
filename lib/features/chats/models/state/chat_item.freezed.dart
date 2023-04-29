@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'chat_item.dart';
 
@@ -12,30 +12,7 @@ part of 'chat_item.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ChatItemViewModelTearOff {
-  const _$ChatItemViewModelTearOff();
-
-  _ChatItemViewModel call(
-      {required String uid,
-      required String name,
-      String? messageText,
-      String? time,
-      String? imageURL}) {
-    return _ChatItemViewModel(
-      uid: uid,
-      name: name,
-      messageText: messageText,
-      time: time,
-      imageURL: imageURL,
-    );
-  }
-}
-
-/// @nodoc
-const $ChatItemViewModel = _$ChatItemViewModelTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ChatItemViewModel {
@@ -54,7 +31,8 @@ mixin _$ChatItemViewModel {
 abstract class $ChatItemViewModelCopyWith<$Res> {
   factory $ChatItemViewModelCopyWith(
           ChatItemViewModel value, $Res Function(ChatItemViewModel) then) =
-      _$ChatItemViewModelCopyWithImpl<$Res>;
+      _$ChatItemViewModelCopyWithImpl<$Res, ChatItemViewModel>;
+  @useResult
   $Res call(
       {String uid,
       String name,
@@ -64,54 +42,57 @@ abstract class $ChatItemViewModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ChatItemViewModelCopyWithImpl<$Res>
+class _$ChatItemViewModelCopyWithImpl<$Res, $Val extends ChatItemViewModel>
     implements $ChatItemViewModelCopyWith<$Res> {
   _$ChatItemViewModelCopyWithImpl(this._value, this._then);
 
-  final ChatItemViewModel _value;
   // ignore: unused_field
-  final $Res Function(ChatItemViewModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
-    Object? name = freezed,
+    Object? uid = null,
+    Object? name = null,
     Object? messageText = freezed,
     Object? time = freezed,
     Object? imageURL = freezed,
   }) {
     return _then(_value.copyWith(
-      uid: uid == freezed
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      messageText: messageText == freezed
+      messageText: freezed == messageText
           ? _value.messageText
           : messageText // ignore: cast_nullable_to_non_nullable
               as String?,
-      time: time == freezed
+      time: freezed == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as String?,
-      imageURL: imageURL == freezed
+      imageURL: freezed == imageURL
           ? _value.imageURL
           : imageURL // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ChatItemViewModelCopyWith<$Res>
+abstract class _$$_ChatItemViewModelCopyWith<$Res>
     implements $ChatItemViewModelCopyWith<$Res> {
-  factory _$ChatItemViewModelCopyWith(
-          _ChatItemViewModel value, $Res Function(_ChatItemViewModel) then) =
-      __$ChatItemViewModelCopyWithImpl<$Res>;
+  factory _$$_ChatItemViewModelCopyWith(_$_ChatItemViewModel value,
+          $Res Function(_$_ChatItemViewModel) then) =
+      __$$_ChatItemViewModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String uid,
       String name,
@@ -121,42 +102,40 @@ abstract class _$ChatItemViewModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ChatItemViewModelCopyWithImpl<$Res>
-    extends _$ChatItemViewModelCopyWithImpl<$Res>
-    implements _$ChatItemViewModelCopyWith<$Res> {
-  __$ChatItemViewModelCopyWithImpl(
-      _ChatItemViewModel _value, $Res Function(_ChatItemViewModel) _then)
-      : super(_value, (v) => _then(v as _ChatItemViewModel));
+class __$$_ChatItemViewModelCopyWithImpl<$Res>
+    extends _$ChatItemViewModelCopyWithImpl<$Res, _$_ChatItemViewModel>
+    implements _$$_ChatItemViewModelCopyWith<$Res> {
+  __$$_ChatItemViewModelCopyWithImpl(
+      _$_ChatItemViewModel _value, $Res Function(_$_ChatItemViewModel) _then)
+      : super(_value, _then);
 
-  @override
-  _ChatItemViewModel get _value => super._value as _ChatItemViewModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
-    Object? name = freezed,
+    Object? uid = null,
+    Object? name = null,
     Object? messageText = freezed,
     Object? time = freezed,
     Object? imageURL = freezed,
   }) {
-    return _then(_ChatItemViewModel(
-      uid: uid == freezed
+    return _then(_$_ChatItemViewModel(
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      messageText: messageText == freezed
+      messageText: freezed == messageText
           ? _value.messageText
           : messageText // ignore: cast_nullable_to_non_nullable
               as String?,
-      time: time == freezed
+      time: freezed == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as String?,
-      imageURL: imageURL == freezed
+      imageURL: freezed == imageURL
           ? _value.imageURL
           : imageURL // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -194,37 +173,35 @@ class _$_ChatItemViewModel implements _ChatItemViewModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ChatItemViewModel &&
-            const DeepCollectionEquality().equals(other.uid, uid) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.messageText, messageText) &&
-            const DeepCollectionEquality().equals(other.time, time) &&
-            const DeepCollectionEquality().equals(other.imageURL, imageURL));
+            other is _$_ChatItemViewModel &&
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.messageText, messageText) ||
+                other.messageText == messageText) &&
+            (identical(other.time, time) || other.time == time) &&
+            (identical(other.imageURL, imageURL) ||
+                other.imageURL == imageURL));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(uid),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(messageText),
-      const DeepCollectionEquality().hash(time),
-      const DeepCollectionEquality().hash(imageURL));
+  int get hashCode =>
+      Object.hash(runtimeType, uid, name, messageText, time, imageURL);
 
   @JsonKey(ignore: true)
   @override
-  _$ChatItemViewModelCopyWith<_ChatItemViewModel> get copyWith =>
-      __$ChatItemViewModelCopyWithImpl<_ChatItemViewModel>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_ChatItemViewModelCopyWith<_$_ChatItemViewModel> get copyWith =>
+      __$$_ChatItemViewModelCopyWithImpl<_$_ChatItemViewModel>(
+          this, _$identity);
 }
 
 abstract class _ChatItemViewModel implements ChatItemViewModel {
   factory _ChatItemViewModel(
-      {required String uid,
-      required String name,
-      String? messageText,
-      String? time,
-      String? imageURL}) = _$_ChatItemViewModel;
+      {required final String uid,
+      required final String name,
+      final String? messageText,
+      final String? time,
+      final String? imageURL}) = _$_ChatItemViewModel;
 
   @override
   String get uid;
@@ -238,6 +215,6 @@ abstract class _ChatItemViewModel implements ChatItemViewModel {
   String? get imageURL;
   @override
   @JsonKey(ignore: true)
-  _$ChatItemViewModelCopyWith<_ChatItemViewModel> get copyWith =>
+  _$$_ChatItemViewModelCopyWith<_$_ChatItemViewModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

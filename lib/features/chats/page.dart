@@ -1,47 +1,43 @@
 import 'dart:math' as math;
 
+import 'package:bubble/bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:bubble/bubble.dart';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../common/widgets/button.dart';
 import '../../common/widgets/input_field.dart';
 import '../../common/widgets/search_bar.dart';
 import '../../services/auth.dart';
 import '../../services/database/chat.dart';
-
 import '../friends/page.dart';
-import 'active_chat/page.dart';
-import 'manager.dart';
-import 'models/view_model/chat_item.dart';
-import 'state_holder.dart';
+import 'models/state/chat_item.dart';
+import 'view_model.dart';
 
-class ChatsPage extends StatefulHookConsumerWidget {
-  const ChatsPage({Key? key}) : super(key: key);
+class ChatsPage extends StatefulWidget {
+  final ChatsViewModel viewModel;
+
+  const ChatsPage(this.viewModel, {Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ChatsPageState();
+  State<ChatsPage> createState() => _ChatsPageState();
 }
 
-class _ChatsPageState extends ConsumerState<ChatsPage> {
+class _ChatsPageState extends State<ChatsPage> {
   late final _createChatController = TextEditingController();
 
   @override
   void initState() {
-    ref.read(chatsManagerProvider).getChats().whenComplete(() => setState(() {}));
+    widget.viewModel.getChats();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final items = ref.watch(chatsStateProvider.notifier).chatItems;
-    final isLoading = ref.watch(chatsStateProvider.notifier).isLoading;
+    final isLoading = widget.viewModel.isLoading;
 
     if (isLoading) {
       return const Center(
@@ -55,7 +51,7 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
         automaticallyImplyLeading: false,
         title: Text(
           'Чаты',
-          style: theme.textTheme.headline2,
+          style: theme.textTheme.displayMedium,
         ),
         centerTitle: true,
         actions: [
@@ -73,20 +69,22 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
           children: [
             const HSearchBar(),
             ListView.builder(
-              itemCount: items.length,
+              itemCount: widget.viewModel.items.length,
               shrinkWrap: true,
               padding: const EdgeInsets.only(top: 16),
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                final color = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+                final color =
+                    Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                        .withOpacity(1.0);
                 return ChatsRow(
-                  chatsItem: items[index],
+                  chatsItem: widget.viewModel.items[index],
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => _ChatPage(
-                        items[index],
+                        widget.viewModel.items[index],
                         color,
-                        ref.read(authServiceProvider).getCurrentUserUid() ?? '',
+                        widget.viewModel.userId,
                       ),
                     ),
                   ),
@@ -123,9 +121,7 @@ class _ChatsPageState extends ConsumerState<ChatsPage> {
       );
 
   void _onCreateChatTapped(String? text) {
-    ref.read(chatsManagerProvider)
-      ..createChat(text ?? 'Чат')
-      ..getChats().whenComplete(() => setState(() {}));
+    widget.viewModel.createChat(text ?? 'Чат');
     Navigator.of(context).pop();
   }
 }
@@ -233,7 +229,7 @@ class _ChatPage extends ConsumerWidget {
         centerTitle: true,
         title: Text(
           chatItem.name,
-          style: Theme.of(context).textTheme.headline2,
+          style: Theme.of(context).textTheme.displayMedium,
         ),
         actions: [
           GestureDetector(
@@ -262,7 +258,9 @@ class _ChatPage extends ConsumerWidget {
         children: [
           Flexible(
             child: StreamBuilder<QuerySnapshot>(
-              stream: ref.read(chatDatabaseServiceProvider).getMessages(chatItem.uid),
+              stream: ref
+                  .read(chatDatabaseServiceProvider)
+                  .getMessages(chatItem.uid),
               builder: (
                 BuildContext context,
                 AsyncSnapshot<QuerySnapshot> snapshot,
@@ -287,8 +285,7 @@ class _ChatPage extends ConsumerWidget {
                     ).toList(),
                     bubbleBuilder: _bubbleBuilder,
                     onAttachmentPressed: () {
-                      ChatDatabaseService chatDatabaseService =
-                          ChatDatabaseService();
+                      var chatDatabaseService = ChatDatabaseService();
                       chatDatabaseService.selectFile();
                     },
                     onMessageTap: (context, message) {},
@@ -327,7 +324,6 @@ class _ChatPage extends ConsumerWidget {
     required nextMessageInGroup,
   }) =>
       Bubble(
-        child: child,
         color: currentUserId != message.author.id ||
                 message.type == types.MessageType.image
             ? const Color(0xfff5f5f7)
@@ -340,6 +336,7 @@ class _ChatPage extends ConsumerWidget {
             : currentUserId != message.author.id
                 ? BubbleNip.leftBottom
                 : BubbleNip.rightBottom,
+        child: child,
       );
 }
 
@@ -348,9 +345,12 @@ class _ActiveChat extends ConsumerStatefulWidget {
   final Color avatarColor;
   final String currentUserId;
 
-  const _ActiveChat(this.chatItem, this.avatarColor, this.currentUserId,
-      {Key? key})
-      : super(key: key);
+  const _ActiveChat(
+    this.chatItem,
+    this.avatarColor,
+    this.currentUserId, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => __ActiveChatState();
@@ -369,7 +369,7 @@ class __ActiveChatState extends ConsumerState<_ActiveChat> {
         centerTitle: true,
         title: Text(
           chatItem.name,
-          style: Theme.of(context).textTheme.headline2,
+          style: Theme.of(context).textTheme.displayMedium,
         ),
         actions: [
           CircleAvatar(
@@ -416,19 +416,22 @@ class __ActiveChatState extends ConsumerState<_ActiveChat> {
                     ).toList(),
                     bubbleBuilder: _bubbleBuilder,
                     onAttachmentPressed: () {
-                      print("Here!");
-                      ChatDatabaseService chatDatabaseService =
-                          ChatDatabaseService();
+                      print('Here!');
+                      var chatDatabaseService = ChatDatabaseService();
                       chatDatabaseService.selectFile();
                     },
                     onMessageTap: (context, message) {},
                     onPreviewDataFetched: (message, preview) {},
                     onSendPressed: (text) {
-                      ref.read(chatDatabaseServiceProvider).addMessageToChat(chatItem.uid, text.text);
+                      ref
+                          .read(chatDatabaseServiceProvider)
+                          .addMessageToChat(chatItem.uid, text.text);
                     },
                     user: types.User(
-                      id: ref.read(authServiceProvider).getCurrentUserUid() ?? ' ',
-                      firstName: ref.read(authServiceProvider).getCurrentUserEmail(),
+                      id: ref.read(authServiceProvider).getCurrentUserUid() ??
+                          ' ',
+                      firstName:
+                          ref.read(authServiceProvider).getCurrentUserEmail(),
                       lastName: ' ',
                     ),
                   );
@@ -453,15 +456,18 @@ class __ActiveChatState extends ConsumerState<_ActiveChat> {
     required nextMessageInGroup,
   }) =>
       Bubble(
-        child: child,
-        color: currentUserId != message.author.id || message.type == types.MessageType.image
+        color: currentUserId != message.author.id ||
+                message.type == types.MessageType.image
             ? const Color(0xfff5f5f7)
             : const Color(0xff6f61e8),
-        margin: nextMessageInGroup ? const BubbleEdges.symmetric(horizontal: 6) : null,
+        margin: nextMessageInGroup
+            ? const BubbleEdges.symmetric(horizontal: 6)
+            : null,
         nip: nextMessageInGroup
             ? BubbleNip.no
             : currentUserId != message.author.id
                 ? BubbleNip.leftBottom
                 : BubbleNip.rightBottom,
+        child: child,
       );
 }

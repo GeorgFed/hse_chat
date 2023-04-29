@@ -1,31 +1,31 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../services/auth.dart';
 import '../../services/database/chat.dart';
-import 'models/view_model/chat_item.dart';
-import 'state_holder.dart';
+import 'models/state/chat_item.dart';
+import 'models/state/chats_state.dart';
 
-late final chatsManagerProvider = Provider(
-  (ref) => ChatsManager(
-    ref.watch(chatsStateProvider.notifier),
-    ref.watch(chatDatabaseServiceProvider),
-    ref.watch(authServiceProvider),
-  ),
-);
-
-class ChatsManager {
-  final ChatsStateHolder _chatsState;
+@injectable
+class ChatsViewModel extends ChangeNotifier {
   final AuthService _authService;
   final ChatDatabaseService _chatDatabaseService;
 
-  ChatsManager(
-    this._chatsState,
-    this._chatDatabaseService,
+  ChatsState _state = ChatsState();
+
+  List<ChatItemViewModel> get items => _state.chatItems;
+
+  bool get isLoading => _state.isLoading;
+
+  String get userId => _state.userId;
+
+  ChatsViewModel(
     this._authService,
+    this._chatDatabaseService,
   );
 
   Future<void> getChats() async {
-    _chatsState.setLoading(value: true);
+    _state = _state.copyWith(isLoading: true);
     final chats = await _chatDatabaseService.getUsersChats();
     final result = <ChatItemViewModel>[];
     for (final chat in chats) {
@@ -39,11 +39,15 @@ class ChatsManager {
       );
       result.add(viewModel);
     }
-    _chatsState
-      ..setData(result)
-      ..setLoading(value: false);
+    _state = _state.copyWith(chatItems: result, isLoading: false);
+    notifyListeners();
   }
 
   Future createChat(String title) => _chatDatabaseService
       .createChatData(title, [_authService.getCurrentUserUid()]);
+
+  Future<void> getCurrentUserId() async {
+    final uid = _authService.getCurrentUserUid();
+    _state = _state.copyWith(userId: uid ?? '');
+  }
 }

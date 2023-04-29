@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'state.dart';
 
@@ -12,21 +12,7 @@ part of 'state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$TabBarStateTearOff {
-  const _$TabBarStateTearOff();
-
-  _TabBarState call({int selectedTab = 0}) {
-    return _TabBarState(
-      selectedTab: selectedTab,
-    );
-  }
-}
-
-/// @nodoc
-const $TabBarState = _$TabBarStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$TabBarState {
@@ -41,57 +27,61 @@ mixin _$TabBarState {
 abstract class $TabBarStateCopyWith<$Res> {
   factory $TabBarStateCopyWith(
           TabBarState value, $Res Function(TabBarState) then) =
-      _$TabBarStateCopyWithImpl<$Res>;
+      _$TabBarStateCopyWithImpl<$Res, TabBarState>;
+  @useResult
   $Res call({int selectedTab});
 }
 
 /// @nodoc
-class _$TabBarStateCopyWithImpl<$Res> implements $TabBarStateCopyWith<$Res> {
+class _$TabBarStateCopyWithImpl<$Res, $Val extends TabBarState>
+    implements $TabBarStateCopyWith<$Res> {
   _$TabBarStateCopyWithImpl(this._value, this._then);
 
-  final TabBarState _value;
   // ignore: unused_field
-  final $Res Function(TabBarState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selectedTab = freezed,
+    Object? selectedTab = null,
   }) {
     return _then(_value.copyWith(
-      selectedTab: selectedTab == freezed
+      selectedTab: null == selectedTab
           ? _value.selectedTab
           : selectedTab // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$TabBarStateCopyWith<$Res>
+abstract class _$$_TabBarStateCopyWith<$Res>
     implements $TabBarStateCopyWith<$Res> {
-  factory _$TabBarStateCopyWith(
-          _TabBarState value, $Res Function(_TabBarState) then) =
-      __$TabBarStateCopyWithImpl<$Res>;
+  factory _$$_TabBarStateCopyWith(
+          _$_TabBarState value, $Res Function(_$_TabBarState) then) =
+      __$$_TabBarStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int selectedTab});
 }
 
 /// @nodoc
-class __$TabBarStateCopyWithImpl<$Res> extends _$TabBarStateCopyWithImpl<$Res>
-    implements _$TabBarStateCopyWith<$Res> {
-  __$TabBarStateCopyWithImpl(
-      _TabBarState _value, $Res Function(_TabBarState) _then)
-      : super(_value, (v) => _then(v as _TabBarState));
+class __$$_TabBarStateCopyWithImpl<$Res>
+    extends _$TabBarStateCopyWithImpl<$Res, _$_TabBarState>
+    implements _$$_TabBarStateCopyWith<$Res> {
+  __$$_TabBarStateCopyWithImpl(
+      _$_TabBarState _value, $Res Function(_$_TabBarState) _then)
+      : super(_value, _then);
 
-  @override
-  _TabBarState get _value => super._value as _TabBarState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selectedTab = freezed,
+    Object? selectedTab = null,
   }) {
-    return _then(_TabBarState(
-      selectedTab: selectedTab == freezed
+    return _then(_$_TabBarState(
+      selectedTab: null == selectedTab
           ? _value.selectedTab
           : selectedTab // ignore: cast_nullable_to_non_nullable
               as int,
@@ -104,8 +94,8 @@ class __$TabBarStateCopyWithImpl<$Res> extends _$TabBarStateCopyWithImpl<$Res>
 class _$_TabBarState implements _TabBarState {
   const _$_TabBarState({this.selectedTab = 0});
 
-  @JsonKey()
   @override
+  @JsonKey()
   final int selectedTab;
 
   @override
@@ -117,28 +107,28 @@ class _$_TabBarState implements _TabBarState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _TabBarState &&
-            const DeepCollectionEquality()
-                .equals(other.selectedTab, selectedTab));
+            other is _$_TabBarState &&
+            (identical(other.selectedTab, selectedTab) ||
+                other.selectedTab == selectedTab));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(selectedTab));
+  int get hashCode => Object.hash(runtimeType, selectedTab);
 
   @JsonKey(ignore: true)
   @override
-  _$TabBarStateCopyWith<_TabBarState> get copyWith =>
-      __$TabBarStateCopyWithImpl<_TabBarState>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_TabBarStateCopyWith<_$_TabBarState> get copyWith =>
+      __$$_TabBarStateCopyWithImpl<_$_TabBarState>(this, _$identity);
 }
 
 abstract class _TabBarState implements TabBarState {
-  const factory _TabBarState({int selectedTab}) = _$_TabBarState;
+  const factory _TabBarState({final int selectedTab}) = _$_TabBarState;
 
   @override
   int get selectedTab;
   @override
   @JsonKey(ignore: true)
-  _$TabBarStateCopyWith<_TabBarState> get copyWith =>
+  _$$_TabBarStateCopyWith<_$_TabBarState> get copyWith =>
       throw _privateConstructorUsedError;
 }

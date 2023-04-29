@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:injectable/injectable.dart';
 import 'package:riverpod/riverpod.dart';
 
 import '../app/models/chat_user.dart';
-import 'database.dart';
 
 final userController = StreamController<ChatUser?>.broadcast(sync: true);
 final FirebaseAuth auth = FirebaseAuth.instance;
@@ -13,6 +13,7 @@ late final authServiceProvider = Provider(
   (ref) => AuthService(),
 );
 
+@lazySingleton
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -28,17 +29,15 @@ class AuthService {
     return auth.currentUser?.uid;
   }
 
-  String? getCurrentUserEmail() {
-    return auth.currentUser?.email;
-  }
+  String? getCurrentUserEmail() => auth.currentUser?.email;
 
   // Stream<ChatUser?> get user =>
   //     _auth.authStateChanges().map(_userFromFirebaseUser);
 
   Future signInAnon() async {
     try {
-      UserCredential result = await _auth.signInAnonymously();
-      User? user = result.user;
+      var result = await _auth.signInAnonymously();
+      var user = result.user;
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -48,11 +47,13 @@ class AuthService {
 
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      User? user = result.user;
+      var result = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      var user = result.user;
       userController.add(_userFromFirebaseUser(user));
-      print("Auth: " + user!.emailVerified.toString());
+      print('Auth: ' + user!.emailVerified.toString());
       if (!user.emailVerified) {
         return null;
       }
@@ -90,23 +91,25 @@ class AuthService {
   Future registerWithEmail(String email) async {
     try {
       var acs = ActionCodeSettings(
-          // URL you want to redirect back to. The domain (www.example.com) for this
-          // URL must be whitelisted in the Firebase Console.
-          url: 'https://www.example.com/finishSignUp?cartId=1234',
-          // This must be true
-          handleCodeInApp: true,
-          iOSBundleId: 'com.example.ios',
-          androidPackageName: 'com.example.android',
-          // installIfNotAvailable
-          androidInstallApp: true,
-          // minimumVersion
-          androidMinimumVersion: '12');
+        // URL you want to redirect back to. The domain (www.example.com) for this
+        // URL must be whitelisted in the Firebase Console.
+        url: 'https://www.example.com/finishSignUp?cartId=1234',
+        // This must be true
+        handleCodeInApp: true,
+        iOSBundleId: 'com.example.ios',
+        androidPackageName: 'com.example.android',
+        // installIfNotAvailable
+        androidInstallApp: true,
+        // minimumVersion
+        androidMinimumVersion: '12',
+      );
 
       var emailAuth = 'vladislav.sizov.2002@gmail.com';
       FirebaseAuth.instance
           .sendSignInLinkToEmail(email: emailAuth, actionCodeSettings: acs)
           .catchError(
-              (onError) => print('Error sending email verification $onError'))
+            (onError) => print('Error sending email verification $onError'),
+          )
           .then((value) => print('Successfully sent email verification'));
     } catch (e) {}
   }

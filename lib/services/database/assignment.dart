@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
 import '../../app/models/assingment.dart';
 
+@lazySingleton
 class AssignmentService {
   final CollectionReference chatCollection =
       FirebaseFirestore.instance.collection('assigmnents');
@@ -42,7 +44,9 @@ class AssignmentService {
           .toList();
 
   Assingment messageFromSnapshotData(
-          Map<String, dynamic> snapshot, String? id) =>
+    Map<String, dynamic> snapshot,
+    String? id,
+  ) =>
       Assingment(
         uid: id ?? '',
         title: snapshot['title'] ?? '',

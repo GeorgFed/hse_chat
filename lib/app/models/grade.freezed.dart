@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'grade.dart';
 
@@ -12,26 +12,7 @@ part of 'grade.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$GradeTearOff {
-  const _$GradeTearOff();
-
-  _Grade call(
-      {required String uid,
-      required String value,
-      required String assignmentUid}) {
-    return _Grade(
-      uid: uid,
-      value: value,
-      assignmentUid: assignmentUid,
-    );
-  }
-}
-
-/// @nodoc
-const $Grade = _$GradeTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$Grade {
@@ -46,74 +27,77 @@ mixin _$Grade {
 /// @nodoc
 abstract class $GradeCopyWith<$Res> {
   factory $GradeCopyWith(Grade value, $Res Function(Grade) then) =
-      _$GradeCopyWithImpl<$Res>;
+      _$GradeCopyWithImpl<$Res, Grade>;
+  @useResult
   $Res call({String uid, String value, String assignmentUid});
 }
 
 /// @nodoc
-class _$GradeCopyWithImpl<$Res> implements $GradeCopyWith<$Res> {
+class _$GradeCopyWithImpl<$Res, $Val extends Grade>
+    implements $GradeCopyWith<$Res> {
   _$GradeCopyWithImpl(this._value, this._then);
 
-  final Grade _value;
   // ignore: unused_field
-  final $Res Function(Grade) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
-    Object? value = freezed,
-    Object? assignmentUid = freezed,
+    Object? uid = null,
+    Object? value = null,
+    Object? assignmentUid = null,
   }) {
     return _then(_value.copyWith(
-      uid: uid == freezed
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      assignmentUid: assignmentUid == freezed
+      assignmentUid: null == assignmentUid
           ? _value.assignmentUid
           : assignmentUid // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$GradeCopyWith<$Res> implements $GradeCopyWith<$Res> {
-  factory _$GradeCopyWith(_Grade value, $Res Function(_Grade) then) =
-      __$GradeCopyWithImpl<$Res>;
+abstract class _$$_GradeCopyWith<$Res> implements $GradeCopyWith<$Res> {
+  factory _$$_GradeCopyWith(_$_Grade value, $Res Function(_$_Grade) then) =
+      __$$_GradeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String uid, String value, String assignmentUid});
 }
 
 /// @nodoc
-class __$GradeCopyWithImpl<$Res> extends _$GradeCopyWithImpl<$Res>
-    implements _$GradeCopyWith<$Res> {
-  __$GradeCopyWithImpl(_Grade _value, $Res Function(_Grade) _then)
-      : super(_value, (v) => _then(v as _Grade));
+class __$$_GradeCopyWithImpl<$Res> extends _$GradeCopyWithImpl<$Res, _$_Grade>
+    implements _$$_GradeCopyWith<$Res> {
+  __$$_GradeCopyWithImpl(_$_Grade _value, $Res Function(_$_Grade) _then)
+      : super(_value, _then);
 
-  @override
-  _Grade get _value => super._value as _Grade;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
-    Object? value = freezed,
-    Object? assignmentUid = freezed,
+    Object? uid = null,
+    Object? value = null,
+    Object? assignmentUid = null,
   }) {
-    return _then(_Grade(
-      uid: uid == freezed
+    return _then(_$_Grade(
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      assignmentUid: assignmentUid == freezed
+      assignmentUid: null == assignmentUid
           ? _value.assignmentUid
           : assignmentUid // ignore: cast_nullable_to_non_nullable
               as String,
@@ -143,31 +127,28 @@ class _$_Grade implements _Grade {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Grade &&
-            const DeepCollectionEquality().equals(other.uid, uid) &&
-            const DeepCollectionEquality().equals(other.value, value) &&
-            const DeepCollectionEquality()
-                .equals(other.assignmentUid, assignmentUid));
+            other is _$_Grade &&
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.assignmentUid, assignmentUid) ||
+                other.assignmentUid == assignmentUid));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(uid),
-      const DeepCollectionEquality().hash(value),
-      const DeepCollectionEquality().hash(assignmentUid));
+  int get hashCode => Object.hash(runtimeType, uid, value, assignmentUid);
 
   @JsonKey(ignore: true)
   @override
-  _$GradeCopyWith<_Grade> get copyWith =>
-      __$GradeCopyWithImpl<_Grade>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_GradeCopyWith<_$_Grade> get copyWith =>
+      __$$_GradeCopyWithImpl<_$_Grade>(this, _$identity);
 }
 
 abstract class _Grade implements Grade {
   factory _Grade(
-      {required String uid,
-      required String value,
-      required String assignmentUid}) = _$_Grade;
+      {required final String uid,
+      required final String value,
+      required final String assignmentUid}) = _$_Grade;
 
   @override
   String get uid;
@@ -177,5 +158,6 @@ abstract class _Grade implements Grade {
   String get assignmentUid;
   @override
   @JsonKey(ignore: true)
-  _$GradeCopyWith<_Grade> get copyWith => throw _privateConstructorUsedError;
+  _$$_GradeCopyWith<_$_Grade> get copyWith =>
+      throw _privateConstructorUsedError;
 }

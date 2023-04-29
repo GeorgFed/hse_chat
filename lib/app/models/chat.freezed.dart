@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'chat.dart';
 
@@ -12,28 +12,7 @@ part of 'chat.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ChatTearOff {
-  const _$ChatTearOff();
-
-  _ChatUser call(
-      {required String uid,
-      required String title,
-      List<String> usersId = const [],
-      List<String> messagesId = const []}) {
-    return _ChatUser(
-      uid: uid,
-      title: title,
-      usersId: usersId,
-      messagesId: messagesId,
-    );
-  }
-}
-
-/// @nodoc
-const $Chat = _$ChatTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$Chat {
@@ -49,7 +28,8 @@ mixin _$Chat {
 /// @nodoc
 abstract class $ChatCopyWith<$Res> {
   factory $ChatCopyWith(Chat value, $Res Function(Chat) then) =
-      _$ChatCopyWithImpl<$Res>;
+      _$ChatCopyWithImpl<$Res, Chat>;
+  @useResult
   $Res call(
       {String uid,
       String title,
@@ -58,46 +38,51 @@ abstract class $ChatCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ChatCopyWithImpl<$Res> implements $ChatCopyWith<$Res> {
+class _$ChatCopyWithImpl<$Res, $Val extends Chat>
+    implements $ChatCopyWith<$Res> {
   _$ChatCopyWithImpl(this._value, this._then);
 
-  final Chat _value;
   // ignore: unused_field
-  final $Res Function(Chat) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
-    Object? title = freezed,
-    Object? usersId = freezed,
-    Object? messagesId = freezed,
+    Object? uid = null,
+    Object? title = null,
+    Object? usersId = null,
+    Object? messagesId = null,
   }) {
     return _then(_value.copyWith(
-      uid: uid == freezed
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      usersId: usersId == freezed
+      usersId: null == usersId
           ? _value.usersId
           : usersId // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      messagesId: messagesId == freezed
+      messagesId: null == messagesId
           ? _value.messagesId
           : messagesId // ignore: cast_nullable_to_non_nullable
               as List<String>,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ChatUserCopyWith<$Res> implements $ChatCopyWith<$Res> {
-  factory _$ChatUserCopyWith(_ChatUser value, $Res Function(_ChatUser) then) =
-      __$ChatUserCopyWithImpl<$Res>;
+abstract class _$$_ChatUserCopyWith<$Res> implements $ChatCopyWith<$Res> {
+  factory _$$_ChatUserCopyWith(
+          _$_ChatUser value, $Res Function(_$_ChatUser) then) =
+      __$$_ChatUserCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String uid,
       String title,
@@ -106,36 +91,36 @@ abstract class _$ChatUserCopyWith<$Res> implements $ChatCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$ChatUserCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res>
-    implements _$ChatUserCopyWith<$Res> {
-  __$ChatUserCopyWithImpl(_ChatUser _value, $Res Function(_ChatUser) _then)
-      : super(_value, (v) => _then(v as _ChatUser));
+class __$$_ChatUserCopyWithImpl<$Res>
+    extends _$ChatCopyWithImpl<$Res, _$_ChatUser>
+    implements _$$_ChatUserCopyWith<$Res> {
+  __$$_ChatUserCopyWithImpl(
+      _$_ChatUser _value, $Res Function(_$_ChatUser) _then)
+      : super(_value, _then);
 
-  @override
-  _ChatUser get _value => super._value as _ChatUser;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
-    Object? title = freezed,
-    Object? usersId = freezed,
-    Object? messagesId = freezed,
+    Object? uid = null,
+    Object? title = null,
+    Object? usersId = null,
+    Object? messagesId = null,
   }) {
-    return _then(_ChatUser(
-      uid: uid == freezed
+    return _then(_$_ChatUser(
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      usersId: usersId == freezed
-          ? _value.usersId
+      usersId: null == usersId
+          ? _value._usersId
           : usersId // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      messagesId: messagesId == freezed
-          ? _value.messagesId
+      messagesId: null == messagesId
+          ? _value._messagesId
           : messagesId // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -148,19 +133,32 @@ class _$_ChatUser implements _ChatUser {
   _$_ChatUser(
       {required this.uid,
       required this.title,
-      this.usersId = const [],
-      this.messagesId = const []});
+      final List<String> usersId = const [],
+      final List<String> messagesId = const []})
+      : _usersId = usersId,
+        _messagesId = messagesId;
 
   @override
   final String uid;
   @override
   final String title;
-  @JsonKey()
+  final List<String> _usersId;
   @override
-  final List<String> usersId;
   @JsonKey()
+  List<String> get usersId {
+    if (_usersId is EqualUnmodifiableListView) return _usersId;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_usersId);
+  }
+
+  final List<String> _messagesId;
   @override
-  final List<String> messagesId;
+  @JsonKey()
+  List<String> get messagesId {
+    if (_messagesId is EqualUnmodifiableListView) return _messagesId;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_messagesId);
+  }
 
   @override
   String toString() {
@@ -171,34 +169,35 @@ class _$_ChatUser implements _ChatUser {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ChatUser &&
-            const DeepCollectionEquality().equals(other.uid, uid) &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality().equals(other.usersId, usersId) &&
+            other is _$_ChatUser &&
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.title, title) || other.title == title) &&
+            const DeepCollectionEquality().equals(other._usersId, _usersId) &&
             const DeepCollectionEquality()
-                .equals(other.messagesId, messagesId));
+                .equals(other._messagesId, _messagesId));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(uid),
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(usersId),
-      const DeepCollectionEquality().hash(messagesId));
+      uid,
+      title,
+      const DeepCollectionEquality().hash(_usersId),
+      const DeepCollectionEquality().hash(_messagesId));
 
   @JsonKey(ignore: true)
   @override
-  _$ChatUserCopyWith<_ChatUser> get copyWith =>
-      __$ChatUserCopyWithImpl<_ChatUser>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_ChatUserCopyWith<_$_ChatUser> get copyWith =>
+      __$$_ChatUserCopyWithImpl<_$_ChatUser>(this, _$identity);
 }
 
 abstract class _ChatUser implements Chat {
   factory _ChatUser(
-      {required String uid,
-      required String title,
-      List<String> usersId,
-      List<String> messagesId}) = _$_ChatUser;
+      {required final String uid,
+      required final String title,
+      final List<String> usersId,
+      final List<String> messagesId}) = _$_ChatUser;
 
   @override
   String get uid;
@@ -210,6 +209,6 @@ abstract class _ChatUser implements Chat {
   List<String> get messagesId;
   @override
   @JsonKey(ignore: true)
-  _$ChatUserCopyWith<_ChatUser> get copyWith =>
+  _$$_ChatUserCopyWith<_$_ChatUser> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,31 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:injectable/injectable.dart';
 
-import '../app/models/assingment.dart';
-import '../app/models/chat.dart';
 import '../app/models/chat_user_data.dart';
 import '../app/models/grade.dart';
 import 'auth.dart';
-import 'database/grade.dart';
 
 late final dataBaseServiceProvider = Provider(
   (ref) => DataBaseService(),
 );
 
+@lazySingleton
 class DataBaseService {
   // Колекция пользователей
-  final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
 
   // Колекция заданий
-  final CollectionReference assignmentCollection = FirebaseFirestore.instance.collection('assignments');
+  final CollectionReference assignmentCollection =
+      FirebaseFirestore.instance.collection('assignments');
 
   // Колекция оценок
-  final CollectionReference gradesCollection = FirebaseFirestore.instance.collection('grades');
+  final CollectionReference gradesCollection =
+      FirebaseFirestore.instance.collection('grades');
   // Колекция групп
-  final CollectionReference groupsCollection = FirebaseFirestore.instance.collection('groups');
+  final CollectionReference groupsCollection =
+      FirebaseFirestore.instance.collection('groups');
 
   // Создание или обновление данных пользователя
-  Future createUserData(String uid, String name, String avatarUrl, String status) async =>
+  Future createUserData(
+          String uid, String name, String avatarUrl, String status) async =>
       await usersCollection.doc(uid).set({
         'name': name,
         'avatarUrl': avatarUrl,
@@ -41,7 +45,8 @@ class DataBaseService {
     return _chatUsersDataFromSnapshot(querySnapshot);
   }
 
-  Future updateUserData(ChatUserData chatUserData) async => await usersCollection.doc(chatUserData.uid).set({
+  Future updateUserData(ChatUserData chatUserData) async =>
+      await usersCollection.doc(chatUserData.uid).set({
         'name': chatUserData.name,
         'avatarUrl': chatUserData.avatarUrl,
         'status': chatUserData.status,
@@ -77,27 +82,30 @@ class DataBaseService {
   // }
 
   String? userEmailFromUid(String uid) {
-    AuthService authService = AuthService();
-    String? email = authService.getCurrentUserEmail();
+    var authService = AuthService();
+    var email = authService.getCurrentUserEmail();
     return email;
   }
 
   Future PrintUsers() async {
-    QuerySnapshot querySnapshot = await usersCollection.get();
+    var querySnapshot = await usersCollection.get();
     print(querySnapshot);
     print(_chatUsersDataFromSnapshot(querySnapshot));
   }
 
-  List<ChatUserData> _chatUsersDataFromSnapshot(QuerySnapshot snapshot) => snapshot.docs
-      .map((doc) => ChatUserData(
-            uid: doc.id,
-            name: doc.get('name') ?? '',
-            status: doc.get('status') ?? [],
-            avatarUrl: doc.get('avatarUrl') ?? [],
-            assignmentsList: convertFromDynamic(doc.get('tasks')),
-            gradesList: convertFromDynamic(doc.get('grades')),
-          ))
-      .toList();
+  List<ChatUserData> _chatUsersDataFromSnapshot(QuerySnapshot snapshot) =>
+      snapshot.docs
+          .map(
+            (doc) => ChatUserData(
+              uid: doc.id,
+              name: doc.get('name') ?? '',
+              status: doc.get('status') ?? [],
+              avatarUrl: doc.get('avatarUrl') ?? [],
+              assignmentsList: convertFromDynamic(doc.get('tasks')),
+              gradesList: convertFromDynamic(doc.get('grades')),
+            ),
+          )
+          .toList();
 
   ChatUserData _userDataFromSnapshot(DocumentSnapshot snapshot) => ChatUserData(
         uid: snapshot.id,

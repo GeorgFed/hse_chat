@@ -1,21 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../app/models/grade.dart';
-import '../auth.dart';
 import '../database.dart';
 
 late final chatDatabaseServiceProvider =
     Provider((ref) => GradeDatabaseService());
 
+@lazySingleton
 class GradeDatabaseService {
   final CollectionReference gradesCollection =
       FirebaseFirestore.instance.collection('grades');
 
   // Создание или обновление данных оценок
   Future createGradesData(
-      int value, String assignmentUid, String userUid) async {
+    int value,
+    String assignmentUid,
+    String userUid,
+  ) async {
     const uuid = Uuid();
     final newId = uuid.v1();
     await gradesCollection.doc(newId).set({

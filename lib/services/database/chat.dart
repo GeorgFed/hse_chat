@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -12,6 +13,7 @@ import '../database.dart';
 late final chatDatabaseServiceProvider =
     Provider((ref) => ChatDatabaseService());
 
+@lazySingleton
 class ChatDatabaseService {
   final CollectionReference chatCollection =
       FirebaseFirestore.instance.collection('chats');
@@ -111,8 +113,8 @@ class ChatDatabaseService {
       );
 
   Future selectFile() async {
-    print("Here");
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    print('Here');
+    final result = await FilePicker.platform.pickFiles();
     if (result == null) {
       return;
     }

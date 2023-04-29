@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../app/models/group.dart';
 
+@lazySingleton
 class GroupDatabaseService {
   final CollectionReference groupsCollection =
       FirebaseFirestore.instance.collection('groups');

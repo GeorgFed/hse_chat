@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -6,6 +7,7 @@ import 'package:uuid/uuid.dart';
 import '../../app/models/chat.dart';
 import '../../app/models/message.dart';
 import '../auth.dart';
+import '../database.dart';
 
 late final chatDatabaseServiceProvider =
     Provider((ref) => ChatDatabaseService());
@@ -20,12 +22,13 @@ class ChatDatabaseService {
   Future createChatData(
     String title,
     List<String?> usersId,
-  ) async =>
-      await chatCollection.doc().set({
-        'title': title,
-        'usersId': usersId,
-        'messagesId': [],
-      });
+  ) async {
+    await chatCollection.doc().set({
+      'title': title,
+      'usersId': usersId,
+      'messagesId': [],
+    });
+  }
 
   Future updateChatData(String uid, Chat chat) async =>
       await chatCollection.doc(uid).set({
@@ -56,6 +59,8 @@ class ChatDatabaseService {
     var chat = chatFromSnapshot(await documentReference.get());
     chat.usersId.add(userUid);
     updateChatData(chatUid, chat);
+    var dataBaseService = DataBaseService();
+    dataBaseService.addChatToUser(chatUid, userUid);
   }
 
   Future<List<Chat>> getAllChats() async {
@@ -68,7 +73,6 @@ class ChatDatabaseService {
         .where('usersId', arrayContains: AuthService().getCurrentUserUid())
         .get();
     var chats = _chatsListFromSnapshot(querySnapshot);
-    print(chats);
     return chats;
   }
 
@@ -105,6 +109,16 @@ class ChatDatabaseService {
         usersId: convertFromDynamic(snapshot['usersId']),
         messagesId: convertFromDynamic(snapshot['messagesId']),
       );
+
+  Future selectFile() async {
+    print("Here");
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    if (result == null) {
+      return;
+    }
+    final fileName = result.paths;
+    final destination = 'files/$fileName';
+  }
 
   Future createMessageData(
     String chatUid,
@@ -163,5 +177,6 @@ class ChatDatabaseService {
         'chatUid',
         isEqualTo: chatUid,
       )
+      .orderBy('time', descending: true)
       .snapshots();
 }

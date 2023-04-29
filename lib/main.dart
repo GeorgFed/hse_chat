@@ -1,15 +1,27 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:injectable/injectable.dart';
 
 import 'features/auth/page.dart';
+import 'main.config.dart';
 
 final providerContainer = ProviderContainer();
 
+final getIt = GetIt.instance;
+
+@InjectableInit(
+  initializerName: 'init',
+  preferRelativeImports: true,
+  asExtension: true,
+)
+void configureDependencies() => getIt.init();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  configureDependencies();
   await Firebase.initializeApp();
   runApp(
     UncontrolledProviderScope(

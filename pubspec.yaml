@@ -4,42 +4,45 @@ description: A chat for hse courses
 version: 1.0.0
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.12.0 <=4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  riverpod: ^1.0.3
-  flutter_riverpod: ^1.0.3
-  hooks_riverpod: ^1.0.3
-  dio: ^4.0.6
-  freezed: ^1.1.1
-  freezed_annotation: ^1.1.0
+  riverpod: ^2.3.6
+  flutter_riverpod: ^2.3.6
+  hooks_riverpod: ^2.3.6
+  dio: ^5.1.1
+  freezed: ^2.3.2
+  freezed_annotation: ^2.2.0
   flutter_hooks: ^0.18.3
   cupertino_icons: ^1.0.2
-  flutter_svg: ^1.0.3
-  google_fonts: ^2.3.1
+  flutter_svg: ^2.0.5
+  google_fonts: ^4.0.4
 
-  firebase_storage: ^10.2.11
+  firebase_storage: ^11.1.1
 
-  firebase_auth: ^3.3.13
-  cloud_firestore: ^3.1.12
-  firebase_core: ^1.14.0
+  firebase_auth: ^4.4.2
+  cloud_firestore: ^4.5.3
+  firebase_core: ^2.10.0
   firebase_storage_web: ^3.2.11
   flutter_chat_ui: ^1.5.8
   file_picker: ^4.5.1
   uuid: ^3.0.6
   intl: ^0.17.0
   bubble: ^1.2.1
+  get_it: ^7.3.0
+  injectable: ^2.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^1.0.4
+  flutter_lints: ^2.0.1
   build_runner: ^2.1.8
   json_serializable: ^6.1.5
+  injectable_generator: ^2.1.5
 
 flutter:
   uses-material-design: true
